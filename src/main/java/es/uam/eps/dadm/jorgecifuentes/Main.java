@@ -10,6 +10,5 @@ public class Main {
     public static void main(String [ ] args) {
         System.out.println("Funciona");
 
-        Coordenada c = new Coordenada(1, 'D');
     }
 }

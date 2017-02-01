@@ -17,6 +17,9 @@ repositories {
 }
 
 dependencies {
+
+    compile fileTree(dir: 'libs', include: '*.jar')
+
     // The production code uses Guava
     compile 'com.google.guava:guava:20.0'
 

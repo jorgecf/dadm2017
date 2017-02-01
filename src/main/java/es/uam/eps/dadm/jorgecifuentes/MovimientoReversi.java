@@ -8,16 +8,18 @@ import es.uam.eps.multij.Movimiento;
 
 public class MovimientoReversi extends Movimiento {
 
-    Coordenada posicion;
+    int x, y; // coordenada destino en el tablero
 
     public String toString() {
-        return this.posicion.toString();
+        return String.valueOf(this.x) + String.valueOf(this.y);
     }
 
     public boolean equals(Object o) {
 
-        if (o instanceof MovimientoReversi && ((MovimientoReversi) o).posicion == this.posicion) {
-            return true;
+        if (o instanceof MovimientoReversi) {
+            if (this.x == ((MovimientoReversi) o).x && this.y == ((MovimientoReversi) o).y) {
+                return true;
+            }
         }
 
         return false;

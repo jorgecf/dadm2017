@@ -14,9 +14,10 @@ import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
 public class TableroReversi extends Tablero {
 
-    ArrayList<Coordenada> tablero; // int?
+    int[] tablero = new int[64]; // macro
 
-    public TableroReversi(){
+
+    public TableroReversi() {
 
     }
 
