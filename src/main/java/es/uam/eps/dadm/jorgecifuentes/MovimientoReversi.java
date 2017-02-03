@@ -10,10 +10,17 @@ public class MovimientoReversi extends Movimiento {
 
     int x, y; // coordenada destino en el tablero
 
-    public String toString() {
-        return String.valueOf(this.x) + String.valueOf(this.y);
+    public MovimientoReversi(int x, int y) {
+        this.x = x;
+        this.y = y;
     }
 
+    @Override
+    public String toString() {
+        return "Movimiento destino: [" + String.valueOf(this.x) + ", " + String.valueOf(this.y) + "]";
+    }
+
+    @Override
     public boolean equals(Object o) {
 
         if (o instanceof MovimientoReversi) {
