@@ -1,6 +1,8 @@
 package es.uam.eps.dadm.jorgecifuentes;
 
 
+import com.google.common.collect.Table;
+
 import es.uam.eps.multij.ExcepcionJuego;
 import es.uam.eps.multij.Movimiento;
 
@@ -16,18 +18,19 @@ public class Main {
 
         TableroReversi t = new TableroReversi();
 
-        System.out.println(t.tableroToString());
+        System.out.println(t.toString());
 
         try {
             t.stringToTablero(
-                            "VVVVVVVV" +
+                    "VVVVVVVV" +
                             "VBBBVVVV" +
                             "NVNVNVVV" +
                             "VVVVVVNB" +
                             "VVVVBVVV" +
                             "VVVBVBVV" +
                             "VVNVVVNV" +
-                            "VVVVVVVV");
+                            "VVVVVVVV" +
+                            "0");
         } catch (ExcepcionJuego excepcionJuego) {
             excepcionJuego.printStackTrace();
         }
@@ -35,10 +38,6 @@ public class Main {
 
         System.out.println(t.tableroToString());
 
-        for (Movimiento m : t.movimientosValidos()
-                ) {
-            System.out.println(m.toString());
-        }
 
         try {
             t.mueve(t.movimientosValidos().get(0));
@@ -46,8 +45,19 @@ public class Main {
             excepcionJuego.printStackTrace();
         }
 
-        System.out.println(t.tableroToString());
+        System.out.println(t.toString());
+        System.out.println("representacion interna: \n" + t.tableroToString());
 
+
+        // TODO -> hacer test con esto
+        TableroReversi t2 = new TableroReversi();
+
+        try {
+            t2.stringToTablero(t.tableroToString());
+            System.out.println(t2.toString());
+        } catch (ExcepcionJuego excepcionJuego) {
+            excepcionJuego.printStackTrace();
+        }
 
 
     }

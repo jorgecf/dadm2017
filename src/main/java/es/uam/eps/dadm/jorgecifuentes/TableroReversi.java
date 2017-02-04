@@ -147,8 +147,6 @@ public class TableroReversi extends Tablero {
                 for (Iterator<Movimiento> iter = part.iterator(); iter.hasNext(); ) {
                     MovimientoReversi mr = (MovimientoReversi) iter.next();
 
-                    System.out.println(mr);
-
                     if (mr.getDestino().getX() == pos_i && mr.getDestino().getY() == pos_j) {
                         mr.addInicio(i, j, pasos);
                         flag_mod = 1;
@@ -170,21 +168,17 @@ public class TableroReversi extends Tablero {
     }
 
     @Override
-    public String tableroToString() {
+    public String tableroToString() { //TODO comentar: representacion interna
 
-        String ret = "     A B C D E F G H \n     _ _ _ _ _ _ _ _\n             \n";
+        String ret = "";
 
-        for (int j = 0; j < lado; j++) {
-
-            ret += " " + (j + 1) + " | ";
-
-            for (int i = 0; i < lado; i++) {
-
-                ret += this.tablero[i][j] + " ";
+        for (int i = 0; i < lado; i++) {
+            for (int j = 0; j < lado; j++) {
+                ret += this.tablero[j][i];
             }
-            ret += "\n";
         }
 
+        ret += this.turno;
         return ret;
     }
 
@@ -202,6 +196,20 @@ public class TableroReversi extends Tablero {
 
     @Override
     public String toString() {
-        return null;
+        String ret = "     A B C D E F G H \n     _ _ _ _ _ _ _ _\n             \n";
+
+        for (int j = 0; j < lado; j++) {
+
+            ret += " " + (j + 1) + " | ";
+
+            for (int i = 0; i < lado; i++) {
+
+                ret += this.tablero[i][j] + " ";
+            }
+            ret += "\n";
+        }
+
+        ret +="Turno de: " + Color.get(this.turno).toString() + "\n";
+        return ret;
     }
 }
