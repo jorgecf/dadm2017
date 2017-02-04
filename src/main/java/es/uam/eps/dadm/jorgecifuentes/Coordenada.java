@@ -23,6 +23,25 @@ public class Coordenada {
     }
 
     @Override
+    public boolean equals(Object o) {
+
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Coordenada c = (Coordenada) o;
+
+        if (x != c.x) return false;
+        return y == c.y;
+    }
+
+    @Override
+    public int hashCode() {
+        int result = x;
+        result = 31 * result + y;
+        return result;
+    }
+
+    @Override
     public String toString() {
         return "Coordenada{" +
                 "x=" + x +

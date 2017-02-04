@@ -1,64 +1,34 @@
 package es.uam.eps.dadm.jorgecifuentes;
 
+import java.util.ArrayList;
 
-import com.google.common.collect.Table;
-
-import es.uam.eps.multij.ExcepcionJuego;
-import es.uam.eps.multij.Movimiento;
+import es.uam.eps.multij.Jugador;
+import es.uam.eps.multij.JugadorAleatorio;
+import es.uam.eps.multij.Partida;
+import es.uam.eps.multij.Tablero;
 
 /**
- * Created by jorgecf on 1/02/17.
+ * Created by jorgecf on 4/02/17.
  */
 
 public class Main {
 
     public static void main(String[] args) {
+        // ...
+        JugadorReversi observador = new JugadorReversi("observador");
+        JugadorAleatorio jugadorAleatorio = new JugadorAleatorio("jugador1");
+        JugadorReversi jugadorHumano = new JugadorReversi("jugador2");
 
-        System.out.println("Funciona");
+        ArrayList<Jugador> jugadores = new ArrayList<Jugador>();
+        jugadores.add(jugadorHumano);
+        jugadores.add(jugadorAleatorio);
 
-        TableroReversi t = new TableroReversi();
+        Partida partida = new Partida(new TableroReversi(), jugadores);
+        partida.addObservador(observador);
 
-        System.out.println(t.toString());
+        System.out.println(partida.getTablero().toString());
 
-        try {
-            t.stringToTablero(
-                    "VVVVVVVV" +
-                            "VBBBVVVV" +
-                            "NVNVNVVV" +
-                            "VVVVVVNB" +
-                            "VVVVBVVV" +
-                            "VVVBVBVV" +
-                            "VVNVVVNV" +
-                            "VVVVVVVV" +
-                            "0");
-        } catch (ExcepcionJuego excepcionJuego) {
-            excepcionJuego.printStackTrace();
-        }
-
-
-        System.out.println(t.tableroToString());
-
-
-        try {
-            t.mueve(t.movimientosValidos().get(0));
-        } catch (ExcepcionJuego excepcionJuego) {
-            excepcionJuego.printStackTrace();
-        }
-
-        System.out.println(t.toString());
-        System.out.println("representacion interna: \n" + t.tableroToString());
-
-
-        // TODO -> hacer test con esto
-        TableroReversi t2 = new TableroReversi();
-
-        try {
-            t2.stringToTablero(t.tableroToString());
-            System.out.println(t2.toString());
-        } catch (ExcepcionJuego excepcionJuego) {
-            excepcionJuego.printStackTrace();
-        }
-
-
+        partida.comenzar();
+        // ...
     }
 }

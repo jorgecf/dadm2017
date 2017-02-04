@@ -3,6 +3,7 @@ package es.uam.eps.dadm.jorgecifuentes;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Iterator;
+import java.util.Optional;
 
 import es.uam.eps.multij.ExcepcionJuego;
 import es.uam.eps.multij.Movimiento;
@@ -42,6 +43,15 @@ public class TableroReversi extends Tablero {
         for (int i = 0; i < lado; i++) {
             Arrays.fill(this.tablero[i], Color.VACIO.toChar());
         }
+
+        this.estado = EN_CURSO; // iniciamos la partida con el cambio de estado
+
+        // casillas iniciales predefinidas
+        this.tablero[3][3] = Color.BLANCO.toChar();
+        this.tablero[3][4] = Color.NEGRO.toChar();
+        this.tablero[4][3] = Color.NEGRO.toChar();
+        this.tablero[4][4] = Color.BLANCO.toChar();
+
     }
 
     @Override
@@ -76,14 +86,30 @@ public class TableroReversi extends Tablero {
         // modificamos el estado del juego
         this.cambiaTurno();
         // TODO !!!
-        // TODO COMPROBAR FIN PARTIDA
+        // TODO COMPROBAR FIN PARTIDA -> evento?
         // TODO !!!
         // this.estado es tablas, fin etc
+
+        this.ultimoMovimiento = movimiento;
+        this.numJugadas++;
+
+        // TODO mover a jugadorReversi cuando sepa que tira
+        System.out.println(this.toString());
+
     }
 
     @Override
     public boolean esValido(Movimiento movimiento) {
         return this.movimientosValidos().contains(movimiento);
+    }
+
+    // devuelve movmiento valido asociado a destino (solo hay uno en reversi)
+    public Movimiento getMovimientoValido(int dest_x, int dest_y) {
+
+        Optional<Movimiento> mr = this.movimientosValidos().stream().filter(mov -> ((MovimientoReversi) mov).getDestino().equals(new Coordenada(dest_x, dest_y))).findFirst();
+
+        if (mr.isPresent()) return mr.get();
+        else return null;
     }
 
     @Override
@@ -209,7 +235,7 @@ public class TableroReversi extends Tablero {
             ret += "\n";
         }
 
-        ret +="Turno de: " + Color.get(this.turno).toString() + "\n";
+        ret += "Turno de: " + Color.get(this.turno).toString() + "\n";
         return ret;
     }
 }
