@@ -18,16 +18,11 @@ public class Main {
 
         System.out.println(t.tableroToString());
 
-        /*t.tablero[0][0]= TableroReversi.Color.VACIO.toChar();
-        t.tablero[0][1]= TableroReversi.Color.BLANCO.toChar();
-        t.tablero[0][2]= TableroReversi.Color.NEGRO.toChar();
-*/
-
         try {
             t.stringToTablero(
-                    "VBNVVVVV" +
-                            "NBBVVVVV" +
-                            "VVVVVVBN" +
+                            "VVVVVVVV" +
+                            "VBBBVVVV" +
+                            "NVNVNVVV" +
                             "VVVVVVNB" +
                             "VVVVBVVV" +
                             "VVVBVBVV" +
@@ -44,6 +39,15 @@ public class Main {
                 ) {
             System.out.println(m.toString());
         }
+
+        try {
+            t.mueve(t.movimientosValidos().get(0));
+        } catch (ExcepcionJuego excepcionJuego) {
+            excepcionJuego.printStackTrace();
+        }
+
+        System.out.println(t.tableroToString());
+
 
 
     }
