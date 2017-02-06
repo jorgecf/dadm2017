@@ -19,6 +19,7 @@ import es.uam.eps.multij.Tablero;
 
 public class TableroReversi extends Tablero {
 
+
     public enum Color {
         NEGRO, BLANCO, VACIO;
 
@@ -60,40 +61,74 @@ public class TableroReversi extends Tablero {
     protected void mueve(Movimiento movimiento) throws ExcepcionJuego {
 
 
-        if (this.esValido(movimiento) == false) return;
+        if (this.esValido(movimiento) == true) {
 
-        MovimientoReversi m = (MovimientoReversi) movimiento;
+            MovimientoReversi m = (MovimientoReversi) movimiento;
 
-        int c = 0;
-        for (Coordenada p_ini : m.getInicio()) { // iteramos sobre cada inicio del movimiento
+            int c = 0;
+            for (Coordenada p_ini : m.getInicio()) { // iteramos sobre cada inicio del movimiento
 
-            int despl_i = 0;
-            int despl_j = 0;
+                int despl_i = 0;
+                int despl_j = 0;
 
-            despl_i = m.getDestino().getX() > p_ini.getX() ? 1 : (m.getDestino().getX() < p_ini.getX()) ? -1 : 0;
-            despl_j = m.getDestino().getY() > p_ini.getY() ? 1 : (m.getDestino().getY() < p_ini.getY() ? -1 : 0);
+                // obtenemos el sentido del deplazamiento de cada eje (x,y) desde inicio hasta destino:
+                //  1 si crece, -1 si decrece o 0 si no se mueve sobre ese eje
+                despl_i = m.getDestino().getX() > p_ini.getX() ? 1 : (m.getDestino().getX() < p_ini.getX()) ? -1 : 0;
+                despl_j = m.getDestino().getY() > p_ini.getY() ? 1 : (m.getDestino().getY() < p_ini.getY() ? -1 : 0);
 
-            int i = (int) p_ini.getX();
-            int j = (int) p_ini.getY();
+                int i = p_ini.getX();
+                int j = p_ini.getY();
 
-            for (int p = 0; p < m.getPasos().get(c); p++) {
-                i += despl_i;
-                j += despl_j;
-                this.tablero[i][j] = Color.get(this.turno).toChar();
+                // para el numero total de pasos, volteamos las fichas
+                for (int p = 0; p < m.getPasos().get(c); p++) {
+                    i += despl_i;
+                    j += despl_j;
+                    this.tablero[i][j] = Color.get(this.turno).toChar();
+                }
+
+                c++;
             }
-
-            c++;
         }
 
         // modificamos el estado del juego
         this.cambiaTurno();
-        // TODO !!!
-        // TODO COMPROBAR FIN PARTIDA -> evento?
-        // TODO !!!
-        // this.estado es tablas, fin etc
-
+        this.estado = comprobarEstado();
         this.ultimoMovimiento = movimiento;
         this.numJugadas++;
+    }
+
+    /**
+     * Comprueba el estado del juego. Para que finalice el reversi ha de darse alguno de las siguientes casos:
+     * 1) ningun jugador puede mover (aun con el tablero sin llenar)
+     * 2) el tablero esta ya lleno
+     *
+     * @return En caso de terminar el juego, TABLAS o FINALIZADA, en caso contrario EN_JUEGO
+     */
+    private int comprobarEstado() {
+
+        // primero comprobamos el numero de casilla, que es el numero de jugadas en el reversi,
+        // teniendo en cuenta las 4 casillas iniciales
+        if (this.numJugadas + 4 == lado * lado ||
+                // si ningun jugador puede mover, el juego ha acabado
+                HelperMovimientosValidos(Color.get(this.turno)).size() == 0
+                        && HelperMovimientosValidos(Color.get((this.turno + 1) % this.numJugadores)).size() == 0) {
+
+            // comprobamos quien ha ganado
+            int empate = 0;
+            for (int i = 0; i < lado; i++) {
+                for (int j = 0; j < lado; j++) {
+                    if (this.tablero[i][j] == Color.get(this.turno).toChar()) {
+                        empate++;
+                    } else empate--;
+                }
+            }
+
+            if (empate == 0) return TABLAS;
+            else return FINALIZADA;
+        }
+
+        // sigue el juego
+        return EN_CURSO;
     }
 
     @Override
@@ -101,16 +136,18 @@ public class TableroReversi extends Tablero {
         return this.movimientosValidos().contains(movimiento);
     }
 
-    // devuelve movmiento valido asociado a destino (solo hay uno en reversi)
 
     /**
+     * Devuelve el movimiento valido asociado a un destino (solo hay uno en reversi, que agrupa
+     * todos los inicios)
      *
-     * @param dest_x
-     * @param dest_y
-     * @return
+     * @param dest_x coordenada x del destino
+     * @param dest_y coordenada y del destino
+     * @return el movimiento valido o null
      */
     public Movimiento getMovimientoValido(int dest_x, int dest_y) {
 
+        // buscamos un movimiento valido con igual destino al pasado por parametro
         Optional<Movimiento> mr = this.movimientosValidos().stream().filter(mov -> ((MovimientoReversi) mov).getDestino().equals(new Coordenada(dest_x, dest_y))).findFirst();
 
         if (mr.isPresent()) return mr.get();
@@ -119,6 +156,78 @@ public class TableroReversi extends Tablero {
 
     @Override
     public ArrayList<Movimiento> movimientosValidos() {
+        return HelperMovimientosValidos(Color.get(this.turno));
+    }
+
+    /**
+     * Funcion privada de ayuda que obtiene los movimientos validos en una direccion para una
+     * casilla dada, y despues aplana el resultado.
+     *
+     * @param part  coleccion de movimientos parcial, debe ser valida
+     * @param i     coordenada x de la casilla
+     * @param j     coordenada y de la casilla
+     * @param dir_i direccion de i: +-1 o 0 (crece, decrece, no se mueve)
+     * @param dir_j direccion de j: +-1 o 0 (crece, decrece, no se mueve)
+     */
+    private void DireccionMovimientosValidos(ArrayList<Movimiento> part, int i, int j, int dir_i, int dir_j) {
+
+        if (part == null) return;
+
+        int flag_rival = 0; // indica si nos hemos encontrado con una ficha rival
+        int pasos = 0; // numero de pasos del inicio al destino
+
+        for (int k = 1; k < this.lado; k++) {
+
+            // nos movemos de uno en uno en la direccion dada
+            int pos_i = i + (k * dir_i);
+            int pos_j = j + (k * dir_j);
+            pasos++;
+
+            if (pos_i > lado - 1 || pos_i < 0 || pos_j > lado - 1 || pos_j < 0)
+                break; // fuera de limites
+
+
+            // si nos encontramos un vacio despues de encontrar una o varias fichas rivales,
+            //  tenemos que parar y colocar ahi nuestra ficha
+            if (this.tablero[pos_i][pos_j] == Color.VACIO.toChar() && flag_rival == 1) {
+
+                // aplanamos la lista: si ret ya tiene un movimiento con nuestro destino, lo
+                //  actualizamos poniendo el nuevo inicio y pasos
+                int flag_mod = 0;
+                for (Iterator<Movimiento> iter = part.iterator(); iter.hasNext(); ) {
+
+                    MovimientoReversi mr = (MovimientoReversi) iter.next();
+
+                    if (mr.getDestino().getX() == pos_i && mr.getDestino().getY() == pos_j) {
+                        mr.getInicio().add(new Coordenada(i, j));
+                        mr.getPasos().add(pasos);
+                        flag_mod = 1;
+                        break;
+                    }
+                }
+
+                // agregamos el movimiento a la lista de validos, si no existia uno antes
+                if (flag_mod == 0)
+                    part.add(new MovimientoReversi(pos_i, pos_j, i, j, pasos));
+                break;
+
+            } // comprobamos si hay una casilla ocupada por el rival
+            else if (this.tablero[pos_i][pos_j] == Color.get((this.turno + 1) % numJugadores).toChar()) {
+                flag_rival = 1;
+
+            } else if (this.tablero[pos_i][pos_j] == Color.get(this.turno).toChar() || this.tablero[pos_i][pos_j] == Color.VACIO.toChar()) {
+                break;
+            }
+        }
+    }
+
+    /**
+     * Funcion privada de ayuda que obtiene los movimientos validos para un jugador concreto.
+     *
+     * @param c color de las fichas del jugador
+     * @return coleccion de sus movimietos validos
+     */
+    private ArrayList<Movimiento> HelperMovimientosValidos(Color c) {
 
         ArrayList<Movimiento> ret = new ArrayList<Movimiento>();
 
@@ -126,7 +235,7 @@ public class TableroReversi extends Tablero {
         for (int i = 0; i < lado; i++) {
             for (int j = 0; j < lado; j++) {
 
-                if (this.tablero[i][j] == Color.get(this.turno).toChar()) {
+                if (this.tablero[i][j] == c.toChar()) {
 
                     // para cada casilla, comprobamos sus ocho direcciones
                     this.DireccionMovimientosValidos(ret, i, j, 0, -1); // norte
@@ -141,71 +250,13 @@ public class TableroReversi extends Tablero {
             }
         }
 
-
         return ret;
     }
 
-    /**
-     * @param part
-     * @param i
-     * @param j
-     * @param dir_i
-     * @param dir_j
-     */
-    private void DireccionMovimientosValidos(ArrayList<Movimiento> part, int i, int j, int dir_i, int dir_j) { //TODO limpiar
-
-        if (part == null) return;
-
-
-        int flag_rival = 0;
-        int pasos = 0;
-
-        for (int k = 1; k < this.lado; k++) {
-
-            int pos_i = i + (k * dir_i);
-            int pos_j = j + (k * dir_j);
-            pasos++;
-
-            if (pos_i > lado - 1 || pos_i < 0 || pos_j > lado - 1 || pos_j < 0)
-                break; //out of bounds
-
-
-            if (this.tablero[pos_i][pos_j] == Color.VACIO.toChar() && flag_rival == 1) {
-
-
-// TODO comment
-
-                int flag_mod = 0;
-                for (Iterator<Movimiento> iter = part.iterator(); iter.hasNext(); ) {
-                    MovimientoReversi mr = (MovimientoReversi) iter.next();
-
-                    if (mr.getDestino().getX() == pos_i && mr.getDestino().getY() == pos_j) {
-                        //     mr.addInicio(i, j, pasos);
-                        mr.getInicio().add(new Coordenada(i, j));
-                        mr.getPasos().add(pasos);
-                        flag_mod = 1;
-                        break;
-                    }
-                }
-
-                // agregamos el movimiento a la lista de validos
-                if (flag_mod == 0)
-                    part.add(new MovimientoReversi(pos_i, pos_j, i, j, pasos));
-                break;
-
-            } else if (this.tablero[pos_i][pos_j] == Color.get((this.turno + 1) % numJugadores).toChar()) { // comprobamos si hay una casilla ocupada por el rival
-                flag_rival = 1;
-
-            } else if (this.tablero[pos_i][pos_j] == Color.get(this.turno).toChar() || this.tablero[pos_i][pos_j] == Color.VACIO.toChar()) {
-                break;
-            }
-        }
-    }
-
     @Override
-    public String tableroToString() { //TODO comentar: representacion interna
+    public String tableroToString() {
 
-        String ret = "";
+        String ret = ""; // representacion interna
 
         for (int i = 0; i < lado; i++) {
             for (int j = 0; j < lado; j++) {
@@ -219,8 +270,6 @@ public class TableroReversi extends Tablero {
 
     @Override
     public void stringToTablero(String s) throws ExcepcionJuego {
-
-        // TODO throwear excepcion
 
         for (int i = 0; i < lado; i++) {
             for (int j = 0; j < lado; j++) {

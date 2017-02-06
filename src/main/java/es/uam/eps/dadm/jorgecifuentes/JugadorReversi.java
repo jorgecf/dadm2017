@@ -57,7 +57,7 @@ public class JugadorReversi implements Jugador {
 
                 // si no hay movimientos posibles, hay que pasar
                 if (p.getTablero().movimientosValidos().size() == 0) {
-                    mov = null;
+                    mov = null; // pasar
                 } else {
 
                     do {
