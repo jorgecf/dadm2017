@@ -43,37 +43,40 @@ public class JugadorReversi implements Jugador {
 
         switch (evento.getTipo()) {
             case Evento.EVENTO_CAMBIO:
-                // ...
-                System.out.println(" evento recibido: " + evento.getDescripcion());
                 break;
 
             case Evento.EVENTO_TURNO:
-
-                System.out.println(evento.getDescripcion());
-                //   System.out.println(t.toString());
-
 
                 int x = -1;
                 int y = -1;
                 Scanner in = new Scanner(System.in);
 
-                try {
-                    x = in.nextInt();
-                    y = in.nextInt();
-                } catch (InputMismatchException e) {
-                    System.out.println("Valor no valido, se espera x y");
-                    // TODO ? in = new Scanner(System.in);
-                } catch (Exception e) {
-                    //   ...
+
+                Movimiento mov;
+
+
+                // si no hay movimientos posibles, hay que pasar
+                if (p.getTablero().movimientosValidos().size() == 0) {
+                    mov = null;
+                } else {
+
+                    do {
+                        System.out.println("Introduzca un movimiento valido:");
+
+                        try {
+                            x = in.nextInt();
+                            y = in.nextInt();
+                        } catch (InputMismatchException e) {
+                            System.out.println("Valor no valido, se espera x y");
+                            in = new Scanner(System.in);
+                        } catch (Exception e) {
+                            //   ...
+                        }
+
+                        // comprobamos si el movimiento es valido en nuestro tablero
+                        mov = t.getMovimientoValido(x, y);
+                    } while (mov == null);
                 }
-
-                // ...?
-
-                // comprobamos si el movimiento es valido es nuestro tablero
-
-                Movimiento mov = t.getMovimientoValido(x, y);
-
-                System.out.println(mov);
 
 
                 try {

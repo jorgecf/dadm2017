@@ -40,20 +40,23 @@ public class MovimientoReversi extends Movimiento {
         this.pasos.add(pasos);
     }
 
-    /**
-     * @param init_x
-     * @param ini_y
-     * @param pasos
-     */
-    public void addInicio(int init_x, int ini_y, int pasos) {
-        this.inicio.add(new Coordenada(init_x, ini_y));
-        this.pasos.add(pasos);
+    public MovimientoReversi(Coordenada dest, ArrayList<Coordenada> ini, ArrayList<Integer> pasos) {
+
+        if (this.inicio == null) this.inicio = new ArrayList<Coordenada>();
+        if (this.pasos == null) this.pasos = new ArrayList<Integer>();
+
+
+        this.destino = dest;
+        this.inicio = ini;
+        this.pasos = pasos;
     }
+
 
     @Override
     public String toString() {
         return "Movimiento desde " + this.inicio.stream().map(ini -> ini.toString()).collect(Collectors.joining(", ")) + " hasta: " + this.destino.toString();
     }
+
 
     @Override
     public boolean equals(Object o) {

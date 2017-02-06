@@ -3,7 +3,9 @@ package es.uam.eps.dadm.jorgecifuentes;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import es.uam.eps.multij.ExcepcionJuego;
 import es.uam.eps.multij.Movimiento;
@@ -92,10 +94,6 @@ public class TableroReversi extends Tablero {
 
         this.ultimoMovimiento = movimiento;
         this.numJugadas++;
-
-        // TODO mover a jugadorReversi cuando sepa que tira
-        System.out.println(this.toString());
-
     }
 
     @Override
@@ -104,6 +102,13 @@ public class TableroReversi extends Tablero {
     }
 
     // devuelve movmiento valido asociado a destino (solo hay uno en reversi)
+
+    /**
+     *
+     * @param dest_x
+     * @param dest_y
+     * @return
+     */
     public Movimiento getMovimientoValido(int dest_x, int dest_y) {
 
         Optional<Movimiento> mr = this.movimientosValidos().stream().filter(mov -> ((MovimientoReversi) mov).getDestino().equals(new Coordenada(dest_x, dest_y))).findFirst();
@@ -124,14 +129,14 @@ public class TableroReversi extends Tablero {
                 if (this.tablero[i][j] == Color.get(this.turno).toChar()) {
 
                     // para cada casilla, comprobamos sus ocho direcciones
-                    DireccionMovimientosValidos(ret, i, j, 0, -1); // norte
-                    DireccionMovimientosValidos(ret, i, j, 0, 1); // sur
-                    DireccionMovimientosValidos(ret, i, j, -1, 0); // este
-                    DireccionMovimientosValidos(ret, i, j, 1, 0); // oeste
-                    DireccionMovimientosValidos(ret, i, j, -1, -1); // noreste
-                    DireccionMovimientosValidos(ret, i, j, 1, -1); // noroeste
-                    DireccionMovimientosValidos(ret, i, j, -1, 1); // sureste
-                    DireccionMovimientosValidos(ret, i, j, 1, 1); //suroeste
+                    this.DireccionMovimientosValidos(ret, i, j, 0, -1); // norte
+                    this.DireccionMovimientosValidos(ret, i, j, 0, 1); // sur
+                    this.DireccionMovimientosValidos(ret, i, j, -1, 0); // este
+                    this.DireccionMovimientosValidos(ret, i, j, 1, 0); // oeste
+                    this.DireccionMovimientosValidos(ret, i, j, -1, -1); // noreste
+                    this.DireccionMovimientosValidos(ret, i, j, 1, -1); // noroeste
+                    this.DireccionMovimientosValidos(ret, i, j, -1, 1); // sureste
+                    this.DireccionMovimientosValidos(ret, i, j, 1, 1); //suroeste
                 }
             }
         }
@@ -167,6 +172,7 @@ public class TableroReversi extends Tablero {
 
             if (this.tablero[pos_i][pos_j] == Color.VACIO.toChar() && flag_rival == 1) {
 
+
 // TODO comment
 
                 int flag_mod = 0;
@@ -174,20 +180,23 @@ public class TableroReversi extends Tablero {
                     MovimientoReversi mr = (MovimientoReversi) iter.next();
 
                     if (mr.getDestino().getX() == pos_i && mr.getDestino().getY() == pos_j) {
-                        mr.addInicio(i, j, pasos);
+                        //     mr.addInicio(i, j, pasos);
+                        mr.getInicio().add(new Coordenada(i, j));
+                        mr.getPasos().add(pasos);
                         flag_mod = 1;
                         break;
                     }
                 }
 
                 // agregamos el movimiento a la lista de validos
-                if (flag_mod == 0) part.add(new MovimientoReversi(pos_i, pos_j, i, j, pasos));
+                if (flag_mod == 0)
+                    part.add(new MovimientoReversi(pos_i, pos_j, i, j, pasos));
                 break;
 
             } else if (this.tablero[pos_i][pos_j] == Color.get((this.turno + 1) % numJugadores).toChar()) { // comprobamos si hay una casilla ocupada por el rival
                 flag_rival = 1;
 
-            } else if (this.tablero[pos_i][pos_j] == Color.get(this.turno).toChar()) {
+            } else if (this.tablero[pos_i][pos_j] == Color.get(this.turno).toChar() || this.tablero[pos_i][pos_j] == Color.VACIO.toChar()) {
                 break;
             }
         }
