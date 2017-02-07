@@ -11,10 +11,10 @@ import es.uam.eps.multij.Tablero;
 
 
 /**
- * Created by jorgecf on 1/02/17.
+ * Clase que representa un tablero en el reversi.
+ *
+ * @author Jorge Cifuentes
  */
-
-
 public class TableroReversi extends Tablero {
 
 
@@ -29,14 +29,43 @@ public class TableroReversi extends Tablero {
             return index == 0 ? NEGRO : (index == 1 ? BLANCO : VACIO);
         }
 
+        /**
+         * Devuelve la representacion en caracter del color
+         *
+         * @return primera letra del nombre del color
+         */
         public char toChar() {
             return this.name().charAt(0);
         }
 
+        /**
+         * Comprueba si un color es valido
+         *
+         * @param c char del color a comprobar
+         * @return true o false
+         */
+        public static boolean comprobarColor(char c) {
+            for (Color x : Color.values()) {
+                if (x.toChar() == c) return true;
+            }
+            return false;
+        }
+
+        /**
+         * Obtiene el color contrario al pasado (Blanco-Negro)
+         *
+         * @return el color obtenido
+         */
+        public Color colorContrario() { // solo ByN
+            return this.values()[(this.ordinal() + 1) % 2];
+        }
     }
 
-    private int lado = 8; // cada lado del tablero
-    private char[][] tablero; // matriz que representa el tablero
+    /*  cada lado del tablero */
+    private int lado = 8;
+
+    /* matriz que representa el tablero */
+    private char[][] tablero;
 
 
     public TableroReversi() {
@@ -50,7 +79,7 @@ public class TableroReversi extends Tablero {
 
         this.estado = EN_CURSO; // iniciamos la partida con el cambio de estado
 
-        // casillas iniciales predefinidas
+        // casillas iniciales predefinidas del reversi
         this.tablero[3][3] = Color.BLANCO.toChar();
         this.tablero[3][4] = Color.NEGRO.toChar();
         this.tablero[4][3] = Color.NEGRO.toChar();
@@ -60,7 +89,6 @@ public class TableroReversi extends Tablero {
 
     @Override
     protected void mueve(Movimiento movimiento) throws ExcepcionJuego {
-
 
         if (this.esValido(movimiento) == true) {
 
@@ -91,14 +119,14 @@ public class TableroReversi extends Tablero {
             }
         }
 
+
         // modificamos el estado del juego
         this.estado = comprobarEstado();
         this.ultimoMovimiento = movimiento;
-        this.numJugadas++;
     }
 
     /**
-     * Comprueba el estado del juego y el turno. Para que finalice el reversi ha de darse alguno de las siguientes casos:
+     * Comprueba el estado del juego y modifica el turno. Para que finalice el reversi ha de darse alguno de las siguientes casos:
      * 1) ningun jugador puede mover (aun con el tablero sin llenar)
      * 2) el tablero esta ya lleno
      *
@@ -106,10 +134,18 @@ public class TableroReversi extends Tablero {
      */
     private int comprobarEstado() {
 
-        // primero comprobamos el numero de casilla, que es el numero de jugadas en el reversi,
-        // teniendo en cuenta las 4 casillas iniciales
-        if (this.numJugadas + 4 == lado * lado ||
-                // si ningun jugador puede mover, el juego ha acabado
+        // si el tablero esta lleno, el juego ha acabado
+        int flag_vacio = 0;
+        for (int i = 0; i < lado; i++) {
+            for (int j = 0; j < lado; j++) {
+                if (this.tablero[i][j] == Color.VACIO.toChar()) {
+                    flag_vacio = 1;
+                }
+            }
+        }
+
+        // si ningun jugador puede mover, el juego ha acabado
+        if (flag_vacio == 0 ||
                 HelperMovimientosValidos(Color.get(this.turno)).size() == 0
                         && HelperMovimientosValidos(Color.get((this.turno + 1) % this.numJugadores)).size() == 0) {
 
@@ -173,8 +209,9 @@ public class TableroReversi extends Tablero {
      * @param j     coordenada y de la casilla
      * @param dir_i direccion de i: +-1 o 0 (crece, decrece, no se mueve)
      * @param dir_j direccion de j: +-1 o 0 (crece, decrece, no se mueve)
+     * @param c     color de fichas sobre el que comprobar los movimientos validos
      */
-    private void DireccionMovimientosValidos(ArrayList<Movimiento> part, int i, int j, int dir_i, int dir_j) {
+    private void DireccionMovimientosValidos(ArrayList<Movimiento> part, int i, int j, int dir_i, int dir_j, Color c) {
 
         if (part == null) return;
 
@@ -216,18 +253,22 @@ public class TableroReversi extends Tablero {
                     part.add(new MovimientoReversi(pos_i, pos_j, i, j, pasos));
                 break;
 
-            } // comprobamos si hay una casilla ocupada por el rival
-            else if (this.tablero[pos_i][pos_j] == Color.get((this.turno + 1) % numJugadores).toChar()) {
+            }
+            // comprobamos si hay una casilla ocupada por el rival
+            else if (this.tablero[pos_i][pos_j] == c.colorContrario().toChar()) {
                 flag_rival = 1;
 
-            } else if (this.tablero[pos_i][pos_j] == Color.get(this.turno).toChar() || this.tablero[pos_i][pos_j] == Color.VACIO.toChar()) {
+            }
+            // si la ficha es del jugador que esta jugando o es vacio, y ademas no nos hemos encontrado una ficha del rival
+            // (flag_rival es 0), salimos
+            else if (this.tablero[pos_i][pos_j] == c.toChar() || this.tablero[pos_i][pos_j] == Color.VACIO.toChar()) {
                 break;
             }
         }
     }
 
     /**
-     * Funcion privada de ayuda que obtiene los movimientos validos para un jugador concreto.
+     * Funcion privada de ayuda que obtiene los movimientos validos para un color de fichas concreto
      *
      * @param c color de las fichas del jugador
      * @return coleccion de sus movimietos validos
@@ -243,14 +284,14 @@ public class TableroReversi extends Tablero {
                 if (this.tablero[i][j] == c.toChar()) {
 
                     // para cada casilla, comprobamos sus ocho direcciones
-                    this.DireccionMovimientosValidos(ret, i, j, 0, -1); // norte
-                    this.DireccionMovimientosValidos(ret, i, j, 0, 1); // sur
-                    this.DireccionMovimientosValidos(ret, i, j, -1, 0); // este
-                    this.DireccionMovimientosValidos(ret, i, j, 1, 0); // oeste
-                    this.DireccionMovimientosValidos(ret, i, j, -1, -1); // noreste
-                    this.DireccionMovimientosValidos(ret, i, j, 1, -1); // noroeste
-                    this.DireccionMovimientosValidos(ret, i, j, -1, 1); // sureste
-                    this.DireccionMovimientosValidos(ret, i, j, 1, 1); //suroeste
+                    this.DireccionMovimientosValidos(ret, i, j, 0, -1, c); // norte
+                    this.DireccionMovimientosValidos(ret, i, j, 0, 1, c); // sur
+                    this.DireccionMovimientosValidos(ret, i, j, -1, 0, c); // este
+                    this.DireccionMovimientosValidos(ret, i, j, 1, 0, c); // oeste
+                    this.DireccionMovimientosValidos(ret, i, j, -1, -1, c); // noreste
+                    this.DireccionMovimientosValidos(ret, i, j, 1, -1, c); // noroeste
+                    this.DireccionMovimientosValidos(ret, i, j, -1, 1, c); // sureste
+                    this.DireccionMovimientosValidos(ret, i, j, 1, 1, c); //suroeste
                 }
             }
         }
@@ -270,17 +311,35 @@ public class TableroReversi extends Tablero {
         }
 
         ret += this.turno;
+        ret += this.numJugadas;
         return ret;
     }
 
     @Override
     public void stringToTablero(String s) throws ExcepcionJuego {
 
+        if (s.length() < lado * lado + 2 || s.length() > lado * lado + 3)
+            throw new ExcepcionJuego("cadena de entrada mal formada");
+
+
         for (int i = 0; i < lado; i++) {
             for (int j = 0; j < lado; j++) {
-                this.tablero[j][i] = s.charAt(i + j + ((lado - 1) * i));
+
+                char c = s.charAt(i + j + ((lado - 1) * i));
+
+                // comprobamos que se introduce un valor correcto
+                if (Color.comprobarColor(c) == false)
+                    throw new ExcepcionJuego("cadena de entrada mal formada");
+
+                this.tablero[j][i] = c;
             }
         }
+
+        // obtenemos los atributos de la partida
+        String atrib = s.substring(lado * lado);
+
+        this.turno = Character.getNumericValue(atrib.charAt(0)); // un caracter
+        this.numJugadas = Integer.parseInt(atrib.substring(1)); // uno o dos caracteres
     }
 
     @Override
@@ -292,13 +351,14 @@ public class TableroReversi extends Tablero {
             ret += " " + (j + 1) + " | ";
 
             for (int i = 0; i < lado; i++) {
-
                 ret += this.tablero[i][j] + " ";
             }
             ret += "\n";
         }
 
-        ret += "Turno de: " + Color.get(this.turno).toString() + "\n";
+        ret += "Turno de: " + Color.get(this.turno).toString();
+        ret += " - numero de jugadas: " + this.getNumJugadas();
+        ret += "\n";
         return ret;
     }
 }

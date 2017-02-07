@@ -21,17 +21,17 @@ public class Main {
 
         // ...
         ObservadorReversi observador = new ObservadorReversi("observador");
-        JugadorReversi jugadorAleatorio = new JugadorReversi("jugador1");
-        JugadorReversi jugadorHumano = new JugadorReversi("jugador2");
+        JugadorReversi jugadorHumano1 = new JugadorReversi("jugadorH1");
+        JugadorReversi jugadorHumano2 = new JugadorReversi("jugadorH2");
 
         ArrayList<Jugador> jugadores = new ArrayList<Jugador>();
-        jugadores.add(jugadorHumano);
-        jugadores.add(jugadorAleatorio);
+        jugadores.add(jugadorHumano1);
+        jugadores.add(jugadorHumano2);
 
         Partida partida = new Partida(new TableroReversi(), jugadores);
         partida.addObservador(observador);
 
-        try {
+     /*   try {
             partida.getTablero().stringToTablero(
                     "NNNNNNNN" +
                             "NNNNNNNN" +
@@ -45,22 +45,38 @@ public class Main {
         } catch (ExcepcionJuego excepcionJuego) {
             excepcionJuego.printStackTrace();
         }
+*/
 
+   /*
+   A B C D E F G H
+     _ _ _ _ _ _ _ _
 
-     /*   try {
+ 1 | B N N N N B B B
+ 2 | B N B B B B B V
+ 3 | B N N B B B N B
+ 4 | B N N N B N N V
+ 5 | B N N B B B N V
+ 6 | B N B N B B B B
+ 7 | B B B B B B B B
+ 8 | B B B B B B N B
+Turno de: BLANCO
+*/
+       try {
             partida.getTablero().stringToTablero(
-                    "BBBBBBBB" +
+                    "BNNNNBBB" +
+                            "BNBBBBBV" +
+                            "BNNBBBNB" +
+                            "BNNNBNNV" +
+                            "BNNBBBNV" +
+                            "BNBNBBBB" +
                             "BBBBBBBB" +
-                            "BBBBBBBB" +
-                            "BBBBBBBB" +
-                            "BBBBBBBB" +
-                            "BBBBBBBB" +
-                            "BBBBBBBB" +
-                            "BBBBBBBB" +
-                            "0");
+                            "BBBBBBNB" +
+                            "1" +
+                            "57");
         } catch (ExcepcionJuego excepcionJuego) {
             excepcionJuego.printStackTrace();
-        }*/
+            return;
+        }
 
 
         partida.comenzar();
