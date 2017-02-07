@@ -18,6 +18,9 @@ import es.uam.eps.multij.Tablero;
 public class TableroReversi extends Tablero {
 
 
+    /**
+     * Clase privada que representa el Color de cada posicion del tablero.
+     */
     public enum Color {
         NEGRO, BLANCO, VACIO;
 
@@ -32,8 +35,8 @@ public class TableroReversi extends Tablero {
 
     }
 
-    private int lado = 8;
-    private char[][] tablero;
+    private int lado = 8; // cada lado del tablero
+    private char[][] tablero; // matriz que representa el tablero
 
 
     public TableroReversi() {
@@ -71,7 +74,7 @@ public class TableroReversi extends Tablero {
 
                 // obtenemos el sentido del deplazamiento de cada eje (x,y) desde inicio hasta destino:
                 //  1 si crece, -1 si decrece o 0 si no se mueve sobre ese eje
-                despl_i = m.getDestino().getX() > p_ini.getX() ? 1 : (m.getDestino().getX() < p_ini.getX()) ? -1 : 0;
+                despl_i = m.getDestino().getX() > p_ini.getX() ? 1 : (m.getDestino().getX() < p_ini.getX() ? -1 : 0);
                 despl_j = m.getDestino().getY() > p_ini.getY() ? 1 : (m.getDestino().getY() < p_ini.getY() ? -1 : 0);
 
                 int i = p_ini.getX();
@@ -162,7 +165,7 @@ public class TableroReversi extends Tablero {
     }
 
     /**
-     * Funcion privada de ayuda que obtiene los movimientos validos en una direccion para una
+     * Funcion privada de ayuda que obtiene los movimientos validos en una direccion desde una
      * casilla dada, y despues aplana el resultado.
      *
      * @param part  coleccion de movimientos parcial, debe ser valida
