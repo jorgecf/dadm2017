@@ -1,6 +1,5 @@
 package es.uam.eps.dadm.jorgecifuentes;
 
-import com.sun.xml.internal.bind.v2.runtime.Coordinator;
 
 import java.util.ArrayList;
 import java.util.stream.Collectors;
@@ -8,14 +7,19 @@ import java.util.stream.Collectors;
 import es.uam.eps.multij.Movimiento;
 
 /**
- * Created by jorgecf on 1/02/17.
+ * Clase que representa un movimiento en el juego del Reversi. Consta de:
+ * - una coordenada destino
+ * - una lista de inicios (ya que a un destino se puede llegar desde varias coordenadas,
+ * y todas ellas tienen que ser consideradas)
+ * - una lista de pasos desde cada inicio hasta el destino, por simplicidad
+ *
+ * @author Jorge Cifuentes
  */
-
 public class MovimientoReversi extends Movimiento {
 
     private Coordenada destino; // coordenada destino en el tablero
-    private ArrayList<Coordenada> inicio;
-    private ArrayList<Integer> pasos;
+    private ArrayList<Coordenada> inicio; // lista de inicios posibles
+    private ArrayList<Integer> pasos; // lista de pasos desde cada inicio
 
     public Coordenada getDestino() {
         return destino;
@@ -39,18 +43,6 @@ public class MovimientoReversi extends Movimiento {
         this.inicio.add(new Coordenada(ini_x, ini_y));
         this.pasos.add(pasos);
     }
-
-    public MovimientoReversi(Coordenada dest, ArrayList<Coordenada> ini, ArrayList<Integer> pasos) {
-
-        if (this.inicio == null) this.inicio = new ArrayList<Coordenada>();
-        if (this.pasos == null) this.pasos = new ArrayList<Integer>();
-
-
-        this.destino = dest;
-        this.inicio = ini;
-        this.pasos = pasos;
-    }
-
 
     @Override
     public String toString() {

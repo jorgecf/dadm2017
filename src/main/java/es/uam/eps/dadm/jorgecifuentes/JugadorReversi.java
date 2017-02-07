@@ -51,9 +51,7 @@ public class JugadorReversi implements Jugador {
                 int y = -1;
                 Scanner in = new Scanner(System.in);
 
-
                 Movimiento mov;
-
 
                 // si no hay movimientos posibles, hay que pasar
                 if (p.getTablero().movimientosValidos().size() == 0) {
@@ -87,10 +85,8 @@ public class JugadorReversi implements Jugador {
 
                 break;
             case Evento.EVENTO_FIN:
-                //...
                 break;
             case Evento.EVENTO_ERROR:
-                //...
                 break;
         }
     }

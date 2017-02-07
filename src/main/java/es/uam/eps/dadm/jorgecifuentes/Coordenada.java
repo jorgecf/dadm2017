@@ -1,9 +1,11 @@
 package es.uam.eps.dadm.jorgecifuentes;
 
-/**
- * Created by jorgecf on 4/02/17.
- */
 
+/**
+ * Clase que representa una coordenada en el eje cartesiano (x, y).
+ *
+ * @author Jorge Cifuentes
+ */
 public class Coordenada {
 
     int x;

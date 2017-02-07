@@ -3,9 +3,7 @@ package es.uam.eps.dadm.jorgecifuentes;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Iterator;
-import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 import es.uam.eps.multij.ExcepcionJuego;
 import es.uam.eps.multij.Movimiento;
@@ -91,14 +89,13 @@ public class TableroReversi extends Tablero {
         }
 
         // modificamos el estado del juego
-        this.cambiaTurno();
         this.estado = comprobarEstado();
         this.ultimoMovimiento = movimiento;
         this.numJugadas++;
     }
 
     /**
-     * Comprueba el estado del juego. Para que finalice el reversi ha de darse alguno de las siguientes casos:
+     * Comprueba el estado del juego y el turno. Para que finalice el reversi ha de darse alguno de las siguientes casos:
      * 1) ningun jugador puede mover (aun con el tablero sin llenar)
      * 2) el tablero esta ya lleno
      *
@@ -123,11 +120,16 @@ public class TableroReversi extends Tablero {
                 }
             }
 
+            // si el juego ha acabado, el jugador que Partida da por ganador es el ultimo que ha jugado,
+            //  por lo que solo se cambia el turno si ha ganado el rival
+            if (empate < 0) this.cambiaTurno();
+
             if (empate == 0) return TABLAS;
             else return FINALIZADA;
         }
 
-        // sigue el juego
+        // sigue el juego de manera normal
+        this.cambiaTurno();
         return EN_CURSO;
     }
 
