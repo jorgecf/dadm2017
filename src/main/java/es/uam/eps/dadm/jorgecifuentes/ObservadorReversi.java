@@ -5,7 +5,7 @@ import es.uam.eps.multij.PartidaListener;
 
 /**
  * Clase que representa un observador del juego Reversi. Es el unico encargado de imprimir por
- * pantalla tanto los Eventos como el tablero.
+ * pantalla tanto las descripciones de los Eventos como el tablero.
  *
  * @author Jorge Cifuentes
  */

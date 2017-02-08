@@ -31,55 +31,6 @@ public class Main {
         Partida partida = new Partida(new TableroReversi(), jugadores);
         partida.addObservador(observador);
 
-     /*   try {
-            partida.getTablero().stringToTablero(
-                    "NNNNNNNN" +
-                            "NNNNNNNN" +
-                            "NNNNNNNN" +
-                            "NNNNNNNN" +
-                            "NNNNNNNB" +
-                            "VVVBVBVV" +
-                            "VVNVVVNV" +
-                            "NNNNNNNN" +
-                            "0");
-        } catch (ExcepcionJuego excepcionJuego) {
-            excepcionJuego.printStackTrace();
-        }
-*/
-
-   /*
-   A B C D E F G H
-     _ _ _ _ _ _ _ _
-
- 1 | B N N N N B B B
- 2 | B N B B B B B V
- 3 | B N N B B B N B
- 4 | B N N N B N N V
- 5 | B N N B B B N V
- 6 | B N B N B B B B
- 7 | B B B B B B B B
- 8 | B B B B B B N B
-Turno de: BLANCO
-*/
-       try {
-            partida.getTablero().stringToTablero(
-                    "BNNNNBBB" +
-                            "BNBBBBBV" +
-                            "BNNBBBNB" +
-                            "BNNNBNNV" +
-                            "BNNBBBNV" +
-                            "BNBNBBBB" +
-                            "BBBBBBBB" +
-                            "BBBBBBNB" +
-                            "1" +
-                            "57");
-        } catch (ExcepcionJuego excepcionJuego) {
-            excepcionJuego.printStackTrace();
-            return;
-        }
-
-
         partida.comenzar();
-        // ...
     }
 }

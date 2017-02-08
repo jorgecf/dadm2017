@@ -38,7 +38,6 @@ public class MovimientoReversi extends Movimiento {
         if (this.inicio == null) this.inicio = new ArrayList<Coordenada>();
         if (this.pasos == null) this.pasos = new ArrayList<Integer>();
 
-
         this.destino = new Coordenada(dest_x, dest_y);
         this.inicio.add(new Coordenada(ini_x, ini_y));
         this.pasos.add(pasos);

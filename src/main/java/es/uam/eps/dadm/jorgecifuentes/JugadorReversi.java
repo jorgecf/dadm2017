@@ -54,6 +54,7 @@ public class JugadorReversi implements Jugador {
                 Movimiento mov;
 
                 // si no hay movimientos posibles, hay que pasar
+                //  (podria hacerse una clase AccionPasar, pero para ello habria que modificar Partida.java)
                 if (p.getTablero().movimientosValidos().size() == 0) {
                     mov = null; // pasar
                 } else {
@@ -68,7 +69,7 @@ public class JugadorReversi implements Jugador {
                             System.out.println("Valor no valido, se espera x y");
                             in = new Scanner(System.in);
                         } catch (Exception e) {
-                            //   ...
+                            e.printStackTrace();
                         }
 
                         // comprobamos si el movimiento es valido en nuestro tablero
@@ -76,7 +77,7 @@ public class JugadorReversi implements Jugador {
                     } while (mov == null);
                 }
 
-
+                // realizamos la accion
                 try {
                     p.realizaAccion(new AccionMover(this, mov));
                 } catch (ExcepcionJuego excepcionJuego) {
