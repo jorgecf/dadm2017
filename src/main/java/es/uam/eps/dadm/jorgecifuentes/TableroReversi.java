@@ -6,8 +6,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Iterator;
 import java.util.Optional;
-import java.util.PrimitiveIterator;
-import java.util.stream.IntStream;
 
 import es.uam.eps.multij.ExcepcionJuego;
 import es.uam.eps.multij.Movimiento;
@@ -31,6 +29,16 @@ public class TableroReversi extends Tablero {
 
         public static Color get(int index) {
             return index == 0 ? NEGRO : (index == 1 ? BLANCO : VACIO);
+        }
+
+        public static Color getFromChar(char c) {
+            if (BLANCO.toChar() == c) {
+                return BLANCO;
+            } else if (NEGRO.toChar() == c) {
+                return NEGRO;
+            }
+
+            return VACIO;
         }
 
         /**
@@ -63,31 +71,33 @@ public class TableroReversi extends Tablero {
         public Color colorContrario() { // solo ByN
             return this.values()[(this.ordinal() + 1) % 2];
         }
+
+
     }
 
     /*  cada lado del tablero */
     private int lado = 8;
 
     /* matriz que representa el tablero */
-    private char[][] tablero;
+    private Color[][] tablero;
 
 
     public TableroReversi() {
 
         this.turno = 0; // comienzan negras
 
-        this.tablero = new char[lado][lado];
+        this.tablero = new Color[lado][lado];
         for (int i = 0; i < lado; i++) {
-            Arrays.fill(this.tablero[i], Color.VACIO.toChar());
+            Arrays.fill(this.tablero[i], Color.VACIO);
         }
 
         this.estado = EN_CURSO; // iniciamos la partida con el cambio de estado
 
         // casillas iniciales predefinidas del reversi
-        this.tablero[3][3] = Color.BLANCO.toChar();
-        this.tablero[3][4] = Color.NEGRO.toChar();
-        this.tablero[4][3] = Color.NEGRO.toChar();
-        this.tablero[4][4] = Color.BLANCO.toChar();
+        this.tablero[3][3] = Color.BLANCO;
+        this.tablero[3][4] = Color.NEGRO;
+        this.tablero[4][3] = Color.NEGRO;
+        this.tablero[4][4] = Color.BLANCO;
 
     }
 
@@ -116,7 +126,7 @@ public class TableroReversi extends Tablero {
                 for (int p = 0; p < m.getPasos().get(c); p++) {
                     i += despl_i;
                     j += despl_j;
-                    this.tablero[i][j] = Color.get(this.turno).toChar();
+                    this.tablero[i][j] = Color.get(this.turno);
                 }
 
                 c++;
@@ -143,7 +153,7 @@ public class TableroReversi extends Tablero {
 
         for (int i = 0; i < lado; i++) {
             for (int j = 0; j < lado; j++) {
-                if (this.tablero[i][j] == Color.VACIO.toChar()) {
+                if (this.tablero[i][j] == Color.VACIO) {
                     flag_vacio = 1;
                 }
             }
@@ -158,7 +168,7 @@ public class TableroReversi extends Tablero {
             int empate = 0;
             for (int i = 0; i < lado; i++) {
                 for (int j = 0; j < lado; j++) {
-                    if (this.tablero[i][j] == Color.get(this.turno).toChar()) {
+                    if (this.tablero[i][j] == Color.get(this.turno)) {
                         empate++;
                     } else empate--;
                 }
@@ -236,7 +246,7 @@ public class TableroReversi extends Tablero {
 
             // si nos encontramos un vacio despues de encontrar una o varias fichas rivales,
             //  tenemos que parar y colocar ahi nuestra ficha
-            if (this.tablero[pos_i][pos_j] == Color.VACIO.toChar() && flag_rival == 1) {
+            if (this.tablero[pos_i][pos_j] == Color.VACIO && flag_rival == 1) {
 
                 // aplanamos la lista: si ret ya tiene un movimiento con nuestro destino, lo
                 //  actualizamos poniendo el nuevo inicio y pasos
@@ -260,13 +270,13 @@ public class TableroReversi extends Tablero {
 
             }
             // comprobamos si hay una casilla ocupada por el rival
-            else if (this.tablero[pos_i][pos_j] == c.colorContrario().toChar()) {
+            else if (this.tablero[pos_i][pos_j] == c.colorContrario()) {
                 flag_rival = 1;
 
             }
             // si la ficha es del jugador que esta jugando o es vacio, y ademas no nos hemos encontrado una ficha del rival
             // (flag_rival es 0), salimos
-            else if (this.tablero[pos_i][pos_j] == c.toChar() || this.tablero[pos_i][pos_j] == Color.VACIO.toChar()) {
+            else if (this.tablero[pos_i][pos_j] == c || this.tablero[pos_i][pos_j] == Color.VACIO) {
                 break;
             }
         }
@@ -286,7 +296,7 @@ public class TableroReversi extends Tablero {
         for (int i = 0; i < lado; i++) {
             for (int j = 0; j < lado; j++) {
 
-                if (this.tablero[i][j] == c.toChar()) {
+                if (this.tablero[i][j] == c) {
 
                     // para cada casilla, comprobamos sus ocho direcciones
                     this.DireccionMovimientosValidos(ret, i, j, 0, -1, c); // norte
@@ -336,7 +346,7 @@ public class TableroReversi extends Tablero {
                 if (Color.comprobarColor(c) == false)
                     throw new ExcepcionJuego("cadena de entrada mal formada");
 
-                this.tablero[j][i] = c;
+                this.tablero[j][i] = Color.getFromChar(c);
             }
         }
 
@@ -356,7 +366,7 @@ public class TableroReversi extends Tablero {
             ret += " " + (j + 1) + " | ";
 
             for (int i = 0; i < lado; i++) {
-                ret += this.tablero[i][j] + " ";
+                ret += this.tablero[i][j].toChar() + " ";
             }
             ret += "\n";
         }
