@@ -1,9 +1,13 @@
 package es.uam.eps.dadm.jorgecifuentes;
 
+import com.google.common.primitives.Ints;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Iterator;
 import java.util.Optional;
+import java.util.PrimitiveIterator;
+import java.util.stream.IntStream;
 
 import es.uam.eps.multij.ExcepcionJuego;
 import es.uam.eps.multij.Movimiento;
@@ -136,6 +140,7 @@ public class TableroReversi extends Tablero {
 
         // si el tablero esta lleno, el juego ha acabado
         int flag_vacio = 0;
+
         for (int i = 0; i < lado; i++) {
             for (int j = 0; j < lado; j++) {
                 if (this.tablero[i][j] == Color.VACIO.toChar()) {

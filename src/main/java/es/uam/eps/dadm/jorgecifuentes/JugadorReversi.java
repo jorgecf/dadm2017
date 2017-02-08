@@ -87,6 +87,7 @@ public class JugadorReversi implements Jugador {
             case Evento.EVENTO_FIN:
                 break;
             case Evento.EVENTO_ERROR:
+                evento.getPartida().continuar();
                 break;
         }
     }
