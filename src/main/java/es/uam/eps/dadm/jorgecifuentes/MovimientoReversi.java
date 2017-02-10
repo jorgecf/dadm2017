@@ -1,6 +1,5 @@
 package es.uam.eps.dadm.jorgecifuentes;
 
-
 import java.util.ArrayList;
 import java.util.stream.Collectors;
 
@@ -17,15 +16,15 @@ import es.uam.eps.multij.Movimiento;
  */
 public class MovimientoReversi extends Movimiento {
 
-    private Coordenada destino; // coordenada destino en el tablero
-    private ArrayList<Coordenada> inicio; // lista de inicios posibles
+    private CoordenadaReversi destino; // coordenada destino en el tablero
+    private ArrayList<CoordenadaReversi> inicio; // lista de inicios posibles
     private ArrayList<Integer> pasos; // lista de pasos desde cada inicio
 
-    public Coordenada getDestino() {
+    public CoordenadaReversi getDestino() {
         return destino;
     }
 
-    public ArrayList<Coordenada> getInicio() {
+    public ArrayList<CoordenadaReversi> getInicio() {
         return inicio;
     }
 
@@ -35,11 +34,11 @@ public class MovimientoReversi extends Movimiento {
 
     public MovimientoReversi(int dest_x, int dest_y, int ini_x, int ini_y, int pasos) {
 
-        if (this.inicio == null) this.inicio = new ArrayList<Coordenada>();
+        if (this.inicio == null) this.inicio = new ArrayList<CoordenadaReversi>();
         if (this.pasos == null) this.pasos = new ArrayList<Integer>();
 
-        this.destino = new Coordenada(dest_x, dest_y);
-        this.inicio.add(new Coordenada(ini_x, ini_y));
+        this.destino = new CoordenadaReversi(dest_x, dest_y);
+        this.inicio.add(new CoordenadaReversi(ini_x, ini_y));
         this.pasos.add(pasos);
     }
 
@@ -52,23 +51,9 @@ public class MovimientoReversi extends Movimiento {
     @Override
     public boolean equals(Object o) {
 
-        if (o instanceof MovimientoReversi) {
-
+        if (o != null && o instanceof MovimientoReversi) {
             MovimientoReversi mo = (MovimientoReversi) o;
-
-            if (mo.inicio.equals(this.inicio) == false) {
-                return false;
-            }
-
-            if (mo.pasos.equals(this.pasos) == false) {
-                return false;
-            }
-
-            if (mo.destino.equals(this.destino) == false) {
-                return false;
-            }
-
-            return true;
+            return (mo.inicio.equals(this.inicio) && mo.pasos.equals(this.pasos) && mo.destino.equals(this.destino));
         }
 
         return false;

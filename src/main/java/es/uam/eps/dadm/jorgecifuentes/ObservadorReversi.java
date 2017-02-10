@@ -24,8 +24,6 @@ public class ObservadorReversi implements PartidaListener {
     @Override
     public void onCambioEnPartida(Evento evento) {
 
-        System.out.println(this.getNombre() + ": " + evento.getDescripcion());
-
         switch (evento.getTipo()) {
             case Evento.EVENTO_CAMBIO:
                 System.out.println(evento.getPartida().getTablero().toString());
@@ -34,9 +32,13 @@ public class ObservadorReversi implements PartidaListener {
             case Evento.EVENTO_TURNO: // observador no tiene turno
                 break;
             case Evento.EVENTO_FIN:
+                System.out.println(evento.getPartida().getTablero().toString());
                 break;
             case Evento.EVENTO_ERROR:
+                evento.getPartida().continuar();
                 break;
         }
+
+        System.out.println(this.getNombre() + ": " + evento.getDescripcion());
     }
 }

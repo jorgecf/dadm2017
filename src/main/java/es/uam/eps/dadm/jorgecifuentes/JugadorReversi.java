@@ -12,14 +12,15 @@ import es.uam.eps.multij.Partida;
 import es.uam.eps.multij.Tablero;
 
 /**
- * Created by jorgecf on 4/02/17.
+ * Clase que representa un jugador de reversi, que introduce por teclado la coordenada
+ * donde quiere colocar una ficha.
+ *
+ * @author Jorge Cifuentes
  */
-
 public class JugadorReversi implements Jugador {
 
 
     private String nombre;
-    private static int numJugadores = 0;
 
     public JugadorReversi(String nombre) {
         this.nombre = nombre;
@@ -42,6 +43,7 @@ public class JugadorReversi implements Jugador {
         TableroReversi t = (TableroReversi) p.getTablero();
 
         switch (evento.getTipo()) {
+
             case Evento.EVENTO_CAMBIO:
                 break;
 
@@ -60,11 +62,11 @@ public class JugadorReversi implements Jugador {
                 } else {
 
                     do {
-                        System.out.println("Introduzca un movimiento valido:");
+                        System.out.println("Introduzca un movimiento valido (fila 1 a 8) (columna 1 a 8):");
 
                         try {
-                            x = in.nextInt();
-                            y = in.nextInt();
+                            x = in.nextInt() - 1;
+                            y = in.nextInt() - 1;
                         } catch (InputMismatchException e) {
                             System.out.println("Valor no valido, se espera x y");
                             in = new Scanner(System.in);
