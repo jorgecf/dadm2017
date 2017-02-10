@@ -2,6 +2,5 @@
 
 # archivos locales
 .gradle/
-.idea/
 build
 local.properties
