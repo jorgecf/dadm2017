@@ -15,7 +15,6 @@ import es.uam.eps.multij.Tablero;
  */
 public class TableroReversi extends Tablero {
 
-
     /**
      * Enumeracion privada que representa el Color de cada posicion del tablero.
      */
@@ -90,6 +89,10 @@ public class TableroReversi extends Tablero {
 
     /* matriz que representa el tablero */
     private Color[][] tablero;
+
+    public Color getTablero(int i, int j) {
+        return tablero[i][j];
+    }
 
     /**
      * Constructor del TableroReversi. LLena el tablero de VACIO, menos las 4 casillas que vienen
@@ -224,11 +227,6 @@ public class TableroReversi extends Tablero {
     public Movimiento getMovimientoValido(int dest_x, int dest_y) {
 
         // buscamos un movimiento valido con igual destino al pasado por parametro
-        //  Optional<Movimiento> mr = this.movimientosValidos().stream().filter(mov -> ((MovimientoReversi) mov).getDestino().equals(new CoordenadaReversi(dest_x, dest_y))).findFirst();
-
-        // if (mr.isPresent()) return mr.get();
-        // else return null;
-
         CoordenadaReversi c = new CoordenadaReversi(dest_x, dest_y);
 
         for (Movimiento m : this.movimientosValidos()) {

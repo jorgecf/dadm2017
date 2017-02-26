@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">Reversi</string>
+    <string name="title">Reversi app</string>
+    <string name="round_already_finished">Juego ya finalizado</string>
+    <string name="invalid_movement">Movimiento invalido</string>
+    <string name="game_over">Game over</string>
 </resources>
