@@ -1,4 +1,4 @@
-package es.uam.eps.dadm.jorgecifuentes.controller;
+package es.uam.eps.dadm.jorgecifuentes.model;
 
 /**
  * Created by jorgecf on 26/02/17.

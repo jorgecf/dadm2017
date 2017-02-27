@@ -11,6 +11,7 @@ import android.widget.TextView;
 import java.util.List;
 
 import es.uam.eps.dadm.jorgecifuentes.R;
+import es.uam.eps.dadm.jorgecifuentes.model.Round;
 
 /**
  * Created by jorgecf on 26/02/17.
