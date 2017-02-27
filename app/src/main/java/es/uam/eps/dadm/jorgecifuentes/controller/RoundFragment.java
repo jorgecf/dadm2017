@@ -3,6 +3,7 @@ package es.uam.eps.dadm.jorgecifuentes.controller;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,6 +14,7 @@ import java.util.ArrayList;
 
 import es.uam.eps.dadm.jorgecifuentes.R;
 import es.uam.eps.dadm.jorgecifuentes.model.Round;
+import es.uam.eps.dadm.jorgecifuentes.model.RoundRepository;
 import es.uam.eps.dadm.jorgecifuentes.model.TableroReversi;
 import es.uam.eps.multij.Evento;
 import es.uam.eps.multij.Jugador;
@@ -24,6 +26,7 @@ import es.uam.eps.multij.Tablero;
 /**
  * Created by jorgecf on 27/02/17.
  */
+
 public class RoundFragment extends Fragment implements PartidaListener {
 
     public static final String ARG_ROUND_ID = "es.uam.eps.dadm.round_id";

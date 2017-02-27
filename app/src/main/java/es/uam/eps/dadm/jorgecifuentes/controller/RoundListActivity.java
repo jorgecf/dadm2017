@@ -19,14 +19,12 @@ import es.uam.eps.dadm.jorgecifuentes.model.Round;
 public class RoundListActivity extends AppCompatActivity implements RoundListFragment.Callbacks, RoundFragment.Callbacks {
 
     private static final int SIZE = 3;
-    private RecyclerView roundRecyclerView;
-    private RoundAdapter roundAdapter;
+    //  private RecyclerView roundRecyclerView;
+    //  private RoundAdapter roundAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-
         super.onCreate(savedInstanceState);
-        // setContentView(R.layout.activity_fragment);
         setContentView(R.layout.activity_masterdetail);
 
         FragmentManager fm = getSupportFragmentManager();
@@ -37,6 +35,7 @@ public class RoundListActivity extends AppCompatActivity implements RoundListFra
             fm.beginTransaction().add(R.id.fragment_container, fragment).commit();
         }
     }
+
 
     @Override
     public void onRoundSelected(Round round) {
@@ -57,25 +56,4 @@ public class RoundListActivity extends AppCompatActivity implements RoundListFra
         RoundListFragment roundListFragment = (RoundListFragment) fragmentManager.findFragmentById(R.id.fragment_container);
         roundListFragment.updateUI();
     }
-
-    @Override
-    public void onResume() {
-        super.onResume();
-        updateUI();
-    }
-
-    private void updateUI() {
-
-        RoundRepository repository = RoundRepository.get(this);
-        List<Round> rounds = repository.getRounds();
-
-        if (roundAdapter == null) {
-            roundAdapter = new RoundAdapter(rounds);
-            roundRecyclerView.setAdapter(roundAdapter);
-        } else {
-            roundAdapter.notifyDataSetChanged();
-        }
-    }
-
-
 }

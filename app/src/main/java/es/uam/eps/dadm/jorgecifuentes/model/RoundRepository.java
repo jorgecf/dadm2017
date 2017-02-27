@@ -1,4 +1,4 @@
-package es.uam.eps.dadm.jorgecifuentes.controller;
+package es.uam.eps.dadm.jorgecifuentes.model;
 
 /**
  * Created by jorgecf on 26/02/17.
@@ -8,8 +8,6 @@ import android.content.Context;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import es.uam.eps.dadm.jorgecifuentes.model.Round;
 
 public class RoundRepository {
     // private static final int SIZE = 3;
