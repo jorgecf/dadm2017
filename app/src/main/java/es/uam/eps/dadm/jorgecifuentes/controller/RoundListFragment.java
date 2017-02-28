@@ -65,7 +65,7 @@ public class RoundListFragment extends Fragment {
         updateUI();
     }
 
-    private void updateUI() {
+    protected void updateUI() {
 
         RoundRepository repository = RoundRepository.get(getActivity());
         List<Round> rounds = repository.getRounds();

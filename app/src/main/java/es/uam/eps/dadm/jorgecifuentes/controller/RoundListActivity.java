@@ -6,11 +6,12 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 
 import es.uam.eps.dadm.jorgecifuentes.R;
 import es.uam.eps.dadm.jorgecifuentes.model.Round;
 
-public class RoundListActivity extends AppCompatActivity implements RoundListFragment.Callbacks {
+public class RoundListActivity extends AppCompatActivity implements RoundListFragment.Callbacks, RoundFragment.Callbacks {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -19,6 +20,7 @@ public class RoundListActivity extends AppCompatActivity implements RoundListFra
 
         FragmentManager fm = getSupportFragmentManager();
         Fragment fragment = fm.findFragmentById(R.id.fragment_container);
+
         if (fragment == null) {
             fragment = new RoundListFragment();
             fm.beginTransaction().add(R.id.fragment_container, fragment).commit();
@@ -36,5 +38,10 @@ public class RoundListActivity extends AppCompatActivity implements RoundListFra
         }
     }
 
-
+    @Override
+    public void onRoundUpdated(Round round) {
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        RoundListFragment roundListFragment = (RoundListFragment) fragmentManager.findFragmentById(R.id.fragment_container);
+        roundListFragment.updateUI();
+    }
 }
