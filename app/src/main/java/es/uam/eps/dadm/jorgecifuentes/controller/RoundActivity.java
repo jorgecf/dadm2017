@@ -15,6 +15,7 @@ import java.util.ArrayList;
 
 import es.uam.eps.dadm.jorgecifuentes.R;
 import es.uam.eps.dadm.jorgecifuentes.model.Round;
+import es.uam.eps.dadm.jorgecifuentes.model.RoundRepository;
 import es.uam.eps.dadm.jorgecifuentes.model.TableroReversi;
 import es.uam.eps.multij.Evento;
 import es.uam.eps.multij.ExcepcionJuego;
@@ -31,6 +32,7 @@ import es.uam.eps.multij.Tablero;
 public class RoundActivity extends AppCompatActivity implements PartidaListener {
 
     public static final String BOARDSTRING = "es.uam.eps.dadm.grid";
+    public static final String EXTRA_ROUND_ID = "es.uam.eps.dadm.round_id";
 
     private final int ids[][] = {
             {R.id.er1, R.id.er2, R.id.er3},
@@ -40,12 +42,22 @@ public class RoundActivity extends AppCompatActivity implements PartidaListener 
     private int SIZE = 3;
     private Partida game;
     private TableroReversi board;
+    private Round round;
+
 
     @Override
-    public void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_round);
-        startRound();
+
+        String roundId = getIntent().getStringExtra(EXTRA_ROUND_ID);
+        round = RoundRepository.get(this).getRound(roundId);
+     //   size = round.getSize();
+        TextView roundTitleTextView = (TextView) findViewById(R.id.round_title);
+        roundTitleTextView.setText(round.getTitle());
+
+        this.startRound();
     }
 
     @Override
@@ -65,6 +77,12 @@ public class RoundActivity extends AppCompatActivity implements PartidaListener 
         } catch (ExcepcionJuego excepcionJuego) {
             excepcionJuego.printStackTrace();
         }
+    }
+
+    public static Intent newIntent(Context packageContext, String roundId) {
+        Intent intent = new Intent(packageContext, RoundActivity.class);
+        intent.putExtra(EXTRA_ROUND_ID, roundId);
+        return intent;
     }
 
 
