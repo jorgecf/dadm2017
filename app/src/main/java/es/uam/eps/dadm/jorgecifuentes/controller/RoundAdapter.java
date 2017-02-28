@@ -16,7 +16,7 @@ import es.uam.eps.dadm.jorgecifuentes.model.Round;
 /**
  * Created by jorgecf on 28/02/17.
  */
-
+/*
 public class RoundAdapter extends RecyclerView.Adapter<RoundAdapter.RoundHolder> {
 
     private List<Round> rounds;
@@ -83,4 +83,4 @@ public class RoundAdapter extends RecyclerView.Adapter<RoundAdapter.RoundHolder>
     }
 
 
-}
+}*/

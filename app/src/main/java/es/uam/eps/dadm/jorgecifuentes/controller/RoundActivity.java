@@ -29,9 +29,37 @@ import es.uam.eps.multij.Tablero;
  * Created by jorgecf on 26/02/17.
  */
 
-public class RoundActivity extends AppCompatActivity implements PartidaListener {
+public class RoundActivity extends AppCompatActivity {
 
-    public static final String BOARDSTRING = "es.uam.eps.dadm.grid";
+
+    public static final String EXTRA_ROUND_ID = "es.uam.eps.dadm.round_id";
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_fragment);
+
+        FragmentManager fm = getSupportFragmentManager();
+        Fragment fragment = fm.findFragmentById(R.id.fragment_container);
+
+        if (fragment == null) {
+            String roundId = getIntent().getStringExtra(EXTRA_ROUND_ID);
+            RoundFragment roundFragment = RoundFragment.newInstance(roundId);
+            getSupportFragmentManager().beginTransaction().add(R.id.fragment_container, roundFragment).commit();
+        }
+    }
+
+    public static Intent newIntent(Context packageContext, String roundId) {
+        Intent intent = new Intent(packageContext, RoundActivity.class);
+        intent.putExtra(EXTRA_ROUND_ID, roundId);
+        return intent;
+    }
+
+
+}
+
+    /*
+  //  public static final String BOARDSTRING = "es.uam.eps.dadm.grid";
     public static final String EXTRA_ROUND_ID = "es.uam.eps.dadm.round_id";
 
     private final int ids[][] = {
@@ -142,4 +170,4 @@ public class RoundActivity extends AppCompatActivity implements PartidaListener 
         }
     }
 
-}
+}*/

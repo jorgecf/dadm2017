@@ -1,5 +1,6 @@
-/*package es.uam.eps.dadm.jorgecifuentes.controller;
+package es.uam.eps.dadm.jorgecifuentes.controller;
 
+import android.content.Intent;
 import android.support.v4.app.Fragment;
 import android.content.Context;
 import android.os.Bundle;
@@ -20,11 +21,12 @@ import es.uam.eps.dadm.jorgecifuentes.model.RoundRepository;
 
 /**
  * Created by jorgecf on 27/02/17.
- *
+ */
 public class RoundListFragment extends Fragment {
 
     private RecyclerView roundRecyclerView;
     private RoundAdapter roundAdapter;
+
     private Callbacks callbacks;
 
     public interface Callbacks {
@@ -52,11 +54,10 @@ public class RoundListFragment extends Fragment {
         RecyclerView.LayoutManager linearLayoutManager = new LinearLayoutManager(getActivity());
         roundRecyclerView.setLayoutManager(linearLayoutManager);
         roundRecyclerView.setItemAnimator(new DefaultItemAnimator());
-
         updateUI();
+
         return view;
     }
-
 
     @Override
     public void onResume() {
@@ -64,7 +65,7 @@ public class RoundListFragment extends Fragment {
         updateUI();
     }
 
-    protected void updateUI() {
+    private void updateUI() {
 
         RoundRepository repository = RoundRepository.get(getActivity());
         List<Round> rounds = repository.getRounds();
@@ -78,20 +79,26 @@ public class RoundListFragment extends Fragment {
 
     }
 
+    // roundadapter
     public class RoundAdapter extends RecyclerView.Adapter<RoundAdapter.RoundHolder> {
 
         private List<Round> rounds;
 
+
+        // roundholder
         public class RoundHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
             private TextView idTextView;
             private TextView boardTextView;
             private TextView dateTextView;
 
+
             private Round round;
 
             public RoundHolder(View itemView) {
                 super(itemView);
+
+                itemView.setOnClickListener(this); // listener
 
                 idTextView = (TextView) itemView.findViewById(R.id.list_item_id);
                 boardTextView = (TextView) itemView.findViewById(R.id.list_item_board);
@@ -102,16 +109,17 @@ public class RoundListFragment extends Fragment {
                 this.round = round;
 
                 idTextView.setText(round.getTitle());
-                boardTextView.setText("REVERSI");//round.getBoard().toString()); TODO
+                boardTextView.setText("REVERSI");//round.getBoard().toSimpleString());
                 dateTextView.setText(String.valueOf(round.getDate()).substring(0, 19));
+
             }
 
             @Override
             public void onClick(View v) {
-                Log.d("log", "onclick de roundholder");
                 callbacks.onRoundSelected(round);
             }
         }
+
 
         public RoundAdapter(List<Round> rounds) {
             this.rounds = rounds;
@@ -121,8 +129,10 @@ public class RoundListFragment extends Fragment {
         public RoundAdapter.RoundHolder onCreateViewHolder(ViewGroup parent, int viewType) {
             LayoutInflater layoutInflater = LayoutInflater.from(parent.getContext());
             View view = layoutInflater.inflate(R.layout.list_item_round, parent, false);
+
             return new RoundHolder(view);
         }
+
 
         @Override
         public void onBindViewHolder(RoundAdapter.RoundHolder holder, int position) {
@@ -134,7 +144,7 @@ public class RoundListFragment extends Fragment {
         public int getItemCount() {
             return rounds.size();
         }
+
+
     }
 }
-
-*/
