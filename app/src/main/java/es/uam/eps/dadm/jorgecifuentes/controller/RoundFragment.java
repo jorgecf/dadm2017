@@ -26,7 +26,7 @@ import es.uam.eps.multij.Tablero;
 /**
  * Created by jorgecf on 27/02/17.
  */
-
+/*
 public class RoundFragment extends Fragment implements PartidaListener {
 
     public static final String ARG_ROUND_ID = "es.uam.eps.dadm.round_id";
@@ -91,7 +91,7 @@ public class RoundFragment extends Fragment implements PartidaListener {
 
     /**
      *
-     */
+     *
     private void registerListeners(ReversiLocalPlayer local) {
         ImageButton button;
 
@@ -158,3 +158,4 @@ public class RoundFragment extends Fragment implements PartidaListener {
         }
     }
 }
+*/

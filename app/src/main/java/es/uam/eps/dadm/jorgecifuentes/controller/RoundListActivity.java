@@ -1,4 +1,4 @@
-package es.uam.eps.dadm.jorgecifuentes.controller;
+/*package es.uam.eps.dadm.jorgecifuentes.controller;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -12,7 +12,7 @@ import es.uam.eps.dadm.jorgecifuentes.model.Round;
 /**
  * Created by jorgecf on 26/02/17.
  */
-
+/*
 public class RoundListActivity extends AppCompatActivity implements RoundListFragment.Callbacks, RoundFragment.Callbacks {
 
     private static final int SIZE = 3;
@@ -54,4 +54,4 @@ public class RoundListActivity extends AppCompatActivity implements RoundListFra
         RoundListFragment roundListFragment = (RoundListFragment) fragmentManager.findFragmentById(R.id.fragment_container);
         roundListFragment.updateUI();
     }
-}
+}*/

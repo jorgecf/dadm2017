@@ -1,6 +1,7 @@
 package es.uam.eps.dadm.jorgecifuentes.controller;
 
 import android.support.design.widget.Snackbar;
+import android.util.Log;
 import android.view.View;
 
 import es.uam.eps.dadm.jorgecifuentes.R;
@@ -61,6 +62,9 @@ public class ReversiLocalPlayer implements View.OnClickListener, Jugador {
 
     @Override
     public void onClick(View v) {
+
+        //TODO desactivar si no es turno
+        Log.d("reversilocalplayer", "onClick: jugador clicked");
 
         try {
             if (game.getTablero().getEstado() != Tablero.EN_CURSO) {

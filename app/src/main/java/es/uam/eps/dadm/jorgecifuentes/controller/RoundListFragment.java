@@ -1,4 +1,4 @@
-package es.uam.eps.dadm.jorgecifuentes.controller;
+/*package es.uam.eps.dadm.jorgecifuentes.controller;
 
 import android.support.v4.app.Fragment;
 import android.content.Context;
@@ -20,8 +20,7 @@ import es.uam.eps.dadm.jorgecifuentes.model.RoundRepository;
 
 /**
  * Created by jorgecf on 27/02/17.
- */
-
+ *
 public class RoundListFragment extends Fragment {
 
     private RecyclerView roundRecyclerView;
@@ -137,3 +136,5 @@ public class RoundListFragment extends Fragment {
         }
     }
 }
+
+*/
