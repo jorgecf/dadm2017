@@ -63,7 +63,7 @@ public class ReversiLocalPlayer implements View.OnClickListener, Jugador {
     @Override
     public void onClick(View v) {
 
-        //TODO desactivar si no es turno
+        //TODO desactivar si no es turno o si acabada partida
         Log.d("reversilocalplayer", "onClick: jugador clicked");
 
         try {

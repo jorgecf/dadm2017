@@ -1,29 +1,15 @@
-package es.uam.eps.dadm.jorgecifuentes.controller;
+package es.uam.eps.dadm.jorgecifuentes.activities;
 
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
-import android.view.View;
-import android.widget.ImageButton;
-import android.widget.TextView;
-
-import java.util.ArrayList;
 
 import es.uam.eps.dadm.jorgecifuentes.R;
+import es.uam.eps.dadm.jorgecifuentes.controller.RoundFragment;
 import es.uam.eps.dadm.jorgecifuentes.model.Round;
-import es.uam.eps.dadm.jorgecifuentes.model.RoundRepository;
-import es.uam.eps.dadm.jorgecifuentes.model.TableroReversi;
-import es.uam.eps.multij.Evento;
-import es.uam.eps.multij.ExcepcionJuego;
-import es.uam.eps.multij.Jugador;
-import es.uam.eps.multij.JugadorAleatorio;
-import es.uam.eps.multij.Partida;
-import es.uam.eps.multij.PartidaListener;
-import es.uam.eps.multij.Tablero;
 
 /**
  * Created by jorgecf on 26/02/17.

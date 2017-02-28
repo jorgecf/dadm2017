@@ -9,6 +9,9 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
@@ -54,6 +57,10 @@ public class RoundListFragment extends Fragment {
         RecyclerView.LayoutManager linearLayoutManager = new LinearLayoutManager(getActivity());
         roundRecyclerView.setLayoutManager(linearLayoutManager);
         roundRecyclerView.setItemAnimator(new DefaultItemAnimator());
+
+        // establecemos la visibilidad del options menu
+        this.setHasOptionsMenu(true);
+
         updateUI();
 
         return view;
@@ -65,7 +72,32 @@ public class RoundListFragment extends Fragment {
         updateUI();
     }
 
-    protected void updateUI() {
+
+    // menu
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        super.onCreateOptionsMenu(menu, inflater);
+        inflater.inflate(R.menu.menu, menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+
+        switch (item.getItemId()) {
+            case R.id.menu_item_new_round: // crea ronda al seleccionar item ( + new round)
+                Round round = new Round();
+                RoundRepository.get(getActivity()).addRound(round);
+                updateUI();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
+    // menu
+
+
+    public void updateUI() {
 
         RoundRepository repository = RoundRepository.get(getActivity());
         List<Round> rounds = repository.getRounds();

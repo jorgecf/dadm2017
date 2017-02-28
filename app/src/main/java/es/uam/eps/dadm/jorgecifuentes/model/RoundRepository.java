@@ -25,10 +25,14 @@ public class RoundRepository {
     private RoundRepository(Context context) {
         rounds = new ArrayList<Round>();
 
-        for (int i = 0; i < 50; i++) {
+        for (int i = 0; i < 4; i++) {
             Round round = new Round();
             rounds.add(round);
         }
+    }
+
+    public void addRound(Round round) {
+        rounds.add(round);
     }
 
     public List<Round> getRounds() {

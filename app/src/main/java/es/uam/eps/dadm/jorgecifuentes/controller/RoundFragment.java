@@ -143,10 +143,12 @@ public class RoundFragment extends Fragment implements PartidaListener {
         switch (evento.getTipo()) {
             case Evento.EVENTO_CAMBIO:
                 updateUI();
+            //    callbacks.onRoundUpdated(round);
                 break;
             case Evento.EVENTO_FIN:
                 updateUI();
-                Snackbar.make(this.getView().findViewById(R.id.round_title), R.string.game_over, Snackbar.LENGTH_SHORT).show();
+            //    callbacks.onRoundUpdated(round);
+                new AlertDialogFragment().show(getActivity().getSupportFragmentManager(), "ALERT DIALOG");
                 break;
         }
     }
