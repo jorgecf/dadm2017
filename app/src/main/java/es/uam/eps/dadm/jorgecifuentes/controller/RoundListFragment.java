@@ -88,6 +88,7 @@ public class RoundListFragment extends Fragment {
             private TextView idTextView;
             private TextView boardTextView;
             private TextView dateTextView;
+
             private Round round;
 
             public RoundHolder(View itemView) {
@@ -100,8 +101,9 @@ public class RoundListFragment extends Fragment {
 
             public void bindRound(Round round) {
                 this.round = round;
+
                 idTextView.setText(round.getTitle());
-                boardTextView.setText("REVERS");//round.getBoard().toString()); TODO
+                boardTextView.setText("REVERSI");//round.getBoard().toString()); TODO
                 dateTextView.setText(String.valueOf(round.getDate()).substring(0, 19));
             }
 

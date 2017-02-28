@@ -24,7 +24,7 @@ public class Round {
         id = UUID.randomUUID().toString();
         title = "ROUND " + id.toString().substring(19, 23).toUpperCase(); //TODO blancas(4) vs negras(17) o algo asi
         date = new Date().toString();
-        board = new TableroReversi();
+        board = new TableroReversi(); //TODO random board
     }
 
     /*

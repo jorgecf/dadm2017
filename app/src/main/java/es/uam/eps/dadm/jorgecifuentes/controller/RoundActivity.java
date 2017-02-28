@@ -39,7 +39,6 @@ public class RoundActivity extends AppCompatActivity implements RoundFragment.Ca
         FragmentManager fm = getSupportFragmentManager();
         Fragment fragment = fm.findFragmentById(R.id.fragment_container);
 
-
         if (fragment == null) {
             String roundId = getIntent().getStringExtra(EXTRA_ROUND_ID);
             RoundFragment roundFragment = RoundFragment.newInstance(roundId);
@@ -57,5 +56,4 @@ public class RoundActivity extends AppCompatActivity implements RoundFragment.Ca
     public void onRoundUpdated(Round round) {
 
     }
-
 }

@@ -85,7 +85,7 @@ public class RoundFragment extends Fragment implements PartidaListener {
     @Override
     public void onStart() {
         super.onStart();
-        startRound();
+        this.startRound();
     }
 
 
@@ -93,8 +93,8 @@ public class RoundFragment extends Fragment implements PartidaListener {
      *
      */
     private void registerListeners(ReversiLocalPlayer local) {
-
         ImageButton button;
+
         for (int i = 0; i < SIZE; i++)
             for (int j = 0; j < SIZE; j++) {
                 button = (ImageButton) this.getView().findViewById(ids[i][j]);

@@ -61,8 +61,8 @@ public class ReversiLocalPlayer implements View.OnClickListener, Jugador {
 
     @Override
     public void onClick(View v) {
-        try {
 
+        try {
             if (game.getTablero().getEstado() != Tablero.EN_CURSO) {
                 Snackbar.make(v, R.string.round_already_finished, Snackbar.LENGTH_SHORT).show();
                 return;
