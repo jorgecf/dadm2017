@@ -6,4 +6,5 @@
     <string name="game_over">Game over</string>
     <string name="new_round">Nueva ronda</string>
     <string name="game_over_message">¿Jugar nueva partida?</string>
+    <string name="round_restarted">Ronda reiniciada</string>
 </resources>

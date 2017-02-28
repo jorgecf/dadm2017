@@ -58,11 +58,22 @@ public class RoundListFragment extends Fragment {
         roundRecyclerView.setLayoutManager(linearLayoutManager);
         roundRecyclerView.setItemAnimator(new DefaultItemAnimator());
 
+        // listener de cada item de la card list
+        roundRecyclerView.addOnItemTouchListener(new
+                RecyclerItemClickListener(getActivity(), new
+                RecyclerItemClickListener.OnItemClickListener() {
+                    @Override
+                    public void onItemClick(View view, int position) {
+                        Round round = RoundRepository.get(getContext()).getRounds().get(position);
+                        callbacks.onRoundSelected(round);
+                    }
+                }));
+
+
         // establecemos la visibilidad del options menu
         this.setHasOptionsMenu(true);
 
         updateUI();
-
         return view;
     }
 
@@ -85,7 +96,7 @@ public class RoundListFragment extends Fragment {
     public boolean onOptionsItemSelected(MenuItem item) {
 
         switch (item.getItemId()) {
-            case R.id.menu_item_new_round: // crea ronda al seleccionar item ( + new round)
+            case R.id.menu_item_new_round: // crea ronda al seleccionar item ( + new round )
                 Round round = new Round();
                 RoundRepository.get(getActivity()).addRound(round);
                 updateUI();
@@ -118,7 +129,7 @@ public class RoundListFragment extends Fragment {
 
 
         // roundholder
-        public class RoundHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+        public class RoundHolder extends RecyclerView.ViewHolder {
 
             private TextView idTextView;
             private TextView boardTextView;
@@ -130,7 +141,7 @@ public class RoundListFragment extends Fragment {
             public RoundHolder(View itemView) {
                 super(itemView);
 
-                itemView.setOnClickListener(this); // listener
+                //itemView.setOnClickListener(this); // listener
 
                 idTextView = (TextView) itemView.findViewById(R.id.list_item_id);
                 boardTextView = (TextView) itemView.findViewById(R.id.list_item_board);
@@ -144,11 +155,6 @@ public class RoundListFragment extends Fragment {
                 boardTextView.setText("REVERSI");//round.getBoard().toSimpleString());
                 dateTextView.setText(String.valueOf(round.getDate()).substring(0, 19));
 
-            }
-
-            @Override
-            public void onClick(View v) {
-                callbacks.onRoundSelected(round);
             }
         }
 

@@ -1,6 +1,8 @@
 package es.uam.eps.dadm.jorgecifuentes.controller;
 
+import android.content.Context;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.util.Log;
@@ -63,6 +65,18 @@ public class RoundFragment extends Fragment implements PartidaListener {
     }
 
     @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        callbacks = (Callbacks) context;
+    }
+
+    @Override
+    public void onDetach() {
+        super.onDetach();
+        callbacks = null;
+    }
+
+    @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
@@ -96,15 +110,38 @@ public class RoundFragment extends Fragment implements PartidaListener {
 
 
     private void registerListeners(ReversiLocalPlayer local) {
+
         ImageButton button;
         for (int i = 0; i < SIZE; i++)
             for (int j = 0; j < SIZE; j++) {
                 button = (ImageButton) this.getView().findViewById(ids[i][j]);
                 button.setOnClickListener(local);
             }
+
+        // listener del boton flotante
+        FloatingActionButton resetButton = (FloatingActionButton) getView().findViewById(R.id.reset_round_fab);
+        resetButton.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View view) {
+
+                if (round.getBoard().getEstado() != Tablero.EN_CURSO) {
+                    Snackbar.make(getView(), R.string.round_already_finished, Snackbar.LENGTH_SHORT).show();
+                    return;
+                }
+
+                round.getBoard().reset();
+                startRound();
+                callbacks.onRoundUpdated(round);
+                updateUI();
+                Snackbar.make(getView(), R.string.round_restarted, Snackbar.LENGTH_SHORT).show();
+            }
+
+        });
     }
 
     void startRound() {
+
         ArrayList<Jugador> players = new ArrayList<Jugador>();
         JugadorAleatorio randomPlayer = new JugadorAleatorio("Random player");
         ReversiLocalPlayer localPlayer = new ReversiLocalPlayer();
@@ -143,11 +180,11 @@ public class RoundFragment extends Fragment implements PartidaListener {
         switch (evento.getTipo()) {
             case Evento.EVENTO_CAMBIO:
                 updateUI();
-            //    callbacks.onRoundUpdated(round);
+                callbacks.onRoundUpdated(round);
                 break;
             case Evento.EVENTO_FIN:
                 updateUI();
-            //    callbacks.onRoundUpdated(round);
+                callbacks.onRoundUpdated(round);
                 new AlertDialogFragment().show(getActivity().getSupportFragmentManager(), "ALERT DIALOG");
                 break;
         }
