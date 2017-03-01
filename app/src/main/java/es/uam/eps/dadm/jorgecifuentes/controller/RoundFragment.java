@@ -2,14 +2,10 @@ package es.uam.eps.dadm.jorgecifuentes.controller;
 
 import android.content.Context;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageButton;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -39,7 +35,7 @@ public class RoundFragment extends Fragment implements PartidaListener {
             {4, 5, 6},
             {7, 8, 9}};
 
-    private int SIZE = 3;
+    private int SIZE = 8;
     private int size;
     private Round round;
     private Partida game;
@@ -119,7 +115,8 @@ public class RoundFragment extends Fragment implements PartidaListener {
         RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
         params.addRule(RelativeLayout.CENTER_IN_PARENT);
 
-        ImageButton button = new ImageButton(getActivity());
+        ReversiButton button = new ReversiButton(getActivity());
+
         button.setId(id);
         button.setBackgroundResource(R.drawable.void_button_48dp);
         button.setLayoutParams(params);
@@ -133,7 +130,7 @@ public class RoundFragment extends Fragment implements PartidaListener {
         params.addRule(RelativeLayout.BELOW, below);
         params.addRule(RelativeLayout.ALIGN_LEFT, below);
 
-        ImageButton button = new ImageButton(getActivity());
+        ReversiButton button = new ReversiButton(getActivity());
         button.setId(id);
         button.setBackgroundResource(R.drawable.void_button_48dp);
         button.setLayoutParams(params);
@@ -145,7 +142,7 @@ public class RoundFragment extends Fragment implements PartidaListener {
         RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
         params.addRule(RelativeLayout.LEFT_OF, leftOf);
         params.addRule(RelativeLayout.ALIGN_BOTTOM, leftOf);
-        ImageButton button = new ImageButton(getActivity());
+        ReversiButton button = new ReversiButton(getActivity());
         button.setId(id);
         button.setBackgroundResource(R.drawable.void_button_48dp);
         button.setLayoutParams(params);
@@ -156,7 +153,7 @@ public class RoundFragment extends Fragment implements PartidaListener {
         RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
         params.addRule(RelativeLayout.RIGHT_OF, rightOf);
         params.addRule(RelativeLayout.ALIGN_BOTTOM, rightOf);
-        ImageButton button = new ImageButton(getActivity());
+        ReversiButton button = new ReversiButton(getActivity());
         button.setId(id);
         button.setBackgroundResource(R.drawable.void_button_48dp);
         button.setLayoutParams(params);
@@ -199,15 +196,15 @@ public class RoundFragment extends Fragment implements PartidaListener {
 
     private void registerListeners(ReversiLocalPlayer local) {
 
-        ImageButton button;
+        ReversiButton button;
         for (int i = 0; i < SIZE; i++)
             for (int j = 0; j < SIZE; j++) {
-                button = (ImageButton) this.getView().findViewById(ids[i][j]);
+                button = (ReversiButton) this.getView().findViewById(ids[i][j]);
                 button.setOnClickListener(local);
             }
 
         // listener del boton flotante
-        /*
+        /* TODO ponerlo desde java
         FloatingActionButton resetButton = (FloatingActionButton) getView().findViewById(R.id.reset_round_fab);
 
         resetButton.setOnClickListener(new View.OnClickListener() {
@@ -251,17 +248,20 @@ public class RoundFragment extends Fragment implements PartidaListener {
 
     private void updateUI() {
 
-        ImageButton button;
+        ReversiButton button;
 
         for (int i = 0; i < SIZE; i++)
             for (int j = 0; j < SIZE; j++) {
-                button = (ImageButton) this.getView().findViewById(ids[i][j]);
+                button = (ReversiButton) this.getView().findViewById(ids[i][j]);
                 if (board.getTablero(i, j) == TableroReversi.Color.BLANCO) {
-                    button.setBackgroundResource(R.drawable.white_button_48dp);
+                    //button.setBackgroundResource(R.drawable.white_button_48dp);
+                    button.randomPlayer();
                 } else if (board.getTablero(i, j) == TableroReversi.Color.NEGRO) {
-                    button.setBackgroundResource(R.drawable.black_button_48dp);
+                    //button.setBackgroundResource(R.drawable.black_button_48dp);
+                    button.human();
                 } else
-                    button.setBackgroundResource(R.drawable.void_button_48dp);
+                    //button.setBackgroundResource(R.drawable.void_button_48dp);
+                    button.notClicked();
             }
 
     }
