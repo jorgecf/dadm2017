@@ -15,10 +15,12 @@ import es.uam.eps.multij.Partida;
 import es.uam.eps.multij.Tablero;
 
 public class ReversiLocalPlayer implements View.OnClickListener, Jugador {
+
     private final int ids[][] = {
-            {R.id.er1, R.id.er2, R.id.er3},
-            {R.id.er4, R.id.er5, R.id.er6},
-            {R.id.er7, R.id.er8, R.id.er9}};
+            {1, 2, 3},
+            {4, 5, 6},
+            {7, 8, 9}};
+
 
     private int SIZE = 3;
     Partida game;

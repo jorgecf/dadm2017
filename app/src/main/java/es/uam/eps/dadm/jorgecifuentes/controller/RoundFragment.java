@@ -10,6 +10,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -34,9 +35,9 @@ public class RoundFragment extends Fragment implements PartidaListener {
     public static final String ARG_ROUND_ID = "es.uam.eps.dadm.round_id";
 
     private final int ids[][] = {
-            {R.id.er1, R.id.er2, R.id.er3},
-            {R.id.er4, R.id.er5, R.id.er6},
-            {R.id.er7, R.id.er8, R.id.er9}};
+            {1, 2, 3},
+            {4, 5, 6},
+            {7, 8, 9}};
 
     private int SIZE = 3;
     private int size;
@@ -89,12 +90,17 @@ public class RoundFragment extends Fragment implements PartidaListener {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        final View rootView = inflater.inflate(R.layout.fragment_round, container, false);
-        TextView roundTitleTextView = (TextView) rootView.findViewById(R.id.round_title);
+        //final View rootView = inflater.inflate(R.layout.fragment_round, container, false);
+
+        // cargamos la vista
+        View rootView = this.makeBoard();
+
+        TextView roundTitleTextView = (TextView) rootView.findViewById(0);
         roundTitleTextView.setText(round.getTitle());
 
         return rootView;
     }
+
 
     @Override
     public void onStart() {
@@ -108,6 +114,88 @@ public class RoundFragment extends Fragment implements PartidaListener {
         updateUI();
     }
 
+    private void createButtonCenter(RelativeLayout parent, int id) {
+
+        RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
+        params.addRule(RelativeLayout.CENTER_IN_PARENT);
+
+        ImageButton button = new ImageButton(getActivity());
+        button.setId(id);
+        button.setBackgroundResource(R.drawable.void_button_48dp);
+        button.setLayoutParams(params);
+
+        parent.addView(button);
+    }
+
+    private void createButtonBelow(RelativeLayout parent, int below, int id) {
+
+        RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
+        params.addRule(RelativeLayout.BELOW, below);
+        params.addRule(RelativeLayout.ALIGN_LEFT, below);
+
+        ImageButton button = new ImageButton(getActivity());
+        button.setId(id);
+        button.setBackgroundResource(R.drawable.void_button_48dp);
+        button.setLayoutParams(params);
+
+        parent.addView(button);
+    }
+
+    private void createButtonLeftOf(RelativeLayout parent, int leftOf, int id) { //TODO simplificar estas 4 funciones
+        RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
+        params.addRule(RelativeLayout.LEFT_OF, leftOf);
+        params.addRule(RelativeLayout.ALIGN_BOTTOM, leftOf);
+        ImageButton button = new ImageButton(getActivity());
+        button.setId(id);
+        button.setBackgroundResource(R.drawable.void_button_48dp);
+        button.setLayoutParams(params);
+        parent.addView(button);
+    }
+
+    private void createButtonRightOf(RelativeLayout parent, int rightOf, int id) {
+        RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
+        params.addRule(RelativeLayout.RIGHT_OF, rightOf);
+        params.addRule(RelativeLayout.ALIGN_BOTTOM, rightOf);
+        ImageButton button = new ImageButton(getActivity());
+        button.setId(id);
+        button.setBackgroundResource(R.drawable.void_button_48dp);
+        button.setLayoutParams(params);
+        parent.addView(button);
+    }
+
+    private View makeBoard() {
+
+        RelativeLayout.LayoutParams paramsMatch = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.MATCH_PARENT, RelativeLayout.LayoutParams.MATCH_PARENT);
+
+        RelativeLayout root = new RelativeLayout(getActivity());
+        root.setLayoutParams(paramsMatch);
+        createTitleTextView(root, 0);
+        createButtonCenter(root, 2);
+        createButtonLeftOf(root, 2, 1);
+        createButtonRightOf(root, 2, 3);
+        createButtonBelow(root, 2, 5);
+        createButtonLeftOf(root, 5, 4);
+        createButtonRightOf(root, 5, 6);
+        createButtonBelow(root, 5, 8);
+        createButtonLeftOf(root, 8, 7);
+        createButtonRightOf(root, 8, 9);
+
+        return root;
+    }
+
+    private void createTitleTextView(RelativeLayout parent, int id) {
+
+        RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
+        params.addRule(RelativeLayout.CENTER_HORIZONTAL);
+
+        TextView textView = new TextView(getActivity());
+        textView.setId(id);
+        textView.setTextSize(35);
+        textView.setPadding(0, 40, 0, 40);
+        textView.setLayoutParams(params);
+
+        parent.addView(textView);
+    }
 
     private void registerListeners(ReversiLocalPlayer local) {
 
@@ -119,7 +207,9 @@ public class RoundFragment extends Fragment implements PartidaListener {
             }
 
         // listener del boton flotante
+        /*
         FloatingActionButton resetButton = (FloatingActionButton) getView().findViewById(R.id.reset_round_fab);
+
         resetButton.setOnClickListener(new View.OnClickListener() {
 
             @Override
@@ -138,6 +228,7 @@ public class RoundFragment extends Fragment implements PartidaListener {
             }
 
         });
+        */
     }
 
     void startRound() {
