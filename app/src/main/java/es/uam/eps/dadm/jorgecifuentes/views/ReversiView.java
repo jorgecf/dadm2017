@@ -33,6 +33,7 @@ public class ReversiView extends View {
     private TableroReversi board;
     private OnPlayListener onPlayListener;
 
+
     public interface OnPlayListener {
         void onPlay(int row, int column);
     }
@@ -41,11 +42,10 @@ public class ReversiView extends View {
     public ReversiView(Context context, AttributeSet attrs) {
         super(context, attrs);
         init();
-        // aun no sabe W y H
     }
 
     private void init() {
-        backgroundPaint.setColor(Color.BLACK);
+        backgroundPaint.setColor(Color.TRANSPARENT);
         linePaint.setStrokeWidth(2);
     }
 
@@ -134,7 +134,7 @@ public class ReversiView extends View {
         else if (board.getTablero(i, j) == TableroReversi.Color.BLANCO)
             paint.setColor(Color.WHITE);
         else
-            paint.setColor(Color.GREEN);
+            paint.setColor(Color.TRANSPARENT);
     }
 
 
@@ -156,6 +156,9 @@ public class ReversiView extends View {
         this.board = (TableroReversi) board;
     }
 
+    public void setBoard(Tablero board) {
+        this.board = (TableroReversi) board;
+    }
 
 }
 

@@ -34,15 +34,9 @@ public class RoundFragment extends Fragment implements PartidaListener {
 
     public static final String ARG_ROUND_ID = "es.uam.eps.dadm.round_id";
 
-    private final int ids[][] = {
-            {R.id.er1, R.id.er2, R.id.er3},
-            {R.id.er4, R.id.er5, R.id.er6},
-            {R.id.er7, R.id.er8, R.id.er9}};
-
-   // private int SIZE = 3;
-  //  private int size;
     private Round round;
     private Partida game;
+
     private TableroReversi board;
     private ReversiView boardView;
 
@@ -85,7 +79,6 @@ public class RoundFragment extends Fragment implements PartidaListener {
         if (getArguments().containsKey(ARG_ROUND_ID)) {
             String roundId = getArguments().getString(ARG_ROUND_ID);
             round = RoundRepository.get(getActivity()).getRound(roundId);
-            //size = round.getSize();
         }
     }
 
@@ -100,6 +93,7 @@ public class RoundFragment extends Fragment implements PartidaListener {
 
     @Override
     public void onStart() {
+        Log.d("reversi", "onStart: entrando");
         super.onStart();
         startRound();
     }
@@ -145,17 +139,20 @@ public class RoundFragment extends Fragment implements PartidaListener {
     void startRound() {
 
         ArrayList<Jugador> players = new ArrayList<Jugador>();
-        JugadorAleatorio randomPlayer = new JugadorAleatorio("Random player");
+        // JugadorAleatorio randomPlayer = new JugadorAleatorio("Random player");
         ReversiLocalPlayer localPlayer = new ReversiLocalPlayer();
+        ReversiLocalPlayer localPlayer2 = new ReversiLocalPlayer();
 
-        players.add(randomPlayer);
+        //players.add(randomPlayer);
         players.add(localPlayer);
+        players.add(localPlayer2);
 
         board = new TableroReversi();
         game = new Partida(board, players);
 
         game.addObservador(this); // observador: se encarga de pintar el tablero con OnCambioEnPartida
         localPlayer.setPartida(game);
+        localPlayer2.setPartida(game);
 
         // custom view
         boardView = (ReversiView) getView().findViewById(R.id.board_reversiview);
@@ -163,39 +160,23 @@ public class RoundFragment extends Fragment implements PartidaListener {
         boardView.setOnPlayListener(localPlayer);
 
 
-        //  registerListeners(localPlayer);
         if (game.getTablero().getEstado() == Tablero.EN_CURSO)
             game.comenzar();
     }
 
-    /*
-    private void updateUI() {
 
-        ImageButton button;
-
-        for (int i = 0; i < SIZE; i++)
-            for (int j = 0; j < SIZE; j++) {
-                button = (ImageButton) this.getView().findViewById(ids[i][j]);
-                if (board.getTablero(i, j) == TableroReversi.Color.BLANCO) {
-                    button.setBackgroundResource(R.drawable.white_button_48dp);
-                } else if (board.getTablero(i, j) == TableroReversi.Color.NEGRO) {
-                    button.setBackgroundResource(R.drawable.black_button_48dp);
-                } else
-                    button.setBackgroundResource(R.drawable.void_button_48dp);
-            }
-
-    }
-*/
 
     // es esta quien pinta el tablero al ser listener
     @Override
     public void onCambioEnPartida(Evento evento) {
         switch (evento.getTipo()) {
             case Evento.EVENTO_CAMBIO:
+                this.boardView.setBoard(this.board);
                 boardView.invalidate();
                 callbacks.onRoundUpdated(round);
                 break;
             case Evento.EVENTO_FIN:
+                this.boardView.setBoard(this.board);
                 boardView.invalidate();
                 callbacks.onRoundUpdated(round);
                 Snackbar.make(getView(), R.string.game_over, Snackbar.LENGTH_SHORT).show();

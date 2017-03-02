@@ -141,8 +141,6 @@ public class RoundListFragment extends Fragment {
             public RoundHolder(View itemView) {
                 super(itemView);
 
-                //itemView.setOnClickListener(this); // listener
-
                 idTextView = (TextView) itemView.findViewById(R.id.list_item_id);
                 boardTextView = (TextView) itemView.findViewById(R.id.list_item_board);
                 dateTextView = (TextView) itemView.findViewById(R.id.list_item_date);
@@ -154,7 +152,6 @@ public class RoundListFragment extends Fragment {
                 idTextView.setText(round.getTitle());
                 boardTextView.setText("REVERSI");//round.getBoard().toSimpleString());
                 dateTextView.setText(String.valueOf(round.getDate()).substring(0, 19));
-
             }
         }
 
