@@ -3,7 +3,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    <LinearLayout
+
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:gravity="center_horizontal"
@@ -17,9 +18,11 @@
             android:textAllCaps="true"
             android:textSize="@dimen/title_size" />
 
-        <!-- Tablero de juego -->
-        <include layout="@layout/board" />
-
+        <es.uam.eps.dadm.jorgecifuentes.views.ReversiView
+            android:id="@+id/board_reversiview"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="30dp" />
     </LinearLayout>
 
     <android.support.design.widget.FloatingActionButton
@@ -32,5 +35,6 @@
         android:src="@android:drawable/ic_menu_revert" />
 
 </android.support.design.widget.CoordinatorLayout>
+
 
 

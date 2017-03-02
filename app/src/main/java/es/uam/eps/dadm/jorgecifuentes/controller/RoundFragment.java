@@ -2,10 +2,12 @@ package es.uam.eps.dadm.jorgecifuentes.controller;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -15,6 +17,7 @@ import es.uam.eps.dadm.jorgecifuentes.R;
 import es.uam.eps.dadm.jorgecifuentes.model.Round;
 import es.uam.eps.dadm.jorgecifuentes.model.RoundRepository;
 import es.uam.eps.dadm.jorgecifuentes.model.TableroReversi;
+import es.uam.eps.dadm.jorgecifuentes.views.ReversiView;
 import es.uam.eps.multij.Evento;
 import es.uam.eps.multij.Jugador;
 import es.uam.eps.multij.JugadorAleatorio;
@@ -40,6 +43,8 @@ public class RoundFragment extends Fragment implements PartidaListener {
     private Round round;
     private Partida game;
     private TableroReversi board;
+
+    private ReversiView boardView;
 
     private Callbacks callbacks;
 
@@ -82,19 +87,9 @@ public class RoundFragment extends Fragment implements PartidaListener {
             round = RoundRepository.get(getActivity()).getRound(roundId);
             //size = round.getSize();
         }
-    }
 
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        //final View rootView = inflater.inflate(R.layout.fragment_round, container, false);
+        //  startRound();
 
-        // cargamos la vista
-        View rootView = this.makeBoard();
-
-        TextView roundTitleTextView = (TextView) rootView.findViewById(0);
-        roundTitleTextView.setText(round.getTitle());
-
-        return rootView;
     }
 
 
@@ -104,103 +99,20 @@ public class RoundFragment extends Fragment implements PartidaListener {
         startRound();
     }
 
-    @Override
-    public void onResume() {
-        super.onResume();
-        updateUI();
-    }
+    /*
+            @Override
+            public void onResume() {
+                super.onResume();
+                updateUI();
+            }
+            */
+    private void registerListeners() {
 
-    private void createButtonCenter(RelativeLayout parent, int id) {
-
-        RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
-        params.addRule(RelativeLayout.CENTER_IN_PARENT);
-
-        ReversiButton button = new ReversiButton(getActivity());
-
-        button.setId(id);
-        button.setBackgroundResource(R.drawable.void_button_48dp);
-        button.setLayoutParams(params);
-
-        parent.addView(button);
-    }
-
-    private void createButtonBelow(RelativeLayout parent, int below, int id) {
-
-        RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
-        params.addRule(RelativeLayout.BELOW, below);
-        params.addRule(RelativeLayout.ALIGN_LEFT, below);
-
-        ReversiButton button = new ReversiButton(getActivity());
-        button.setId(id);
-        button.setBackgroundResource(R.drawable.void_button_48dp);
-        button.setLayoutParams(params);
-
-        parent.addView(button);
-    }
-
-    private void createButtonLeftOf(RelativeLayout parent, int leftOf, int id) { //TODO simplificar estas 4 funciones
-        RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
-        params.addRule(RelativeLayout.LEFT_OF, leftOf);
-        params.addRule(RelativeLayout.ALIGN_BOTTOM, leftOf);
-        ReversiButton button = new ReversiButton(getActivity());
-        button.setId(id);
-        button.setBackgroundResource(R.drawable.void_button_48dp);
-        button.setLayoutParams(params);
-        parent.addView(button);
-    }
-
-    private void createButtonRightOf(RelativeLayout parent, int rightOf, int id) {
-        RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
-        params.addRule(RelativeLayout.RIGHT_OF, rightOf);
-        params.addRule(RelativeLayout.ALIGN_BOTTOM, rightOf);
-        ReversiButton button = new ReversiButton(getActivity());
-        button.setId(id);
-        button.setBackgroundResource(R.drawable.void_button_48dp);
-        button.setLayoutParams(params);
-        parent.addView(button);
-    }
-
-    private View makeBoard() {
-
-        RelativeLayout.LayoutParams paramsMatch = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.MATCH_PARENT, RelativeLayout.LayoutParams.MATCH_PARENT);
-
-        RelativeLayout root = new RelativeLayout(getActivity());
-        root.setLayoutParams(paramsMatch);
-        createTitleTextView(root, 0);
-        createButtonCenter(root, 2);
-        createButtonLeftOf(root, 2, 1);
-        createButtonRightOf(root, 2, 3);
-        createButtonBelow(root, 2, 5);
-        createButtonLeftOf(root, 5, 4);
-        createButtonRightOf(root, 5, 6);
-        createButtonBelow(root, 5, 8);
-        createButtonLeftOf(root, 8, 7);
-        createButtonRightOf(root, 8, 9);
-
-        return root;
-    }
-
-    private void createTitleTextView(RelativeLayout parent, int id) {
-
-        RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
-        params.addRule(RelativeLayout.CENTER_HORIZONTAL);
-
-        TextView textView = new TextView(getActivity());
-        textView.setId(id);
-        textView.setTextSize(35);
-        textView.setPadding(0, 40, 0, 40);
-        textView.setLayoutParams(params);
-
-        parent.addView(textView);
-    }
-
-    private void registerListeners(ReversiLocalPlayer local) {
-
-        ReversiButton button;
+        ImageButton button;
         for (int i = 0; i < SIZE; i++)
             for (int j = 0; j < SIZE; j++) {
-                button = (ReversiButton) this.getView().findViewById(ids[i][j]);
-                button.setOnClickListener(local);
+                button = (ImageButton) this.getView().findViewById(ids[i][j]);
+                //    button.setOnClickListener(local);
             }
 
         // listener del boton flotante
@@ -225,7 +137,11 @@ public class RoundFragment extends Fragment implements PartidaListener {
             }
 
         });
-        */
+
+    }
+
+*/
+
     }
 
     void startRound() {
@@ -237,47 +153,36 @@ public class RoundFragment extends Fragment implements PartidaListener {
         players.add(randomPlayer);
         players.add(localPlayer);
 
-        board = new TableroReversi();
-        game = new Partida(board, players);
+        game = new Partida(round.getBoard(), players);
         game.addObservador(this);
+
         localPlayer.setPartida(game);
-        registerListeners(localPlayer);
+
+        boardView = (ReversiView) getView().findViewById(R.id.board_reversiview);
+        boardView.setBoard(size, round.getBoard());
+        boardView.setOnPlayListener(localPlayer);
+        registerListeners();
+
+
         if (game.getTablero().getEstado() == Tablero.EN_CURSO)
             game.comenzar();
-    }
-
-    private void updateUI() {
-
-        ReversiButton button;
-
-        for (int i = 0; i < SIZE; i++)
-            for (int j = 0; j < SIZE; j++) {
-                button = (ReversiButton) this.getView().findViewById(ids[i][j]);
-                if (board.getTablero(i, j) == TableroReversi.Color.BLANCO) {
-                    //button.setBackgroundResource(R.drawable.white_button_48dp);
-                    button.randomPlayer();
-                } else if (board.getTablero(i, j) == TableroReversi.Color.NEGRO) {
-                    //button.setBackgroundResource(R.drawable.black_button_48dp);
-                    button.human();
-                } else
-                    //button.setBackgroundResource(R.drawable.void_button_48dp);
-                    button.notClicked();
-            }
 
     }
+
 
     @Override
     public void onCambioEnPartida(Evento evento) {
         switch (evento.getTipo()) {
             case Evento.EVENTO_CAMBIO:
-                updateUI();
+                boardView.invalidate();
                 callbacks.onRoundUpdated(round);
                 break;
             case Evento.EVENTO_FIN:
-                updateUI();
+                boardView.invalidate();
                 callbacks.onRoundUpdated(round);
-                new AlertDialogFragment().show(getActivity().getSupportFragmentManager(), "ALERT DIALOG");
+                Snackbar.make(getView(), R.string.game_over, Snackbar.LENGTH_SHORT).show();
                 break;
+
         }
     }
 
