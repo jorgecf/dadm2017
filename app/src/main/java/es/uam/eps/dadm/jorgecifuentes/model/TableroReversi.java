@@ -85,7 +85,7 @@ public class TableroReversi extends Tablero {
     }
 
     /*  cada lado del tablero */
-    private int lado = 8;
+    private final int lado = 8;
 
     /* matriz que representa el tablero */
     private Color[][] tablero;
@@ -404,5 +404,9 @@ public class TableroReversi extends Tablero {
         ret += " - numero de jugadas: " + this.getNumJugadas();
         ret += "\n";
         return ret;
+    }
+
+    public int getSize() {
+        return this.lado;
     }
 }

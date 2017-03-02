@@ -2,13 +2,14 @@ package es.uam.eps.dadm.jorgecifuentes.controller;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -34,16 +35,15 @@ public class RoundFragment extends Fragment implements PartidaListener {
     public static final String ARG_ROUND_ID = "es.uam.eps.dadm.round_id";
 
     private final int ids[][] = {
-            {1, 2, 3},
-            {4, 5, 6},
-            {7, 8, 9}};
+            {R.id.er1, R.id.er2, R.id.er3},
+            {R.id.er4, R.id.er5, R.id.er6},
+            {R.id.er7, R.id.er8, R.id.er9}};
 
-    private int SIZE = 8;
-    private int size;
+   // private int SIZE = 3;
+  //  private int size;
     private Round round;
     private Partida game;
     private TableroReversi board;
-
     private ReversiView boardView;
 
     private Callbacks callbacks;
@@ -87,11 +87,16 @@ public class RoundFragment extends Fragment implements PartidaListener {
             round = RoundRepository.get(getActivity()).getRound(roundId);
             //size = round.getSize();
         }
-
-        //  startRound();
-
     }
 
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        final View rootView = inflater.inflate(R.layout.fragment_round, container, false);
+        TextView roundTitleTextView = (TextView) rootView.findViewById(R.id.round_title);
+        roundTitleTextView.setText(round.getTitle());
+
+        return rootView;
+    }
 
     @Override
     public void onStart() {
@@ -99,51 +104,44 @@ public class RoundFragment extends Fragment implements PartidaListener {
         startRound();
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        //  updateUI();
+    }
+
     /*
-            @Override
-            public void onResume() {
-                super.onResume();
-                updateUI();
-            }
-            */
-    private void registerListeners() {
+        private void registerListeners(ReversiLocalPlayer local) {
 
-        ImageButton button;
-        for (int i = 0; i < SIZE; i++)
-            for (int j = 0; j < SIZE; j++) {
-                button = (ImageButton) this.getView().findViewById(ids[i][j]);
-                //    button.setOnClickListener(local);
-            }
-
-        // listener del boton flotante
-        /* TODO ponerlo desde java
-        FloatingActionButton resetButton = (FloatingActionButton) getView().findViewById(R.id.reset_round_fab);
-
-        resetButton.setOnClickListener(new View.OnClickListener() {
-
-            @Override
-            public void onClick(View view) {
-
-                if (round.getBoard().getEstado() != Tablero.EN_CURSO) {
-                    Snackbar.make(getView(), R.string.round_already_finished, Snackbar.LENGTH_SHORT).show();
-                    return;
+            ImageButton button;
+            for (int i = 0; i < SIZE; i++)
+                for (int j = 0; j < SIZE; j++) {
+                    button = (ImageButton) this.getView().findViewById(ids[i][j]);
+                    button.setOnClickListener(local);
                 }
 
-                round.getBoard().reset();
-                startRound();
-                callbacks.onRoundUpdated(round);
-                updateUI();
-                Snackbar.make(getView(), R.string.round_restarted, Snackbar.LENGTH_SHORT).show();
-            }
+            // listener del boton flotante
+            FloatingActionButton resetButton = (FloatingActionButton) getView().findViewById(R.id.reset_round_fab);
+            resetButton.setOnClickListener(new View.OnClickListener() {
 
-        });
+                @Override
+                public void onClick(View view) {
 
-    }
+                    if (round.getBoard().getEstado() != Tablero.EN_CURSO) {
+                        Snackbar.make(getView(), R.string.round_already_finished, Snackbar.LENGTH_SHORT).show();
+                        return;
+                    }
 
-*/
+                    round.getBoard().reset();
+                    startRound();
+                    callbacks.onRoundUpdated(round);
+               //     updateUI();
+                    Snackbar.make(getView(), R.string.round_restarted, Snackbar.LENGTH_SHORT).show();
+                }
 
-    }
-
+            });
+        }
+    */
     void startRound() {
 
         ArrayList<Jugador> players = new ArrayList<Jugador>();
@@ -153,23 +151,43 @@ public class RoundFragment extends Fragment implements PartidaListener {
         players.add(randomPlayer);
         players.add(localPlayer);
 
-        game = new Partida(round.getBoard(), players);
-        game.addObservador(this);
+        board = new TableroReversi();
+        game = new Partida(board, players);
 
+        game.addObservador(this); // observador: se encarga de pintar el tablero con OnCambioEnPartida
         localPlayer.setPartida(game);
 
+        // custom view
         boardView = (ReversiView) getView().findViewById(R.id.board_reversiview);
-        boardView.setBoard(size, round.getBoard());
+        boardView.setBoard(round.getBoard().getSize(), round.getBoard());
         boardView.setOnPlayListener(localPlayer);
-        registerListeners();
 
 
+        //  registerListeners(localPlayer);
         if (game.getTablero().getEstado() == Tablero.EN_CURSO)
             game.comenzar();
-
     }
 
+    /*
+    private void updateUI() {
 
+        ImageButton button;
+
+        for (int i = 0; i < SIZE; i++)
+            for (int j = 0; j < SIZE; j++) {
+                button = (ImageButton) this.getView().findViewById(ids[i][j]);
+                if (board.getTablero(i, j) == TableroReversi.Color.BLANCO) {
+                    button.setBackgroundResource(R.drawable.white_button_48dp);
+                } else if (board.getTablero(i, j) == TableroReversi.Color.NEGRO) {
+                    button.setBackgroundResource(R.drawable.black_button_48dp);
+                } else
+                    button.setBackgroundResource(R.drawable.void_button_48dp);
+            }
+
+    }
+*/
+
+    // es esta quien pinta el tablero al ser listener
     @Override
     public void onCambioEnPartida(Evento evento) {
         switch (evento.getTipo()) {
@@ -182,8 +200,8 @@ public class RoundFragment extends Fragment implements PartidaListener {
                 callbacks.onRoundUpdated(round);
                 Snackbar.make(getView(), R.string.game_over, Snackbar.LENGTH_SHORT).show();
                 break;
-
         }
     }
+
 
 }

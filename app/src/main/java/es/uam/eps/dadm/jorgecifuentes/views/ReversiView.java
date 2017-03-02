@@ -28,7 +28,7 @@ public class ReversiView extends View {
     private float heightOfTile;
     private float widthOfTile;
     private float radio;
-    private int size = 3;
+    private int size;
 
     private TableroReversi board;
     private OnPlayListener onPlayListener;
@@ -41,6 +41,7 @@ public class ReversiView extends View {
     public ReversiView(Context context, AttributeSet attrs) {
         super(context, attrs);
         init();
+        // aun no sabe W y H
     }
 
     private void init() {
@@ -67,8 +68,7 @@ public class ReversiView extends View {
         else
             width = height = widthSize = heightSize;
 
-        setMeasuredDimension(width, height);
-
+        this.setMeasuredDimension(width, height);
     }
 
     @Override
@@ -94,7 +94,7 @@ public class ReversiView extends View {
         float boardHeight = getHeight();
 
         canvas.drawRect(0, 0, boardWidth, boardHeight, backgroundPaint);
-        drawCircles(canvas, linePaint);
+        this.drawCircles(canvas, linePaint);
     }
 
     @Override
@@ -153,7 +153,7 @@ public class ReversiView extends View {
 
     public void setBoard(int size, Tablero board) {
         this.size = size;
-
+        this.board = (TableroReversi) board;
     }
 
 
