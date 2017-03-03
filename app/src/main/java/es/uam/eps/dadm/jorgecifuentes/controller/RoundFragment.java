@@ -90,8 +90,22 @@ public class RoundFragment extends Fragment implements PartidaListener {
         roundTitleTextView.setText(round.getTitle());
 
         // FAB de reinicio de ronda
-        FloatingActionButton resetButton = (FloatingActionButton) rootView.findViewById(R.id.reset_round_fab);
-        resetButton.setOnClickListener(new View.OnClickListener() {
+        final FloatingActionButton menuButton = (FloatingActionButton) rootView.findViewById(R.id.open_menu_fab);
+        final FloatingActionButton resetButton =(FloatingActionButton) rootView.findViewById(R.id.reset_round_fab);
+        final FloatingActionButton hintButton =(FloatingActionButton) rootView.findViewById(R.id.hint_fab);
+
+        menuButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //if(!isFABOpen){
+                    showFABMenu(menuButton, resetButton, hintButton);
+               // }else{
+             //       closeFABMenu();
+              //  }
+            }
+        });
+
+       resetButton.setOnClickListener(new View.OnClickListener() {
 
             @Override
             public void onClick(View view) {
@@ -109,13 +123,22 @@ public class RoundFragment extends Fragment implements PartidaListener {
 
         });
 
+        //TODO listener hint menu
 
         return rootView;
     }
 
+    private void showFABMenu(FloatingActionButton fab1, FloatingActionButton fab2, FloatingActionButton fab3) { // TODO lista de fab's
+      //  isFABOpen=true;
+        fab1.animate().translationY(-20); //TODO bucle
+        fab2.animate().translationY(-100 - 100);
+        fab3.animate().translationY(-380);
+    }
+
+
     @Override
     public void onStart() {
-        Log.d("reversi", "onStart: entrando");
+        Log.d("reversi", "onStart: entrando"); //TODO quitar
         super.onStart();
         this.startRound();
     }

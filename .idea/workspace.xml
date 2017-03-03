@@ -18,25 +18,12 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="3d1603f3-4074-4bc9-ba3e-b553357feeef" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/libraries/appcompat_v7_25_2_0.xml" afterPath="$PROJECT_DIR$/.idea/libraries/appcompat_v7_25_2_0.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/libraries/design_25_2_0.xml" afterPath="$PROJECT_DIR$/.idea/libraries/design_25_2_0.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/libraries/recyclerview_v7_25_2_0.xml" afterPath="$PROJECT_DIR$/.idea/libraries/recyclerview_v7_25_2_0.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/libraries/rules_0_5.xml" afterPath="$PROJECT_DIR$/.idea/libraries/rules_0_5.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/libraries/runner_0_5.xml" afterPath="$PROJECT_DIR$/.idea/libraries/runner_0_5.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/libraries/support_compat_25_2_0.xml" afterPath="$PROJECT_DIR$/.idea/libraries/support_compat_25_2_0.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/libraries/support_core_ui_25_2_0.xml" afterPath="$PROJECT_DIR$/.idea/libraries/support_core_ui_25_2_0.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/libraries/support_core_utils_25_2_0.xml" afterPath="$PROJECT_DIR$/.idea/libraries/support_core_utils_25_2_0.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/libraries/support_fragment_25_2_0.xml" afterPath="$PROJECT_DIR$/.idea/libraries/support_fragment_25_2_0.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/libraries/support_media_compat_25_2_0.xml" afterPath="$PROJECT_DIR$/.idea/libraries/support_media_compat_25_2_0.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/src/main/res/drawable/ic_add_24dp.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/src/main/res/drawable/ic_hint_24dp.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/src/main/res/drawable/ic_undo_24dp.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/app.iml" afterPath="$PROJECT_DIR$/app/app.iml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/es/uam/eps/dadm/jorgecifuentes/controller/RoundFragment.java" afterPath="$PROJECT_DIR$/app/src/main/java/es/uam/eps/dadm/jorgecifuentes/controller/RoundFragment.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/es/uam/eps/dadm/jorgecifuentes/views/ReversiView.java" afterPath="$PROJECT_DIR$/app/src/main/java/es/uam/eps/dadm/jorgecifuentes/views/ReversiView.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/res/layout/fragment_round.xml" afterPath="$PROJECT_DIR$/app/src/main/res/layout/fragment_round.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/res/layout/fragment_round_list.xml" afterPath="$PROJECT_DIR$/app/src/main/res/layout/fragment_round_list.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/res/layout/list_item_round.xml" afterPath="$PROJECT_DIR$/app/src/main/res/layout/list_item_round.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/res/values/colors.xml" afterPath="$PROJECT_DIR$/app/src/main/res/values/colors.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/res/values/styles.xml" afterPath="$PROJECT_DIR$/app/src/main/res/values/styles.xml" />
     </list>
     <ignored path="dadm2017-jorgecifuentesfernandez.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -70,7 +57,7 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="ReversiView.java" pinned="false" current-in-tab="true">
+      <file leaf-file-name="ReversiView.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/src/main/java/es/uam/eps/dadm/jorgecifuentes/views/ReversiView.java">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="1014">
@@ -82,17 +69,19 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="RoundFragment.java" pinned="false" current-in-tab="false">
+      <file leaf-file-name="RoundFragment.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/app/src/main/java/es/uam/eps/dadm/jorgecifuentes/controller/RoundFragment.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="392">
-              <caret line="183" column="0" selection-start-line="183" selection-start-column="0" selection-end-line="183" selection-end-column="0" />
+            <state relative-caret-position="605">
+              <caret line="125" column="33" selection-start-line="125" selection-start-column="33" selection-end-line="125" selection-end-column="33" />
               <folding>
                 <element signature="imports" expanded="true" />
-                <element signature="e#2884#3453#0" expanded="true" />
-                <element signature="e#3099#3130#0" expanded="true" />
-                <element signature="e#3372#3396#0" expanded="true" />
-                <element signature="e#3452#3453#0" expanded="true" />
+                <element signature="e#3111#3417#0" expanded="true" />
+                <element signature="e#3416#3417#0" expanded="true" />
+                <element signature="e#3459#4028#0" expanded="true" />
+                <element signature="e#3674#3705#0" expanded="true" />
+                <element signature="e#3947#3971#0" expanded="true" />
+                <element signature="e#4027#4028#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -104,11 +93,15 @@
             <state />
           </provider>
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="435">
-              <caret line="29" column="20" selection-start-line="29" selection-start-column="20" selection-end-line="29" selection-end-column="20" />
+            <state relative-caret-position="205">
+              <caret line="25" column="43" selection-start-line="25" selection-start-column="43" selection-end-line="25" selection-end-column="43" />
               <folding>
-                <element signature="e#1249#1282#0" expanded="true" />
-                <element signature="e#1318#1353#0" expanded="true" />
+                <element signature="e#1299#1332#0" expanded="true" />
+                <element signature="e#1368#1403#0" expanded="true" />
+                <element signature="e#1749#1782#0" expanded="true" />
+                <element signature="e#1818#1853#0" expanded="true" />
+                <element signature="e#2197#2230#0" expanded="true" />
+                <element signature="e#2266#2301#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -1866,7 +1859,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/app/src/main/java/es/uam/eps/dadm/jorgecifuentes/view/ReversiView.java" />
         <option value="$PROJECT_DIR$/app/src/main/res/values/dimens.xml" />
         <option value="$PROJECT_DIR$/app/src/main/res/drawable/ic_action_name.xml" />
         <option value="$PROJECT_DIR$/app/src/main/res/layout/activity_round_constraintlayout.xml" />
@@ -1907,13 +1899,17 @@
         <option value="$PROJECT_DIR$/app/src/main/res/layout/activity_fragment.xml" />
         <option value="$PROJECT_DIR$/app/src/main/java/es/uam/eps/dadm/jorgecifuentes/controller/ReversiLocalPlayer.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/es/uam/eps/dadm/jorgecifuentes/controller/RoundListFragment.java" />
-        <option value="$PROJECT_DIR$/app/src/main/java/es/uam/eps/dadm/jorgecifuentes/controller/RoundFragment.java" />
-        <option value="$PROJECT_DIR$/app/src/main/res/layout/fragment_round.xml" />
         <option value="$PROJECT_DIR$/app/src/main/res/values/styles.xml" />
         <option value="$PROJECT_DIR$/app/src/main/res/layout/fragment_round_list.xml" />
         <option value="$PROJECT_DIR$/app/src/main/res/layout/list_item_round.xml" />
         <option value="$PROJECT_DIR$/app/src/main/res/values/colors.xml" />
         <option value="$PROJECT_DIR$/app/src/main/java/es/uam/eps/dadm/jorgecifuentes/views/ReversiView.java" />
+        <option value="$PROJECT_DIR$/app/src/main/res/drawable/ic_add_black_24dp.xml" />
+        <option value="$PROJECT_DIR$/app/src/main/res/drawable/ic_add_24dp.xml" />
+        <option value="$PROJECT_DIR$/app/src/main/res/drawable/ic_hint_24dp.xml" />
+        <option value="$PROJECT_DIR$/app/src/main/res/drawable/ic_undo_24dp.xml" />
+        <option value="$PROJECT_DIR$/app/src/main/res/layout/fragment_round.xml" />
+        <option value="$PROJECT_DIR$/app/src/main/java/es/uam/eps/dadm/jorgecifuentes/controller/RoundFragment.java" />
       </list>
     </option>
   </component>
@@ -2090,6 +2086,24 @@
               <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidModuleNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
+              <option name="myItemId" value="res" />
+              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidResFolderNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="drawable" />
+              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidResFolderTypeNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="dadm2017-jorgecifuentesfernandez" />
+              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="app" />
+              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidModuleNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
               <option name="myItemId" value="java" />
               <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidSourceTypeNode" />
             </PATH_ELEMENT>
@@ -2210,6 +2224,7 @@
     <property name="settings.editor.splitter.proportion" value="0.2" />
     <property name="UI_DESIGNER_EDITOR_MODE.NlPaletteManager-NlEditorPanel.WIDTH" value="221" />
     <property name="SearchEverywhereHistoryKey" value="board_erview&#9;null&#9;null&#10;intent&#9;null&#9;null&#10;newintent&#9;PSI&#9;JAVA://es.uam.eps.dadm.jorgecifuentes.controller.RoundActivity#newIntent" />
+    <property name="VectorAssetImportPath" value="$PROJECT_DIR$/../../.." />
   </component>
   <component name="RecentsManager">
     <key name="MoveClassesOrPackagesDialog.RECENTS_KEY">
@@ -2572,7 +2587,7 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="0" y="0" width="1920" height="1044" extended-state="7" />
+    <frame x="0" y="0" width="1920" height="1044" extended-state="6" />
     <editor active="true" />
     <layout>
       <window_info id="Nl-Palette" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
@@ -2675,50 +2690,6 @@
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/values-w900dp/refs.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="45">
-          <caret line="3" column="12" selection-start-line="3" selection-start-column="12" selection-end-line="3" selection-end-column="12" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$USER_HOME$/Android/Sdk/platforms/android-25/data/res/drawable-hdpi/ic_input_add.png">
-      <provider selected="true" editor-type-id="images">
-        <state />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/es/uam/eps/dadm/jorgecifuentes/model/RoundRepository.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="180">
-          <caret line="12" column="0" selection-start-line="12" selection-start-column="0" selection-end-line="12" selection-end-column="0" />
-          <folding>
-            <element signature="imports" expanded="false" />
-            <element signature="e#785#786#0" expanded="false" />
-            <element signature="e#818#819#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/drawable/void_button_48dp.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/menu/menu.xml">
-      <provider editor-type-id="android-designer2">
-        <state />
-      </provider>
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="165">
-          <caret line="11" column="0" selection-start-line="11" selection-start-column="0" selection-end-line="11" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/src/test/java/es/uam/eps/dadm/jorgecifuentes/ExampleUnitTest.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="135">
@@ -3049,40 +3020,86 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/fragment_round.xml">
-      <provider editor-type-id="android-designer2">
-        <state />
-      </provider>
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="435">
-          <caret line="29" column="20" selection-start-line="29" selection-start-column="20" selection-end-line="29" selection-end-column="20" />
-          <folding>
-            <element signature="e#1249#1282#0" expanded="true" />
-            <element signature="e#1318#1353#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/es/uam/eps/dadm/jorgecifuentes/controller/RoundFragment.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="392">
-          <caret line="183" column="0" selection-start-line="183" selection-start-column="0" selection-end-line="183" selection-end-column="0" />
-          <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="e#2884#3453#0" expanded="true" />
-            <element signature="e#3099#3130#0" expanded="true" />
-            <element signature="e#3372#3396#0" expanded="true" />
-            <element signature="e#3452#3453#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/es/uam/eps/dadm/jorgecifuentes/views/ReversiView.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="1014">
           <caret line="122" column="10" selection-start-line="122" selection-start-column="10" selection-end-line="122" selection-end-column="10" />
           <folding>
             <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$USER_HOME$/Android/Sdk/platforms/android-25/data/res/drawable-hdpi/ic_input_add.png">
+      <provider selected="true" editor-type-id="images">
+        <state />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/drawable/ic_add_24dp.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="90">
+          <caret line="6" column="36" selection-start-line="6" selection-start-column="36" selection-end-line="6" selection-end-column="36" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/drawable/ic_hint_24dp.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="90">
+          <caret line="6" column="36" selection-start-line="6" selection-start-column="36" selection-end-line="6" selection-end-column="36" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/drawable/ic_undo_24dp.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="90">
+          <caret line="6" column="36" selection-start-line="6" selection-start-column="36" selection-end-line="6" selection-end-column="36" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/activity_round_constraintlayout.xml">
+      <provider selected="true" editor-type-id="android-designer2">
+        <state />
+      </provider>
+      <provider editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/fragment_round.xml">
+      <provider editor-type-id="android-designer2">
+        <state />
+      </provider>
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="205">
+          <caret line="25" column="43" selection-start-line="25" selection-start-column="43" selection-end-line="25" selection-end-column="43" />
+          <folding>
+            <element signature="e#1299#1332#0" expanded="true" />
+            <element signature="e#1368#1403#0" expanded="true" />
+            <element signature="e#1749#1782#0" expanded="true" />
+            <element signature="e#1818#1853#0" expanded="true" />
+            <element signature="e#2197#2230#0" expanded="true" />
+            <element signature="e#2266#2301#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/es/uam/eps/dadm/jorgecifuentes/controller/RoundFragment.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="605">
+          <caret line="125" column="33" selection-start-line="125" selection-start-column="33" selection-end-line="125" selection-end-column="33" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="e#3111#3417#0" expanded="true" />
+            <element signature="e#3416#3417#0" expanded="true" />
+            <element signature="e#3459#4028#0" expanded="true" />
+            <element signature="e#3674#3705#0" expanded="true" />
+            <element signature="e#3947#3971#0" expanded="true" />
+            <element signature="e#4027#4028#0" expanded="true" />
           </folding>
         </state>
       </provider>
