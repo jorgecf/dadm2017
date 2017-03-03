@@ -5,6 +5,7 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.support.design.widget.Snackbar;
+import android.support.v4.content.ContextCompat;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.View;
@@ -20,10 +21,10 @@ import es.uam.eps.multij.Tablero;
 public class ReversiView extends View {
 
     private final String DEBUG = "ReversiView";
-    private int numero;
 
     private Paint backgroundPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
     private Paint linePaint = new Paint(Paint.ANTI_ALIAS_FLAG);
+    private Paint gridPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
 
     private float heightOfTile;
     private float widthOfTile;
@@ -41,12 +42,13 @@ public class ReversiView extends View {
 
     public ReversiView(Context context, AttributeSet attrs) {
         super(context, attrs);
-        init();
-    }
 
-    private void init() {
-        backgroundPaint.setColor(Color.TRANSPARENT);
-        linePaint.setStrokeWidth(2);
+        this.backgroundPaint.setColor(ContextCompat.getColor(context, R.color.colorAccentLight));
+
+        this.gridPaint.setColor(ContextCompat.getColor(context, R.color.colorAccent));
+        this.gridPaint.setStrokeWidth(3);
+
+        this.linePaint.setStrokeWidth(2);
     }
 
     @Override
@@ -117,12 +119,20 @@ public class ReversiView extends View {
         float centerRaw, centerColumn;
 
         for (int i = 0; i < size; i++) {
+
             int pos = size - i - 1;
             centerRaw = heightOfTile * (1 + 2 * pos) / 2f;
+
+            int steps = i * (this.getWidth() / size);
+            canvas.drawLine(steps, 0, steps, this.getHeight(), gridPaint); // lineas verticales
+            canvas.drawLine(0, steps, this.getWidth(), steps, gridPaint); // lineas horizontales
+
+
             for (int j = 0; j < size; j++) {
                 centerColumn = widthOfTile * (1 + 2 * j) / 2f;
                 setPaintColor(paint, i, j);
                 canvas.drawCircle(centerColumn, centerRaw, radio, paint);
+                //   canvas.drawLine(centerColumn, 0, 500, 500, new Paint(Color.BLUE));
             }
         }
     }

@@ -24,7 +24,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_alignParentTop="true"
-            android:textColor="@android:color/holo_blue_light"
+            android:textColor="@color/colorAccent"
             android:textSize="16sp"
             android:textStyle="bold" />
 
@@ -32,7 +32,8 @@
             android:id="@+id/list_item_date"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@id/list_item_id" />
+            android:layout_below="@id/list_item_id"
+            android:textColor="@android:color/secondary_text_dark"/>
 
         <TextView
             android:id="@+id/list_item_board"

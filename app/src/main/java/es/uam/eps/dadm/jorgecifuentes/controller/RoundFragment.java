@@ -74,19 +74,41 @@ public class RoundFragment extends Fragment implements PartidaListener {
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
 
         if (getArguments().containsKey(ARG_ROUND_ID)) {
             String roundId = getArguments().getString(ARG_ROUND_ID);
-            round = RoundRepository.get(getActivity()).getRound(roundId);
+            this.round = RoundRepository.get(getActivity()).getRound(roundId);
         }
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) { // inicializaciones graficas, va despues de oncreate
         final View rootView = inflater.inflate(R.layout.fragment_round, container, false);
         TextView roundTitleTextView = (TextView) rootView.findViewById(R.id.round_title);
         roundTitleTextView.setText(round.getTitle());
+
+        // FAB de reinicio de ronda
+        FloatingActionButton resetButton = (FloatingActionButton) rootView.findViewById(R.id.reset_round_fab);
+        resetButton.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View view) {
+
+                if (round.getBoard().getEstado() != Tablero.EN_CURSO) {
+                    Snackbar.make(getView(), R.string.round_already_finished, Snackbar.LENGTH_SHORT).show();
+                    return;
+                }
+
+                round.getBoard().reset();
+                startRound();
+                callbacks.onRoundUpdated(round);
+                Snackbar.make(getView(), R.string.round_restarted, Snackbar.LENGTH_SHORT).show();
+            }
+
+        });
+
 
         return rootView;
     }
@@ -95,15 +117,16 @@ public class RoundFragment extends Fragment implements PartidaListener {
     public void onStart() {
         Log.d("reversi", "onStart: entrando");
         super.onStart();
-        startRound();
+        this.startRound();
     }
 
+    /*
     @Override
     public void onResume() {
         super.onResume();
         //  updateUI();
     }
-
+*/
     /*
         private void registerListeners(ReversiLocalPlayer local) {
 
@@ -163,7 +186,6 @@ public class RoundFragment extends Fragment implements PartidaListener {
         if (game.getTablero().getEstado() == Tablero.EN_CURSO)
             game.comenzar();
     }
-
 
 
     // es esta quien pinta el tablero al ser listener
