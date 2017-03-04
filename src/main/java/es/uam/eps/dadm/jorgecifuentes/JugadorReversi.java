@@ -73,7 +73,7 @@ public class JugadorReversi implements Jugador {
                         } catch (Exception e) {
                             e.printStackTrace();
                         }
-
+			
                         // comprobamos si el movimiento es valido en nuestro tablero
                         mov = t.getMovimientoValido(x, y);
                     } while (mov == null);
