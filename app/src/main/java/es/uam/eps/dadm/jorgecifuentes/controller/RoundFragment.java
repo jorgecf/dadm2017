@@ -165,8 +165,8 @@ public class RoundFragment extends Fragment implements PartidaListener {
         ReversiLocalPlayer localPlayer = new ReversiLocalPlayer();
         //ReversiLocalPlayer localPlayer2 = new ReversiLocalPlayer();
 
-        players.add(randomPlayer);
         players.add(localPlayer);
+        players.add(randomPlayer);
         //players.add(localPlayer2);
 
         // Si el tablero es nulo se crea. Solo sera nulo en la primera llamada, con la rotacion se
@@ -193,19 +193,19 @@ public class RoundFragment extends Fragment implements PartidaListener {
     @Override
     public void onCambioEnPartida(Evento evento) {
 
-       // TextView scoreTitleTextView = (TextView) this.getView().findViewById(R.id.score_title);
-       // scoreTitleTextView.setText(this.round.getState());
+
+        // Actualizamos el marcador.
+        ((TextView) getView().findViewById(R.id.black_score)).setText(round.getBoard().getFichas(TableroReversi.Color.NEGRO) + " " + game.getJugador(0).getNombre());
+        ((TextView) getView().findViewById(R.id.white_score)).setText(game.getJugador(1).getNombre() + " " + round.getBoard().getFichas(TableroReversi.Color.BLANCO));
+
+        this.boardView.setBoard(this.round.getBoard());
+        boardView.invalidate();
+        callbacks.onRoundUpdated(round);
 
         switch (evento.getTipo()) {
             case Evento.EVENTO_CAMBIO:
-                this.boardView.setBoard(this.round.getBoard());
-                boardView.invalidate();
-                callbacks.onRoundUpdated(round);
                 break;
             case Evento.EVENTO_FIN:
-                this.boardView.setBoard(this.round.getBoard());
-                boardView.invalidate();
-                callbacks.onRoundUpdated(round);
                 Snackbar.make(getView(), R.string.game_over, Snackbar.LENGTH_SHORT).show();
                 break;
         }

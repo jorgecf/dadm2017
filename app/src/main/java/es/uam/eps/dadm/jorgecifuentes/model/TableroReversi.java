@@ -16,7 +16,7 @@ import es.uam.eps.multij.Tablero;
 public class TableroReversi extends Tablero {
 
     /**
-     * Enumeracion privada que representa el Color de cada posicion del tablero.
+     * Enumeracion propia que representa el Color de cada posicion del tablero.
      */
     public enum Color {
         NEGRO, BLANCO, VACIO;
@@ -114,6 +114,20 @@ public class TableroReversi extends Tablero {
         this.tablero[3][4] = Color.NEGRO;
         this.tablero[4][3] = Color.NEGRO;
         this.tablero[4][4] = Color.BLANCO;
+    }
+
+    //TODO header funcion
+    public int getFichas(Color c) {
+
+        int ret = 0;
+        for (int i = 0; i < lado; i++) {
+            for (int j = 0; j < lado; j++) {
+                if (tablero[i][j] == c) ret++;
+            }
+
+        }
+
+        return ret;
     }
 
     /**
