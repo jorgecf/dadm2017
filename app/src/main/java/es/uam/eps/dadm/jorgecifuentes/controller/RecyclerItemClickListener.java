@@ -3,6 +3,7 @@ package es.uam.eps.dadm.jorgecifuentes.controller;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.helper.ItemTouchHelper;
 import android.view.GestureDetector;
 import android.view.MotionEvent;
 import android.view.View;
@@ -30,8 +31,8 @@ public class RecyclerItemClickListener implements RecyclerView.OnItemTouchListen
                 return true;
             }
         });
-    }
 
+    }
 
     @Override
     public boolean onInterceptTouchEvent(RecyclerView view, MotionEvent e) {

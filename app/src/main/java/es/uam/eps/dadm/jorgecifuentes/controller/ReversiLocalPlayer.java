@@ -43,16 +43,12 @@ public class ReversiLocalPlayer implements ReversiView.OnPlayListener, Jugador {
     public void onPlay(int row, int column) {
 
         try {
-            if (game.getTablero().getEstado() != Tablero.EN_CURSO) {
-                return;
-            }
-
             TableroReversi t = (TableroReversi) game.getTablero();
             Movimiento m = t.getMovimientoValido(row, column);
 
-            // si SI hay movimientos validos y este no es uno de ellos, no hacemos nada,
-            //  el turno sigue siendo de este jugadpr
-            if (m == null && t.movimientosValidos().size() > 0) {
+            // Si SI hay movimientos validos y este no es uno de ellos, no hacemos nada,
+            //  el turno sigue siendo de este jugador.
+            if (m == null) {
                 Log.d("reversi", "onPlay: movimiento no valido");
             } else {
                 game.realizaAccion(new AccionMover(this, m));

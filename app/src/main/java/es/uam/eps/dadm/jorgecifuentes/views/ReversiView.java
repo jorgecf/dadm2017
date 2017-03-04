@@ -105,6 +105,9 @@ public class ReversiView extends View {
         if (board.getEstado() != Tablero.EN_CURSO) {
             Snackbar.make(findViewById(R.id.board_reversiview), R.string.round_already_finished, Snackbar.LENGTH_SHORT).show();
             return super.onTouchEvent(event);
+        } else if (board.movimientosValidos().size() == 0) {
+            Snackbar.make(findViewById(R.id.board_reversiview), R.string.no_valid_movements, Snackbar.LENGTH_SHORT).show();
+            return super.onTouchEvent(event);
         }
 
         if (event.getAction() == MotionEvent.ACTION_DOWN) {

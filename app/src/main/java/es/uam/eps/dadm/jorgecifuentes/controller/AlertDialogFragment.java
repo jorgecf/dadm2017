@@ -47,10 +47,7 @@ public class AlertDialogFragment extends DialogFragment {
         );
 
 
-        alertDialogBuilder.setNegativeButton("No",
-                new DialogInterface.OnClickListener()
-
-                {
+        alertDialogBuilder.setNegativeButton("No", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
                         if (activity instanceof RoundActivity)
                             activity.finish();

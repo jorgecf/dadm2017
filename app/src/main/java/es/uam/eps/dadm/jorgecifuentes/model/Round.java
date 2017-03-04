@@ -18,7 +18,6 @@ public class Round {
     private String date;
     private TableroReversi board;
 
-
     public Round() {
         // this.size = size;
         id = UUID.randomUUID().toString();

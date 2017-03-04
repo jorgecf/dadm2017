@@ -1,12 +1,14 @@
 package es.uam.eps.dadm.jorgecifuentes.controller;
 
 import android.content.Intent;
+import android.graphics.Canvas;
 import android.support.v4.app.Fragment;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.helper.ItemTouchHelper;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -51,26 +53,54 @@ public class RoundListFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
-        View view = inflater.inflate(R.layout.fragment_round_list, container, false);
+        final View view = inflater.inflate(R.layout.fragment_round_list, container, false);
         roundRecyclerView = (RecyclerView) view.findViewById(R.id.round_recycler_view);
 
         RecyclerView.LayoutManager linearLayoutManager = new LinearLayoutManager(getActivity());
         roundRecyclerView.setLayoutManager(linearLayoutManager);
         roundRecyclerView.setItemAnimator(new DefaultItemAnimator());
 
-        // listener de cada item de la card list
-        roundRecyclerView.addOnItemTouchListener(new
-                RecyclerItemClickListener(getActivity(), new
-                RecyclerItemClickListener.OnItemClickListener() {
-                    @Override
-                    public void onItemClick(View view, int position) {
-                        Round round = RoundRepository.get(getContext()).getRounds().get(position);
-                        callbacks.onRoundSelected(round);
-                    }
-                }));
+        // listener de cada item de la cardview
+        roundRecyclerView.addOnItemTouchListener(new RecyclerItemClickListener(getActivity(), new RecyclerItemClickListener.OnItemClickListener() {
+            @Override
+            public void onItemClick(View view, int position) {
+                Round round = RoundRepository.get(getContext()).getRounds().get(position);
+
+                roundAdapter.setCurrent(position);
+                callbacks.onRoundSelected(round);
+            }
+        }));
+
+        // listener del dismiss de la cardview
+        ItemTouchHelper.SimpleCallback swipeCallback = new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT) {
+            @Override
+            public boolean onMove(RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder, RecyclerView.ViewHolder target) {
+                return false;
+            }
+
+            @Override
+            public void onSwiped(RecyclerView.ViewHolder viewHolder, int swipeDir) {
+                roundAdapter.remove(viewHolder.getAdapterPosition());
+            }
+
+            @Override
+            public int getSwipeDirs(RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder) {
+                // Este metodo se llama antes de empezar la animacion del Swipe. Si la partida es la
+                //  actual, logicamente no se puede quitar de la lista, asi que se bloquea la
+                //  accion.
+                if (roundAdapter.isRemovable(viewHolder.getAdapterPosition()) == false) {
+                    return 0;
+                }
+
+                return super.getSwipeDirs(recyclerView, viewHolder);
+            }
+        };
+
+        ItemTouchHelper itemTouchHelper = new ItemTouchHelper(swipeCallback);
+        itemTouchHelper.attachToRecyclerView(roundRecyclerView);
 
 
-        // establecemos la visibilidad del options menu
+        // Establecemos la visibilidad del options menu.
         this.setHasOptionsMenu(true);
 
         updateUI();
@@ -105,6 +135,8 @@ public class RoundListFragment extends Fragment {
                 return super.onOptionsItemSelected(item);
         }
     }
+
+
     // menu
 
 
@@ -126,6 +158,7 @@ public class RoundListFragment extends Fragment {
     public class RoundAdapter extends RecyclerView.Adapter<RoundAdapter.RoundHolder> {
 
         private List<Round> rounds;
+        private int current;
 
 
         // roundholder
@@ -158,6 +191,7 @@ public class RoundListFragment extends Fragment {
 
         public RoundAdapter(List<Round> rounds) {
             this.rounds = rounds;
+            this.current = -1;
         }
 
         @Override
@@ -171,13 +205,28 @@ public class RoundListFragment extends Fragment {
 
         @Override
         public void onBindViewHolder(RoundAdapter.RoundHolder holder, int position) {
-            Round round = rounds.get(position);
+            Round round = this.rounds.get(position);
             holder.bindRound(round);
+        }
+
+        // para swipe
+        public void remove(int position) {
+            this.rounds.remove(position);
+            this.notifyItemRemoved(position);
+        }
+
+
+        public boolean isRemovable(int position) {
+            return current != position;
+        }
+
+        public void setCurrent(int current) {
+            this.current = current;
         }
 
         @Override
         public int getItemCount() {
-            return rounds.size();
+            return this.rounds.size();
         }
 
 
