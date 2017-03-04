@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 
 import es.uam.eps.dadm.jorgecifuentes.R;
 import es.uam.eps.dadm.jorgecifuentes.controller.RoundFragment;
@@ -17,23 +18,25 @@ import es.uam.eps.dadm.jorgecifuentes.model.Round;
 
 public class RoundActivity extends AppCompatActivity implements RoundFragment.Callbacks {
 
-
     public static final String EXTRA_ROUND_ID = "es.uam.eps.dadm.round_id";
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_fragment);
 
+
         FragmentManager fm = getSupportFragmentManager();
         Fragment fragment = fm.findFragmentById(R.id.fragment_container);
 
         if (fragment == null) {
             String roundId = getIntent().getStringExtra(EXTRA_ROUND_ID);
-            RoundFragment roundFragment = RoundFragment.newInstance(roundId);
+            RoundFragment roundFragment = RoundFragment.newInstance(roundId); // nuevo fragmento
             getSupportFragmentManager().beginTransaction().add(R.id.fragment_container, roundFragment).commit();
         }
     }
+
 
     public static Intent newIntent(Context packageContext, String roundId) {
         Intent intent = new Intent(packageContext, RoundActivity.class);

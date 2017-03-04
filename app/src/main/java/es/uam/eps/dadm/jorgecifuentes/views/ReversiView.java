@@ -132,7 +132,6 @@ public class ReversiView extends View {
                 centerColumn = widthOfTile * (1 + 2 * j) / 2f;
                 setPaintColor(paint, i, j);
                 canvas.drawCircle(centerColumn, centerRaw, radio, paint);
-                //   canvas.drawLine(centerColumn, 0, 500, 500, new Paint(Color.BLUE));
             }
         }
     }
@@ -169,6 +168,7 @@ public class ReversiView extends View {
     public void setBoard(Tablero board) {
         this.board = (TableroReversi) board;
     }
+
 
 }
 
