@@ -64,10 +64,14 @@ public class RoundListFragment extends Fragment {
         roundRecyclerView.addOnItemTouchListener(new RecyclerItemClickListener(getActivity(), new RecyclerItemClickListener.OnItemClickListener() {
             @Override
             public void onItemClick(View view, int position) {
-                Round round = RoundRepository.get(getContext()).getRounds().get(position);
 
-                roundAdapter.setCurrent(position);
-                callbacks.onRoundSelected(round);
+                // Si la partida esta iniciada, clickar nuevamente sobre su CardView no la reiniciara.
+                //  Para ello esta su FAB.
+                if (roundAdapter.isCurrent(position) == false) {
+                    Round round = RoundRepository.get(getContext()).getRounds().get(position);
+                    roundAdapter.setCurrent(position);
+                    callbacks.onRoundSelected(round);
+                }
             }
         }));
 
@@ -223,6 +227,11 @@ public class RoundListFragment extends Fragment {
         public void setCurrent(int current) {
             this.current = current;
         }
+
+        public boolean isCurrent(int position) {
+            return position == this.current;
+        }
+
 
         @Override
         public int getItemCount() {

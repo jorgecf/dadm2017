@@ -6,7 +6,6 @@ import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -91,6 +90,7 @@ public class RoundFragment extends Fragment implements PartidaListener {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) { // inicializaciones graficas, va despues de oncreate
 
         final View rootView = inflater.inflate(R.layout.fragment_round, container, false);
+
         TextView roundTitleTextView = (TextView) rootView.findViewById(R.id.round_title);
         roundTitleTextView.setText(round.getTitle());
 
@@ -161,13 +161,13 @@ public class RoundFragment extends Fragment implements PartidaListener {
     void startRound() {
 
         ArrayList<Jugador> players = new ArrayList<Jugador>();
-        // JugadorAleatorio randomPlayer = new JugadorAleatorio("Random player");
+        JugadorAleatorio randomPlayer = new JugadorAleatorio("Random player");
         ReversiLocalPlayer localPlayer = new ReversiLocalPlayer();
-        ReversiLocalPlayer localPlayer2 = new ReversiLocalPlayer();
+        //ReversiLocalPlayer localPlayer2 = new ReversiLocalPlayer();
 
-        //players.add(randomPlayer);
+        players.add(randomPlayer);
         players.add(localPlayer);
-        players.add(localPlayer2);
+        //players.add(localPlayer2);
 
         // Si el tablero es nulo se crea. Solo sera nulo en la primera llamada, con la rotacion se
         //  restablecera en onActivityCreated para continuar desde el mismo punto.
@@ -175,9 +175,10 @@ public class RoundFragment extends Fragment implements PartidaListener {
 
         game.addObservador(this);
         localPlayer.setPartida(game);
-        localPlayer2.setPartida(game);
+        // localPlayer2.setPartida(game);
 
 
+        // Vista del Tablero.
         boardView = (ReversiView) this.getView().findViewById(R.id.board_reversiview);
         boardView.setBoard(round.getBoard().getSize(), round.getBoard());
         boardView.setOnPlayListener(localPlayer);
@@ -191,6 +192,10 @@ public class RoundFragment extends Fragment implements PartidaListener {
     // es esta quien pinta el tablero al ser listener
     @Override
     public void onCambioEnPartida(Evento evento) {
+
+       // TextView scoreTitleTextView = (TextView) this.getView().findViewById(R.id.score_title);
+       // scoreTitleTextView.setText(this.round.getState());
+
         switch (evento.getTipo()) {
             case Evento.EVENTO_CAMBIO:
                 this.boardView.setBoard(this.round.getBoard());

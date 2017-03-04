@@ -12,25 +12,19 @@ import es.uam.eps.multij.Tablero;
 
 public class Round {
 
-    // private int size;
     private String id;
     private String title;
     private String date;
     private TableroReversi board;
 
     public Round() {
-        // this.size = size;
         id = UUID.randomUUID().toString();
-        title = "ROUND " + id.toString().substring(19, 23).toUpperCase(); //TODO blancas(4) vs negras(17) o algo asi
+        title = "ROUND " + id.toString().substring(19, 23).toUpperCase();
         date = new Date().toString();
-        board = new TableroReversi(); //TODO random board
+        board = new TableroReversi();
     }
 
-    /*
-        public int getSize() {
-            return size;
-        }
-    */
+
     public String getId() {
         return id;
     }

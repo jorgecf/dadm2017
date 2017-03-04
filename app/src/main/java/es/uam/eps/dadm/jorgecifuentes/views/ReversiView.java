@@ -95,7 +95,7 @@ public class ReversiView extends View {
         float boardWidth = getWidth();
         float boardHeight = getHeight();
 
-        canvas.drawRect(0, 0, boardWidth, boardHeight, backgroundPaint);
+        canvas.drawRect(0, 0, getWidth(), getHeight(), backgroundPaint);
         this.drawCircles(canvas, linePaint);
     }
 
