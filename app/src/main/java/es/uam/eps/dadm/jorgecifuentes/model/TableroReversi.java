@@ -16,7 +16,16 @@ import es.uam.eps.multij.Tablero;
 public class TableroReversi extends Tablero {
 
     /**
+     <<<<<<< HEAD:app/src/main/java/es/uam/eps/dadm/jorgecifuentes/model/TableroReversi.java
      * Enumeracion propia que representa el Color de cada posicion del tablero.
+     =======
+     * @TODO darg Como indicas, es privada: deberías utilizar ese modificador de acceso 
+     *
+     */
+
+    /**
+     * Enumeracion privada que representa el Color de cada posicion del tablero.
+     * >>>>>>> origin/correcciones_entrega_01:src/main/java/es/uam/eps/dadm/jorgecifuentes/TableroReversi.java
      */
     public enum Color {
         NEGRO, BLANCO, VACIO;
@@ -84,6 +93,10 @@ public class TableroReversi extends Tablero {
         }
     }
 
+    /**
+     * @TODO darg es mejor que se define como una constante
+     */
+
     /*  cada lado del tablero */
     private final int lado = 8;
 
@@ -108,6 +121,11 @@ public class TableroReversi extends Tablero {
         }
 
         this.estado = EN_CURSO; // iniciamos la partida con el cambio de estado
+
+        /**
+         * @TODO darg se pueden definir constantes en lugar de usar números directamente
+         *
+         */
 
         // casillas iniciales predefinidas del juego reversi
         this.tablero[3][3] = Color.BLANCO;
@@ -375,6 +393,12 @@ public class TableroReversi extends Tablero {
 
     @Override
     public void stringToTablero(String s) throws ExcepcionJuego {
+
+        /**
+         * @TODO darg la cadena de entrada tampoco puede ser null
+         *
+         */
+
 
         if (s.length() < lado * lado + 2 || s.length() > lado * lado + 3)
             throw new ExcepcionJuego("cadena de entrada de longitud incorrecta");
