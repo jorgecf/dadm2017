@@ -55,8 +55,6 @@ public class RoundListFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
-        Log.d("tag", "onCreateView: creando");
-
         final View view = inflater.inflate(R.layout.fragment_round_list, container, false);
         roundRecyclerView = (RecyclerView) view.findViewById(R.id.round_recycler_view);
 

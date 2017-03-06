@@ -42,6 +42,8 @@ public class AlertDialogFragment extends DialogFragment {
                         else
                             ((RoundActivity) activity).finish();
                         dialog.dismiss();
+
+
                     }
                 }
         );
