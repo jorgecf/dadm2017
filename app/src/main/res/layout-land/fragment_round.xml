@@ -26,35 +26,14 @@
             android:id="@+id/round_title"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textAlignment="center"
-            android:textAllCaps="true"
-            android:textSize="@dimen/title_size"
+            android:layout_marginBottom="20dp"
             android:layout_marginRight="20dp"
             android:layout_marginTop="20dp"
-            android:layout_marginBottom="20dp"
-            android:layout_toRightOf="@id/board_reversiview" />
+            android:layout_toRightOf="@id/board_reversiview"
+            android:textAlignment="center"
+            android:textAllCaps="true"
+            android:textSize="@dimen/title_size" />
 
-        <ImageButton
-            android:id="@+id/white_score_button"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-
-            android:background="@android:color/transparent"
-            app:srcCompat="@drawable/ic_white_piece_24dp"
-            android:layout_below="@id/round_title"
-            android:layout_toRightOf="@id/board_reversiview"/>
-
-
-        <ImageButton
-            android:id="@+id/black_score_button"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-
-            android:layout_alignParentRight="true"
-            android:layout_below="@id/round_title"
-
-            android:background="@android:color/transparent"
-            app:srcCompat="@drawable/ic_black_piece_24dp" />
 
         <TextView
             android:id="@+id/white_score"
@@ -65,22 +44,18 @@
             android:layout_marginLeft="8dp"
             android:layout_marginStart="8dp"
 
-            android:layout_toEndOf="@+id/white_score_button"
-            android:layout_toRightOf="@+id/white_score_button"
-            android:text="15" />
+            android:layout_toRightOf="@id/board_reversiview" />
 
         <TextView
             android:id="@+id/black_score"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
 
+            android:layout_alignParentRight="true"
             android:layout_below="@+id/round_title"
             android:layout_marginEnd="8dp"
-            android:layout_marginRight="8dp"
 
-            android:layout_toLeftOf="@+id/black_score_button"
-            android:layout_toStartOf="@+id/black_score_button"
-            android:text="17" />
+            android:layout_marginRight="8dp" />
 
 
         <!-- Tablero -->

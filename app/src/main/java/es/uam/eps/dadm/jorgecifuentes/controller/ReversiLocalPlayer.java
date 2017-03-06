@@ -1,7 +1,9 @@
 package es.uam.eps.dadm.jorgecifuentes.controller;
 
+import android.support.design.widget.Snackbar;
 import android.util.Log;
 
+import es.uam.eps.dadm.jorgecifuentes.R;
 import es.uam.eps.dadm.jorgecifuentes.model.TableroReversi;
 import es.uam.eps.dadm.jorgecifuentes.views.ReversiView;
 import es.uam.eps.multij.AccionMover;
@@ -48,7 +50,7 @@ public class ReversiLocalPlayer implements ReversiView.OnPlayListener, Jugador {
 
             // Si SI hay movimientos validos y este no es uno de ellos, no hacemos nada,
             //  el turno sigue siendo de este jugador.
-            if (m == null) {
+            if (m == null && t.movimientosValidos().size() > 0) {
                 Log.d("reversi", "onPlay: movimiento no valido");
             } else {
                 game.realizaAccion(new AccionMover(this, m));

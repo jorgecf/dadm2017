@@ -2,6 +2,7 @@ package es.uam.eps.dadm.jorgecifuentes.controller;
 
 import android.content.Intent;
 import android.graphics.Canvas;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.content.Context;
 import android.os.Bundle;
@@ -50,8 +51,11 @@ public class RoundListFragment extends Fragment {
         callbacks = null;
     }
 
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+
+        Log.d("tag", "onCreateView: creando");
 
         final View view = inflater.inflate(R.layout.fragment_round_list, container, false);
         roundRecyclerView = (RecyclerView) view.findViewById(R.id.round_recycler_view);
@@ -115,10 +119,13 @@ public class RoundListFragment extends Fragment {
     public void onResume() {
         super.onResume();
         updateUI();
+
+        // Al cargar la vista de nuevo (solo en movil, en tablet nunca se oculta), reseteamos el
+        //  actual.
+        this.roundAdapter.setCurrent(-1);
     }
 
-
-    // menu
+// menu
 
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {

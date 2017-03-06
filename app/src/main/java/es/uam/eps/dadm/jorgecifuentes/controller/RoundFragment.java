@@ -1,11 +1,13 @@
 package es.uam.eps.dadm.jorgecifuentes.controller;
 
 import android.content.Context;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -169,8 +171,6 @@ public class RoundFragment extends Fragment implements PartidaListener {
         players.add(randomPlayer);
         //players.add(localPlayer2);
 
-        // Si el tablero es nulo se crea. Solo sera nulo en la primera llamada, con la rotacion se
-        //  restablecera en onActivityCreated para continuar desde el mismo punto.
         game = new Partida(this.round.getBoard(), players);
 
         game.addObservador(this);
@@ -193,10 +193,20 @@ public class RoundFragment extends Fragment implements PartidaListener {
     @Override
     public void onCambioEnPartida(Evento evento) {
 
+        TextView black_score = (TextView) getView().findViewById(R.id.black_score);
+        TextView white_score = (TextView) getView().findViewById(R.id.white_score);
 
         // Actualizamos el marcador.
-        ((TextView) getView().findViewById(R.id.black_score)).setText(round.getBoard().getFichas(TableroReversi.Color.NEGRO) + " " + game.getJugador(0).getNombre());
-        ((TextView) getView().findViewById(R.id.white_score)).setText(game.getJugador(1).getNombre() + " " + round.getBoard().getFichas(TableroReversi.Color.BLANCO));
+        black_score.setText(round.getBoard().getFichas(TableroReversi.Color.NEGRO) + " " + game.getJugador(0).getNombre());
+        white_score.setText(game.getJugador(1).getNombre() + " " + round.getBoard().getFichas(TableroReversi.Color.BLANCO));
+
+        if (round.getBoard().getTurno() == 0) {
+            white_score.setTypeface(null, Typeface.NORMAL);
+            black_score.setTypeface(null, Typeface.BOLD);
+        } else {
+            white_score.setTypeface(null, Typeface.BOLD);
+            black_score.setTypeface(null, Typeface.NORMAL);
+        }
 
         this.boardView.setBoard(this.round.getBoard());
         boardView.invalidate();
@@ -206,7 +216,7 @@ public class RoundFragment extends Fragment implements PartidaListener {
             case Evento.EVENTO_CAMBIO:
                 break;
             case Evento.EVENTO_FIN:
-                Snackbar.make(getView(), R.string.game_over, Snackbar.LENGTH_SHORT).show();
+                new AlertDialogFragment().show(getActivity().getSupportFragmentManager(), "ALERT DIALOG");
                 break;
         }
     }
