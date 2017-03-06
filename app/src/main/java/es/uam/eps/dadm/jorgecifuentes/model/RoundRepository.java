@@ -5,13 +5,13 @@ package es.uam.eps.dadm.jorgecifuentes.model;
  */
 
 import android.content.Context;
+import android.util.Log;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class RoundRepository {
 
-    // private static final int SIZE = 3;
     private static RoundRepository repository; // singleton
     private List<Round> rounds;
 
@@ -40,10 +40,15 @@ public class RoundRepository {
     }
 
     public Round getRound(String id) {
+
         for (Round round : rounds) {
-            if (round.getId().equals(id))
+
+            if (round.getId().compareTo(id) == 0) {
                 return round;
+            }
         }
+
+
         return null;
     }
 }

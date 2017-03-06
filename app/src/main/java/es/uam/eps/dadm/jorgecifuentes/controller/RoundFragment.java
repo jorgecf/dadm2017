@@ -121,26 +121,6 @@ public class RoundFragment extends Fragment implements PartidaListener {
 
 
     @Override
-    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
-
-        super.onActivityCreated(savedInstanceState);
-
-        // Instanciamos el tablero. Si no hay informacion previa en el Bundle, startRound, iniciara
-        //  con este board recien creado (nueva partida).
-        this.round.setBoard(new TableroReversi());
-
-        if (savedInstanceState != null) {
-            try {
-                // En el caso de que hubiese informacion previa, se agrega, por lo que startRound
-                //  iniciara la partida donde se dejo antes de destruirla vista (onDestroyView).
-                this.round.getBoard().stringToTablero(savedInstanceState.getString(BOARDSTRING));
-            } catch (ExcepcionJuego excepcionJuego) {
-                excepcionJuego.printStackTrace();
-            }
-        }
-    }
-
-    @Override
     public void onStart() {
         super.onStart();
 
@@ -222,4 +202,15 @@ public class RoundFragment extends Fragment implements PartidaListener {
     }
 
 
+    @Override
+    public void onPause() {
+        Log.d("prueba", "onPause: ");
+        super.onPause();
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        Log.d("prueba", "onResume: ");
+    }
 }
