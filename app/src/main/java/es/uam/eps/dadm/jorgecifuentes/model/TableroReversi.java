@@ -444,6 +444,10 @@ public class TableroReversi extends Tablero {
         return ret;
     }
 
+    public String toSimpleString() {
+        return "N: "+this.getFichas(Color.NEGRO) + " B: " + this.getFichas(Color.BLANCO);
+    }
+
     public int getSize() {
         return this.lado;
     }

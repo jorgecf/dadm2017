@@ -37,7 +37,13 @@ public class RoundActivity extends AppCompatActivity implements RoundFragment.Ca
         }
     }
 
-
+    /**
+     * Devuelve una nueva intencion de esta clase.
+     *
+     * @param packageContext contexto de la intencion
+     * @param roundId        Id de la ronda que se va a asociar a la actividad.
+     * @return intencion creada
+     */
     public static Intent newIntent(Context packageContext, String roundId) {
         Intent intent = new Intent(packageContext, RoundActivity.class);
         intent.putExtra(EXTRA_ROUND_ID, roundId);

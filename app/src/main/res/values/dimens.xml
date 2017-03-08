@@ -4,4 +4,6 @@
     <dimen name="activity_vertical_margin">16dp</dimen>
     <dimen name="title_size">32dp</dimen>
     <dimen name="subtitle_size">16dp</dimen>
+
+    <dimen name="fragment_horizontal_margin">20dp</dimen>
 </resources>

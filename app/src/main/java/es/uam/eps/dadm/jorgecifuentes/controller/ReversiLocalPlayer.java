@@ -1,9 +1,7 @@
 package es.uam.eps.dadm.jorgecifuentes.controller;
 
-import android.support.design.widget.Snackbar;
 import android.util.Log;
 
-import es.uam.eps.dadm.jorgecifuentes.R;
 import es.uam.eps.dadm.jorgecifuentes.model.TableroReversi;
 import es.uam.eps.dadm.jorgecifuentes.views.ReversiView;
 import es.uam.eps.multij.AccionMover;
@@ -25,7 +23,6 @@ public class ReversiLocalPlayer implements ReversiView.OnPlayListener, Jugador {
         this.game = game;
     }
 
-
     @Override
     public String getNombre() {
         return "Local player";
@@ -38,6 +35,7 @@ public class ReversiLocalPlayer implements ReversiView.OnPlayListener, Jugador {
 
     @Override
     public void onCambioEnPartida(Evento evento) {
+
     }
 
 

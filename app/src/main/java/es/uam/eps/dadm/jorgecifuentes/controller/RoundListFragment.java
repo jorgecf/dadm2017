@@ -1,8 +1,5 @@
 package es.uam.eps.dadm.jorgecifuentes.controller;
 
-import android.content.Intent;
-import android.graphics.Canvas;
-import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.content.Context;
 import android.os.Bundle;
@@ -10,7 +7,6 @@ import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.helper.ItemTouchHelper;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -62,13 +58,13 @@ public class RoundListFragment extends Fragment {
         roundRecyclerView.setLayoutManager(linearLayoutManager);
         roundRecyclerView.setItemAnimator(new DefaultItemAnimator());
 
-        // listener de cada item de la cardview
+        // Inicializamos el listener de la CardView.
         roundRecyclerView.addOnItemTouchListener(new RecyclerItemClickListener(getActivity(), new RecyclerItemClickListener.OnItemClickListener() {
             @Override
             public void onItemClick(View view, int position) {
 
                 // Si la partida esta iniciada, clickar nuevamente sobre su CardView no la reiniciara.
-                //  Para ello esta su FAB.
+                //  Para eso esta el FAB.
                 if (roundAdapter.isCurrent(position) == false) {
                     Round round = RoundRepository.get(getContext()).getRounds().get(position);
                     roundAdapter.setCurrent(position);
@@ -77,28 +73,29 @@ public class RoundListFragment extends Fragment {
             }
         }));
 
-        // listener del dismiss de la cardview
+        // Inicializamos el listener para hacer swipe sobre los elementos de la lista de CardView.
         ItemTouchHelper.SimpleCallback swipeCallback = new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT) {
+
             @Override
             public boolean onMove(RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder, RecyclerView.ViewHolder target) {
                 return false;
             }
 
             @Override
-            public void onSwiped(RecyclerView.ViewHolder viewHolder, int swipeDir) {
-                roundAdapter.remove(viewHolder.getAdapterPosition());
-            }
-
-            @Override
             public int getSwipeDirs(RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder) {
                 // Este metodo se llama antes de empezar la animacion del Swipe. Si la partida es la
                 //  actual, logicamente no se puede quitar de la lista, asi que se bloquea la
-                //  accion.
+                //  accion (no se puede mover hacia ningun lado).
                 if (roundAdapter.isRemovable(viewHolder.getAdapterPosition()) == false) {
                     return 0;
                 }
 
                 return super.getSwipeDirs(recyclerView, viewHolder);
+            }
+
+            @Override
+            public void onSwiped(RecyclerView.ViewHolder viewHolder, int swipeDir) {
+                roundAdapter.remove(viewHolder.getAdapterPosition());
             }
         };
 
@@ -109,14 +106,14 @@ public class RoundListFragment extends Fragment {
         // Establecemos la visibilidad del options menu.
         this.setHasOptionsMenu(true);
 
-        updateUI();
+        this.updateUI();
         return view;
     }
 
     @Override
     public void onResume() {
         super.onResume();
-        updateUI();
+        this.updateUI();
 
         // Al cargar la vista de nuevo (solo en movil, en tablet nunca se oculta), reseteamos el
         //  actual.
@@ -164,6 +161,7 @@ public class RoundListFragment extends Fragment {
     }
 
     // roundadapter
+
     public class RoundAdapter extends RecyclerView.Adapter<RoundAdapter.RoundHolder> {
 
         private List<Round> rounds;
@@ -176,7 +174,6 @@ public class RoundListFragment extends Fragment {
             private TextView idTextView;
             private TextView boardTextView;
             private TextView dateTextView;
-
 
             private Round round;
 
@@ -191,9 +188,9 @@ public class RoundListFragment extends Fragment {
             public void bindRound(Round round) {
                 this.round = round;
 
-                idTextView.setText(round.getTitle());
-                boardTextView.setText("REVERSI");//round.getBoard().toSimpleString());
-                dateTextView.setText(String.valueOf(round.getDate()).substring(0, 19));
+                this.idTextView.setText(round.getTitle());
+                this.boardTextView.setText(round.getBoard().toSimpleString());
+                this.dateTextView.setText(String.valueOf(round.getDate()).substring(0, 19));
             }
         }
 

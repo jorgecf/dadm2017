@@ -24,7 +24,6 @@ public class AlertDialogFragment extends DialogFragment {
     public Dialog onCreateDialog(Bundle savedInstanceState) {
 
         final AppCompatActivity activity = (AppCompatActivity) getActivity();
-
         AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(getActivity());
         alertDialogBuilder.setTitle(R.string.game_over);
         alertDialogBuilder.setMessage(R.string.game_over_message);
@@ -42,7 +41,6 @@ public class AlertDialogFragment extends DialogFragment {
                         else
                             ((RoundActivity) activity).finish();
                         dialog.dismiss();
-
 
                     }
                 }

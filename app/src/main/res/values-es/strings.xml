@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Reversi</string>
+    <string name="game_over">Juego finalizado</string>
+    <string name="game_over_message">¿Jugar nueva partida?</string>
+    <string name="invalid_movement">Movimiento invalido</string>
+    <string name="new_round">Nueva ronda</string>
+    <string name="no_valid_movements">No hay movimientos validos, pasando</string>
+    <string name="round_already_finished">Juego ya finalizado</string>
+    <string name="round_restarted">Ronda reiniciada</string>
+    <string name="title">Reversi app</string>
+</resources>

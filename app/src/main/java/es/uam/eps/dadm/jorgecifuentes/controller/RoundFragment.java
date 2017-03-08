@@ -45,6 +45,9 @@ public class RoundFragment extends Fragment implements PartidaListener {
 
     private Callbacks callbacks;
 
+    /**
+     *
+     */
     public interface Callbacks {
         void onRoundUpdated(Round round);
     }
@@ -168,15 +171,13 @@ public class RoundFragment extends Fragment implements PartidaListener {
             game.comenzar();
     }
 
-
-    // es esta quien pinta el tablero al ser listener
     @Override
-    public void onCambioEnPartida(Evento evento) {
+    public void onCambioEnPartida(Evento evento) { // esta funcion se encarga de pintar el tablero
 
+        // Actualizamos el marcador.
         TextView black_score = (TextView) getView().findViewById(R.id.black_score);
         TextView white_score = (TextView) getView().findViewById(R.id.white_score);
 
-        // Actualizamos el marcador.
         black_score.setText(round.getBoard().getFichas(TableroReversi.Color.NEGRO) + " " + game.getJugador(0).getNombre());
         white_score.setText(game.getJugador(1).getNombre() + " " + round.getBoard().getFichas(TableroReversi.Color.BLANCO));
 
@@ -188,6 +189,7 @@ public class RoundFragment extends Fragment implements PartidaListener {
             black_score.setTypeface(null, Typeface.NORMAL);
         }
 
+        // Repintamos el tablero.
         this.boardView.setBoard(this.round.getBoard());
         boardView.invalidate();
         callbacks.onRoundUpdated(round);
@@ -199,18 +201,5 @@ public class RoundFragment extends Fragment implements PartidaListener {
                 new AlertDialogFragment().show(getActivity().getSupportFragmentManager(), "ALERT DIALOG");
                 break;
         }
-    }
-
-
-    @Override
-    public void onPause() {
-        Log.d("prueba", "onPause: ");
-        super.onPause();
-    }
-
-    @Override
-    public void onResume() {
-        super.onResume();
-        Log.d("prueba", "onResume: ");
     }
 }
