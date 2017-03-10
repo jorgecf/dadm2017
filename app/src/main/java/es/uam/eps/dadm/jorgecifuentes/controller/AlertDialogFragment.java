@@ -1,6 +1,5 @@
 package es.uam.eps.dadm.jorgecifuentes.controller;
 
-
 import android.app.Dialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
@@ -15,9 +14,10 @@ import es.uam.eps.dadm.jorgecifuentes.model.Round;
 import es.uam.eps.dadm.jorgecifuentes.model.RoundRepository;
 
 /**
- * Created by jorgecf on 28/02/17.
+ * Clase que representa una alerta dentro de un fragmento.
+ *
+ * @author Jorge Cifuentes
  */
-
 public class AlertDialogFragment extends DialogFragment {
 
     @Override
@@ -28,8 +28,8 @@ public class AlertDialogFragment extends DialogFragment {
         alertDialogBuilder.setTitle(R.string.game_over);
         alertDialogBuilder.setMessage(R.string.game_over_message);
 
-
-        alertDialogBuilder.setPositiveButton("Yes",
+        // Boton positivo.
+        alertDialogBuilder.setPositiveButton(R.string.positive,
                 new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
 
@@ -46,8 +46,8 @@ public class AlertDialogFragment extends DialogFragment {
                 }
         );
 
-
-        alertDialogBuilder.setNegativeButton("No", new DialogInterface.OnClickListener() {
+        // Boton negativo.
+        alertDialogBuilder.setNegativeButton(R.string.negative, new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
                         if (activity instanceof RoundActivity)
                             activity.finish();

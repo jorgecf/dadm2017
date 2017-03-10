@@ -8,4 +8,9 @@
     <string name="game_over_message">Play new game?</string>
     <string name="round_restarted">Round restarted</string>
     <string name="no_valid_movements">No valid movements</string>
+    <string name="round_title">ROUND</string>
+    <string name="positive">Yes</string>
+    <string name="negative">No</string>
+    <string name="local_player_default_name">Local player</string>
+    <string name="random_player_default_name">Random player</string>
 </resources>

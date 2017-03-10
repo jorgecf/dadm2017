@@ -120,8 +120,6 @@ public class RoundListFragment extends Fragment {
         this.roundAdapter.setCurrent(-1);
     }
 
-// menu
-
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         super.onCreateOptionsMenu(menu, inflater);
@@ -142,10 +140,9 @@ public class RoundListFragment extends Fragment {
         }
     }
 
-
-    // menu
-
-
+    /**
+     * Actualiza la lista de rondas graficas.
+     */
     public void updateUI() {
 
         RoundRepository repository = RoundRepository.get(getActivity());
@@ -160,15 +157,19 @@ public class RoundListFragment extends Fragment {
 
     }
 
-    // roundadapter
 
+    /**
+     * Esta clase se define como el adaptador de la vista recicladora.
+     */
     public class RoundAdapter extends RecyclerView.Adapter<RoundAdapter.RoundHolder> {
 
         private List<Round> rounds;
         private int current;
 
 
-        // roundholder
+        /**
+         * Esta clase se define como el elemento contenedor de la ronda.
+         */
         public class RoundHolder extends RecyclerView.ViewHolder {
 
             private TextView idTextView;
@@ -180,9 +181,9 @@ public class RoundListFragment extends Fragment {
             public RoundHolder(View itemView) {
                 super(itemView);
 
-                idTextView = (TextView) itemView.findViewById(R.id.list_item_id);
-                boardTextView = (TextView) itemView.findViewById(R.id.list_item_board);
-                dateTextView = (TextView) itemView.findViewById(R.id.list_item_date);
+                this.idTextView = (TextView) itemView.findViewById(R.id.list_item_id);
+                this.boardTextView = (TextView) itemView.findViewById(R.id.list_item_board);
+                this.dateTextView = (TextView) itemView.findViewById(R.id.list_item_date);
             }
 
             public void bindRound(Round round) {
@@ -201,21 +202,19 @@ public class RoundListFragment extends Fragment {
         }
 
         @Override
-        public RoundAdapter.RoundHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        public RoundAdapter.RoundHolder onCreateViewHolder(ViewGroup parent, int viewType) { // llamada al crear el Holder
             LayoutInflater layoutInflater = LayoutInflater.from(parent.getContext());
             View view = layoutInflater.inflate(R.layout.list_item_round, parent, false);
 
             return new RoundHolder(view);
         }
 
-
         @Override
-        public void onBindViewHolder(RoundAdapter.RoundHolder holder, int position) {
+        public void onBindViewHolder(RoundAdapter.RoundHolder holder, int position) { // llamada al asignar un Holder creado a una ronda
             Round round = this.rounds.get(position);
             holder.bindRound(round);
         }
 
-        // para swipe
         public void remove(int position) {
             this.rounds.remove(position);
             this.notifyItemRemoved(position);
@@ -233,7 +232,6 @@ public class RoundListFragment extends Fragment {
         public boolean isCurrent(int position) {
             return position == this.current;
         }
-
 
         @Override
         public int getItemCount() {

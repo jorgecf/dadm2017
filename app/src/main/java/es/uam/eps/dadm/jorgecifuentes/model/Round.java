@@ -1,15 +1,13 @@
 package es.uam.eps.dadm.jorgecifuentes.model;
 
-/**
- * Created by jorgecf on 26/02/17.
- */
-
 import java.util.Date;
 import java.util.UUID;
 
-import es.uam.eps.dadm.jorgecifuentes.model.TableroReversi;
-import es.uam.eps.multij.Tablero;
-
+/**
+ * Clase que representa una ronda del juego, con un tablero y demas informacion adicional.
+ *
+ * @author Jorge Cifuentes
+ */
 public class Round {
 
     private String id;
@@ -18,10 +16,10 @@ public class Round {
     private TableroReversi board;
 
     public Round() {
-        id = UUID.randomUUID().toString();
-        title = "ROUND " + id.toString().substring(19, 23).toUpperCase();
-        date = new Date().toString();
-        board = new TableroReversi();
+        this.id = UUID.randomUUID().toString();
+        this.title = "ROUND " + " " + id.toString().substring(19, 23).toUpperCase();
+        this.date = new Date().toString();
+        this.board = new TableroReversi();
     }
 
 

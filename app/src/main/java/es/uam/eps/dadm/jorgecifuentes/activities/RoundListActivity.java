@@ -1,6 +1,5 @@
 package es.uam.eps.dadm.jorgecifuentes.activities;
 
-
 import android.content.Intent;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -12,10 +11,16 @@ import es.uam.eps.dadm.jorgecifuentes.controller.RoundFragment;
 import es.uam.eps.dadm.jorgecifuentes.controller.RoundListFragment;
 import es.uam.eps.dadm.jorgecifuentes.model.Round;
 
+/**
+ * Clase que representa la actividad con una lista de rondas.
+ *
+ * @author Jorge Cifuentes
+ */
 public class RoundListActivity extends AppCompatActivity implements RoundListFragment.Callbacks, RoundFragment.Callbacks {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_masterdetail);
 

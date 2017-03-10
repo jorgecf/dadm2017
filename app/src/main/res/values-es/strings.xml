@@ -9,4 +9,9 @@
     <string name="round_already_finished">Juego ya finalizado</string>
     <string name="round_restarted">Ronda reiniciada</string>
     <string name="title">Reversi app</string>
+    <string name="round_title">RONDA</string>
+    <string name="positive">Si</string>
+    <string name="negative">No</string>
+    <string name="local_player_default_name">Jugador local</string>
+    <string name="random_player_default_name">Jugaddor aleatorio</string>
 </resources>

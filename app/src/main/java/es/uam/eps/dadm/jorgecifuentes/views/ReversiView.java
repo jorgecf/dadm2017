@@ -15,12 +15,11 @@ import es.uam.eps.dadm.jorgecifuentes.model.TableroReversi;
 import es.uam.eps.multij.Tablero;
 
 /**
- * Created by jorgecf on 1/03/17.
+ * Clase que representa un tablero grafico de Reversi.
+ *
+ * @author Jorge Cifuentes
  */
-
 public class ReversiView extends View {
-
-    private final String DEBUG = "ReversiView";
 
     private Paint backgroundPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
     private Paint linePaint = new Paint(Paint.ANTI_ALIAS_FLAG);
@@ -32,9 +31,12 @@ public class ReversiView extends View {
     private int size;
 
     private TableroReversi board;
+
     private OnPlayListener onPlayListener;
 
-
+    /**
+     * Interfaz que define la ejecucion al clickar en una casilla [i, j].
+     */
     public interface OnPlayListener {
         void onPlay(int row, int column);
     }
@@ -54,17 +56,13 @@ public class ReversiView extends View {
     @Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
 
-        int desiredWidth = 500;
-        String wMode, hMode;
-
-        int widthMode = MeasureSpec.getMode(widthMeasureSpec);
         int widthSize = MeasureSpec.getSize(widthMeasureSpec);
-        int heightMode = MeasureSpec.getMode(heightMeasureSpec);
         int heightSize = MeasureSpec.getSize(heightMeasureSpec);
 
         int width;
         int height;
 
+        // Establecemos una dimension cuadrada con el lado igual al mayor entre altura y anchura.
         if (widthSize < heightSize)
             width = height = heightSize = widthSize;
         else
@@ -76,42 +74,38 @@ public class ReversiView extends View {
     @Override
     protected void onSizeChanged(int w, int h, int oldw, int oldh) {
 
-        widthOfTile = w / size;
-        heightOfTile = h / size;
+        // Dimension de cada casilla.
+        this.widthOfTile = w / size;
+        this.heightOfTile = h / size;
 
-        if (widthOfTile < heightOfTile)
-            radio = widthOfTile * 0.3f;
+        // Establecemos el radio de los circulos relativo a la dimension de las casillas.
+        if (this.widthOfTile < this.heightOfTile)
+            this.radio = this.widthOfTile * 0.3f;
         else
-            radio = heightOfTile * 0.3f;
+            this.radio = this.heightOfTile * 0.3f;
 
         super.onSizeChanged(w, h, oldw, oldh);
     }
 
     @Override
     protected void onDraw(Canvas canvas) {
-
         super.onDraw(canvas);
-
-        float boardWidth = getWidth();
-        float boardHeight = getHeight();
-
-        canvas.drawRect(0, 0, getWidth(), getHeight(), backgroundPaint);
-        this.drawCircles(canvas, linePaint);
+        this.drawBoard(canvas, linePaint);
     }
 
     @Override
     public boolean onTouchEvent(MotionEvent event) {
 
-        if (board.getEstado() != Tablero.EN_CURSO) {
+        if (this.board.getEstado() != Tablero.EN_CURSO) {
             Snackbar.make(findViewById(R.id.board_reversiview), R.string.round_already_finished, Snackbar.LENGTH_SHORT).show();
             return super.onTouchEvent(event);
         }
 
         if (event.getAction() == MotionEvent.ACTION_DOWN) {
 
-            // Si no hay movimientos validos, se avisa y se juega para que el turno vaya al
+            // Si no hay movimientos validos, se avisa y se juega un movimiento nulo para que el turno vaya al
             //  oponente.
-            if (board.movimientosValidos().size() == 0) {
+            if (this.board.movimientosValidos().size() == 0) {
                 Snackbar.make(findViewById(R.id.board_reversiview), R.string.no_valid_movements, Snackbar.LENGTH_SHORT).show();
             }
 
@@ -121,33 +115,49 @@ public class ReversiView extends View {
         return true;
     }
 
-    private void drawCircles(Canvas canvas, Paint paint) {
+    /**
+     * Dibuja el tablero cuadrado, esto es, el fondo, las fichas creadas y las lineas divisorias.
+     *
+     * @param canvas canvas sobre el que pintar
+     * @param paint  pintura a usar
+     */
+    private void drawBoard(Canvas canvas, Paint paint) {
 
         float centerRaw, centerColumn;
 
+        // Fondo del tablero.
+        canvas.drawRect(0, 0, getWidth(), getHeight(), this.backgroundPaint);
+
+        // Fichas y lineas divisorias.
         for (int i = 0; i < size; i++) {
 
-            int pos = size - i - 1;
-            centerRaw = heightOfTile * (1 + 2 * pos) / 2f;
+            int pos = this.size - i - 1;
+            centerRaw = this.heightOfTile * (1 + 2 * pos) / 2f;
 
-            int steps = i * (this.getWidth() / size);
-            canvas.drawLine(steps, 0, steps, this.getHeight(), gridPaint); // lineas verticales
-            canvas.drawLine(0, steps, this.getWidth(), steps, gridPaint); // lineas horizontales
-
+            int steps = i * (this.getWidth() / this.size);
+            canvas.drawLine(steps, 0, steps, this.getHeight(), this.gridPaint); // lineas verticales
+            canvas.drawLine(0, steps, this.getWidth(), steps, this.gridPaint); // lineas horizontales
 
             for (int j = 0; j < size; j++) {
-                centerColumn = widthOfTile * (1 + 2 * j) / 2f;
-                setPaintColor(paint, i, j);
-                canvas.drawCircle(centerColumn, centerRaw, radio, paint);
+                centerColumn = this.widthOfTile * (1 + 2 * j) / 2f;
+                this.setPaintColor(paint, i, j);
+                canvas.drawCircle(centerColumn, centerRaw, this.radio, paint);
             }
         }
     }
 
-
+    /**
+     * Actualiza el color de la Paint de acuerdo al color de la casilla en el tablero.
+     *
+     * @param paint pintura a actualizar
+     * @param i     coordenada i
+     * @param j     coordenada j
+     */
     private void setPaintColor(Paint paint, int i, int j) {
-        if (board.getTablero(i, j) == TableroReversi.Color.NEGRO)
+
+        if (this.board.getTablero(i, j) == TableroReversi.Color.NEGRO)
             paint.setColor(Color.BLACK);
-        else if (board.getTablero(i, j) == TableroReversi.Color.BLANCO)
+        else if (this.board.getTablero(i, j) == TableroReversi.Color.BLANCO)
             paint.setColor(Color.WHITE);
         else
             paint.setColor(Color.TRANSPARENT);
@@ -155,28 +165,21 @@ public class ReversiView extends View {
 
 
     private int fromEventToI(MotionEvent event) {
-        int pos = (int) (event.getY() / heightOfTile);
-        return size - pos - 1;
+        int pos = (int) (event.getY() / this.heightOfTile);
+        return this.size - pos - 1;
     }
 
     private int fromEventToJ(MotionEvent event) {
-        return (int) (event.getX() / widthOfTile);
+        return (int) (event.getX() / this.widthOfTile);
     }
 
     public void setOnPlayListener(OnPlayListener listener) {
         this.onPlayListener = listener;
     }
 
-    public void setBoard(int size, Tablero board) {
-        this.size = size;
-        this.board = (TableroReversi) board;
-    }
-
     public void setBoard(Tablero board) {
         this.board = (TableroReversi) board;
+        this.size = this.board.getSize();
     }
 
-
 }
-
-

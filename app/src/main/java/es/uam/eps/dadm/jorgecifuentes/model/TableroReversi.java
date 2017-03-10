@@ -16,16 +16,7 @@ import es.uam.eps.multij.Tablero;
 public class TableroReversi extends Tablero {
 
     /**
-     <<<<<<< HEAD:app/src/main/java/es/uam/eps/dadm/jorgecifuentes/model/TableroReversi.java
      * Enumeracion propia que representa el Color de cada posicion del tablero.
-     =======
-     * @TODO darg Como indicas, es privada: deberías utilizar ese modificador de acceso 
-     *
-     */
-
-    /**
-     * Enumeracion privada que representa el Color de cada posicion del tablero.
-     * >>>>>>> origin/correcciones_entrega_01:src/main/java/es/uam/eps/dadm/jorgecifuentes/TableroReversi.java
      */
     public enum Color {
         NEGRO, BLANCO, VACIO;
@@ -93,12 +84,11 @@ public class TableroReversi extends Tablero {
         }
     }
 
-    /**
-     * @TODO darg es mejor que se define como una constante
-     */
 
     /*  cada lado del tablero */
-    private final int lado = 8;
+    private static final int LADO = 8;
+    private static final int COORD_A = 3;
+    private static final int COORD_B = 4;
 
     /* matriz que representa el tablero */
     private Color[][] tablero;
@@ -115,31 +105,31 @@ public class TableroReversi extends Tablero {
 
         this.turno = 0; // comienzan negras
 
-        this.tablero = new Color[lado][lado];
-        for (int i = 0; i < lado; i++) {
+        this.tablero = new Color[LADO][LADO];
+        for (int i = 0; i < LADO; i++) {
             Arrays.fill(this.tablero[i], Color.VACIO);
         }
 
         this.estado = EN_CURSO; // iniciamos la partida con el cambio de estado
 
-        /**
-         * @TODO darg se pueden definir constantes en lugar de usar números directamente
-         *
-         */
-
         // casillas iniciales predefinidas del juego reversi
-        this.tablero[3][3] = Color.BLANCO;
-        this.tablero[3][4] = Color.NEGRO;
-        this.tablero[4][3] = Color.NEGRO;
-        this.tablero[4][4] = Color.BLANCO;
+        this.tablero[COORD_A][COORD_A] = Color.BLANCO;
+        this.tablero[COORD_A][COORD_B] = Color.NEGRO;
+        this.tablero[COORD_B][COORD_A] = Color.NEGRO;
+        this.tablero[COORD_B][COORD_B] = Color.BLANCO;
     }
 
-    //TODO header funcion
+    /**
+     * Devuelve el numero de fichas colocadas para un color.
+     *
+     * @param c color a comprobar
+     * @return numero calculado
+     */
     public int getFichas(Color c) {
 
         int ret = 0;
-        for (int i = 0; i < lado; i++) {
-            for (int j = 0; j < lado; j++) {
+        for (int i = 0; i < LADO; i++) {
+            for (int j = 0; j < LADO; j++) {
                 if (tablero[i][j] == c) ret++;
             }
 
@@ -155,9 +145,6 @@ public class TableroReversi extends Tablero {
      *
      * @return el stream del tablero
      */
-    // private Stream<Color> flatStream() {
-    //     return Arrays.stream(this.tablero).flatMap(fila -> Arrays.stream(fila));
-    // }
     @Override
     protected void mueve(Movimiento movimiento) throws ExcepcionJuego {
 
@@ -207,8 +194,8 @@ public class TableroReversi extends Tablero {
         // si el tablero esta lleno, el juego ha acabado
         boolean flag_vacio = false;
         // flag_vacio = this.flatStream().anyMatch(cas -> cas == Color.VACIO);
-        for (int i = 0; i < lado; i++) {
-            for (int j = 0; j < lado; j++) {
+        for (int i = 0; i < LADO; i++) {
+            for (int j = 0; j < LADO; j++) {
                 if (tablero[i][j] == Color.VACIO) flag_vacio = true;
             }
         }
@@ -219,10 +206,10 @@ public class TableroReversi extends Tablero {
                         && HelperMovimientosValidos(Color.get((this.turno + 1) % this.numJugadores)).size() == 0)) {
 
             // comprobamos quien ha ganado
-            int empate = (lado * lado) / 2;
+            int empate = (LADO * LADO) / 2;
             // empate = (int) this.flatStream().filter(cas -> cas == Color.get(this.turno)).count() - empate;
-            for (int i = 0; i < lado; i++) {
-                for (int j = 0; j < lado; j++) {
+            for (int i = 0; i < LADO; i++) {
+                for (int j = 0; j < LADO; j++) {
                     if (this.tablero[i][j] == Color.get(this.turno)) {
                         empate++;
                     } else empate--;
@@ -293,14 +280,14 @@ public class TableroReversi extends Tablero {
         boolean flag_rival = false; // indica si nos hemos encontrado con una ficha rival
         int pasos = 0; // numero de pasos del inicio al destino
 
-        for (int k = 1; k < this.lado; k++) {
+        for (int k = 1; k < this.LADO; k++) {
 
             // nos movemos de uno en uno en la direccion dada
             int pos_i = i + (k * dir_i);
             int pos_j = j + (k * dir_j);
             pasos++;
 
-            if (pos_i > lado - 1 || pos_i < 0 || pos_j > lado - 1 || pos_j < 0)
+            if (pos_i > LADO - 1 || pos_i < 0 || pos_j > LADO - 1 || pos_j < 0)
                 break; // fuera de limites
 
 
@@ -354,8 +341,8 @@ public class TableroReversi extends Tablero {
         ArrayList<Movimiento> ret = new ArrayList<Movimiento>();
 
         // iteramos sobre todas las casillas
-        for (int i = 0; i < lado; i++) {
-            for (int j = 0; j < lado; j++) {
+        for (int i = 0; i < LADO; i++) {
+            for (int j = 0; j < LADO; j++) {
 
                 if (this.tablero[i][j] == c) {
 
@@ -380,8 +367,8 @@ public class TableroReversi extends Tablero {
 
         String ret = ""; // representacion interna
 
-        for (int i = 0; i < lado; i++) {
-            for (int j = 0; j < lado; j++) {
+        for (int i = 0; i < LADO; i++) {
+            for (int j = 0; j < LADO; j++) {
                 ret += this.tablero[j][i].toChar();
             }
         }
@@ -394,20 +381,15 @@ public class TableroReversi extends Tablero {
     @Override
     public void stringToTablero(String s) throws ExcepcionJuego {
 
-        /**
-         * @TODO darg la cadena de entrada tampoco puede ser null
-         *
-         */
 
-
-        if (s.length() < lado * lado + 2 || s.length() > lado * lado + 3)
+        if (s == null || s.length() < LADO * LADO + 2 || s.length() > LADO * LADO + 3)
             throw new ExcepcionJuego("cadena de entrada de longitud incorrecta");
 
 
-        for (int i = 0; i < lado; i++) {
-            for (int j = 0; j < lado; j++) {
+        for (int i = 0; i < LADO; i++) {
+            for (int j = 0; j < LADO; j++) {
 
-                char c = s.charAt(i + j + ((lado - 1) * i));
+                char c = s.charAt(i + j + ((LADO - 1) * i));
 
                 // comprobamos que se introduce un valor correcto
                 if (Color.comprobarColor(c) == false)
@@ -418,7 +400,7 @@ public class TableroReversi extends Tablero {
         }
 
         // obtenemos los atributos de la partida
-        String atrib = s.substring(lado * lado);
+        String atrib = s.substring(LADO * LADO);
 
         this.turno = Character.getNumericValue(atrib.charAt(0)); // un caracter
         this.numJugadas = Integer.parseInt(atrib.substring(1)); // uno o dos caracteres
@@ -428,11 +410,11 @@ public class TableroReversi extends Tablero {
     public String toString() {
         String ret = "     A B C D E F G H \n     _ _ _ _ _ _ _ _\n             \n";
 
-        for (int j = 0; j < lado; j++) {
+        for (int j = 0; j < LADO; j++) {
 
             ret += " " + (j + 1) + " | ";
 
-            for (int i = 0; i < lado; i++) {
+            for (int i = 0; i < LADO; i++) {
                 ret += this.tablero[i][j].toChar() + " ";
             }
             ret += "\n";
@@ -445,10 +427,10 @@ public class TableroReversi extends Tablero {
     }
 
     public String toSimpleString() {
-        return "N: "+this.getFichas(Color.NEGRO) + " B: " + this.getFichas(Color.BLANCO);
+        return "N: " + this.getFichas(Color.NEGRO) + " B: " + this.getFichas(Color.BLANCO);
     }
 
     public int getSize() {
-        return this.lado;
+        return this.LADO;
     }
 }

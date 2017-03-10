@@ -1,23 +1,25 @@
 package es.uam.eps.dadm.jorgecifuentes.controller;
 
-
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.helper.ItemTouchHelper;
 import android.view.GestureDetector;
 import android.view.MotionEvent;
 import android.view.View;
 
 /**
- * Created by jorgecf on 28/02/17.
+ * Clase que representa un listener para elementos de una RecyclerView.
+ *
+ * @author Jorge Cifuentes
  */
-
 public class RecyclerItemClickListener implements RecyclerView.OnItemTouchListener {
 
     private OnItemClickListener mListener;
 
+    /**
+     * Interfaz que establece lo que hacer al clickar en un elemento de la lista.
+     */
     public interface OnItemClickListener {
-        public void onItemClick(View view, int position);
+        void onItemClick(View view, int position);
     }
 
     GestureDetector mGestureDetector;

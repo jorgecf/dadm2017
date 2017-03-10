@@ -3,11 +3,9 @@ package es.uam.eps.dadm.jorgecifuentes.controller;
 import android.content.Context;
 import android.graphics.Typeface;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,7 +19,6 @@ import es.uam.eps.dadm.jorgecifuentes.model.RoundRepository;
 import es.uam.eps.dadm.jorgecifuentes.model.TableroReversi;
 import es.uam.eps.dadm.jorgecifuentes.views.ReversiView;
 import es.uam.eps.multij.Evento;
-import es.uam.eps.multij.ExcepcionJuego;
 import es.uam.eps.multij.Jugador;
 import es.uam.eps.multij.JugadorAleatorio;
 import es.uam.eps.multij.Partida;
@@ -29,9 +26,10 @@ import es.uam.eps.multij.PartidaListener;
 import es.uam.eps.multij.Tablero;
 
 /**
- * Created by jorgecf on 27/02/17.
+ * Clase que representa un  fragmento que incluye la ronda: tablero y demas funcionalidad.
+ *
+ * @author Jorge Cifuentes
  */
-
 public class RoundFragment extends Fragment implements PartidaListener {
 
     public static final String ARG_ROUND_ID = "es.uam.eps.dadm.round_id";
@@ -46,7 +44,7 @@ public class RoundFragment extends Fragment implements PartidaListener {
     private Callbacks callbacks;
 
     /**
-     *
+     * Funcion que define que hacer al actualizar el contenido de una ronda.
      */
     public interface Callbacks {
         void onRoundUpdated(Round round);
@@ -57,7 +55,15 @@ public class RoundFragment extends Fragment implements PartidaListener {
 
     }
 
+    /**
+     * Devuelve una nueva instancia de este fragmento.
+     *
+     * @param roundId id de la ronda contenida
+     * @return la nueva instancia
+     */
     public static RoundFragment newInstance(String roundId) {
+
+        // Almacenamos el id de la ronda en el Bundle.
         Bundle args = new Bundle();
         args.putString(ARG_ROUND_ID, roundId);
 
@@ -84,6 +90,7 @@ public class RoundFragment extends Fragment implements PartidaListener {
 
         super.onCreate(savedInstanceState);
 
+        // Recuperamos la ronda guardada, si existe.
         if (getArguments().containsKey(ARG_ROUND_ID)) {
             String roundId = getArguments().getString(ARG_ROUND_ID);
             this.round = RoundRepository.get(getActivity()).getRound(roundId);
@@ -146,24 +153,20 @@ public class RoundFragment extends Fragment implements PartidaListener {
     void startRound() {
 
         ArrayList<Jugador> players = new ArrayList<Jugador>();
-        JugadorAleatorio randomPlayer = new JugadorAleatorio("Random player");
-        ReversiLocalPlayer localPlayer = new ReversiLocalPlayer();
-        //ReversiLocalPlayer localPlayer2 = new ReversiLocalPlayer();
+        JugadorAleatorio randomPlayer = new JugadorAleatorio(this.getContext().getString(R.string.random_player_default_name));
+        ReversiLocalPlayer localPlayer = new ReversiLocalPlayer(this.getContext());
 
         players.add(localPlayer);
         players.add(randomPlayer);
-        //players.add(localPlayer2);
 
         game = new Partida(this.round.getBoard(), players);
 
         game.addObservador(this);
         localPlayer.setPartida(game);
-        // localPlayer2.setPartida(game);
-
 
         // Vista del Tablero.
         boardView = (ReversiView) this.getView().findViewById(R.id.board_reversiview);
-        boardView.setBoard(round.getBoard().getSize(), round.getBoard());
+        boardView.setBoard(round.getBoard());
         boardView.setOnPlayListener(localPlayer);
 
 

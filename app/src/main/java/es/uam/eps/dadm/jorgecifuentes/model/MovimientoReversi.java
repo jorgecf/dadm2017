@@ -44,7 +44,7 @@ public class MovimientoReversi extends Movimiento {
 
     @Override
     public String toString() {
-        return "Movimiento: "+  /*+ this.inicio.stream().map(ini -> ini.toString()).collect(Collectors.joining(", ")) + */" hasta: " + this.destino.toString();
+        return "Movimiento: " +  /*+ this.inicio.stream().map(ini -> ini.toString()).collect(Collectors.joining(", ")) + */" hasta: " + this.destino.toString();
     }
 
 

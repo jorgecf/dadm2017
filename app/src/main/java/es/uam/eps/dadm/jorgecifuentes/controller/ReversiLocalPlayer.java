@@ -1,7 +1,9 @@
 package es.uam.eps.dadm.jorgecifuentes.controller;
 
+import android.content.Context;
 import android.util.Log;
 
+import es.uam.eps.dadm.jorgecifuentes.R;
 import es.uam.eps.dadm.jorgecifuentes.model.TableroReversi;
 import es.uam.eps.dadm.jorgecifuentes.views.ReversiView;
 import es.uam.eps.multij.AccionMover;
@@ -11,12 +13,23 @@ import es.uam.eps.multij.Movimiento;
 import es.uam.eps.multij.Partida;
 import es.uam.eps.multij.Tablero;
 
+
+/**
+ * Clase que representa un jugador local de Reversi.
+ *
+ * @author Jorge Cifuentes
+ */
 public class ReversiLocalPlayer implements ReversiView.OnPlayListener, Jugador {
 
     private Partida game;
+    private Context context;
 
     public ReversiLocalPlayer() {
 
+    }
+
+    public ReversiLocalPlayer(Context c) {
+        this.context = c;
     }
 
     public void setPartida(Partida game) {
@@ -25,7 +38,7 @@ public class ReversiLocalPlayer implements ReversiView.OnPlayListener, Jugador {
 
     @Override
     public String getNombre() {
-        return "Local player";
+        return this.context.getString(R.string.local_player_default_name);
     }
 
     @Override

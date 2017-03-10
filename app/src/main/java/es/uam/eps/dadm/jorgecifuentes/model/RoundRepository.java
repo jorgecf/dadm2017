@@ -1,18 +1,18 @@
 package es.uam.eps.dadm.jorgecifuentes.model;
 
-/**
- * Created by jorgecf on 26/02/17.
- */
-
 import android.content.Context;
-import android.util.Log;
 
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Clase que representa un repositorio de diferentes rondas como un singleton.
+ *
+ * @author Jorge Cifuentes
+ */
 public class RoundRepository {
 
-    private final int default_rounds = 4;
+    private static final int DEFAULT_ROUNDS = 4;
     private static RoundRepository repository;
     private List<Round> rounds;
 
@@ -37,18 +37,10 @@ public class RoundRepository {
     private RoundRepository(Context context) {
         rounds = new ArrayList<>();
 
-        for (int i = 0; i < this.default_rounds; i++) {
+        for (int i = 0; i < this.DEFAULT_ROUNDS; i++) {
             Round round = new Round();
             rounds.add(round);
         }
-    }
-
-    public void addRound(Round round) {
-        rounds.add(round);
-    }
-
-    public List<Round> getRounds() {
-        return rounds;
     }
 
     /**
@@ -67,4 +59,13 @@ public class RoundRepository {
 
         return null;
     }
+
+    public void addRound(Round round) {
+        rounds.add(round);
+    }
+
+    public List<Round> getRounds() {
+        return rounds;
+    }
+
 }
