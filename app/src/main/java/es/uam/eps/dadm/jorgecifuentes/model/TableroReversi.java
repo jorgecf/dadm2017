@@ -86,7 +86,7 @@ public class TableroReversi extends Tablero {
 
 
     /*  cada lado del tablero */
-    private static final int LADO = 8;
+    private static int LADO = 8;
     private static final int COORD_A = 3;
     private static final int COORD_B = 4;
 
@@ -100,9 +100,12 @@ public class TableroReversi extends Tablero {
     /**
      * Constructor del TableroReversi. LLena el tablero de VACIO, menos las 4 casillas que vienen
      * predefinidias por las reglas del juego como BLANCO o NEGRO.
+     *
+     * @param size
      */
-    public TableroReversi() {
+    public TableroReversi(int size) {
 
+        this.LADO = size; //TODO coord a y coord b relativas
         this.turno = 0; // comienzan negras
 
         this.tablero = new Color[LADO][LADO];
@@ -128,8 +131,8 @@ public class TableroReversi extends Tablero {
     public int getFichas(Color c) {
 
         int ret = 0;
-        for (int i = 0; i < LADO; i++) {
-            for (int j = 0; j < LADO; j++) {
+        for (int i = 0; i < this.LADO; i++) {
+            for (int j = 0; j < this.LADO; j++) {
                 if (tablero[i][j] == c) ret++;
             }
 
