@@ -18,11 +18,14 @@ import android.widget.TextView;
 import java.util.List;
 
 import es.uam.eps.dadm.jorgecifuentes.R;
+import es.uam.eps.dadm.jorgecifuentes.activities.PreferenceActivity;
 import es.uam.eps.dadm.jorgecifuentes.model.Round;
 import es.uam.eps.dadm.jorgecifuentes.model.RoundRepository;
 
 /**
- * Created by jorgecf on 27/02/17.
+ * Clase que representa un  fragmento que incluye la lista de rondas.
+ *
+ * @author Jorge Cifuentes
  */
 public class RoundListFragment extends Fragment {
 
@@ -33,6 +36,8 @@ public class RoundListFragment extends Fragment {
 
     public interface Callbacks {
         void onRoundSelected(Round round);
+
+        void onPreferencesSelected();
     }
 
     @Override
@@ -130,11 +135,17 @@ public class RoundListFragment extends Fragment {
     public boolean onOptionsItemSelected(MenuItem item) {
 
         switch (item.getItemId()) {
+
             case R.id.menu_item_new_round: // crea ronda al seleccionar item ( + new round )
-                Round round = new Round();
+                Round round = new Round(Integer.parseInt(PreferenceActivity.getBoardSize(getActivity())));
                 RoundRepository.get(getActivity()).addRound(round);
                 updateUI();
                 return true;
+
+            case R.id.menu_item_settings:
+                callbacks.onPreferencesSelected();
+                return true;
+
             default:
                 return super.onOptionsItemSelected(item);
         }
@@ -237,7 +248,6 @@ public class RoundListFragment extends Fragment {
         public int getItemCount() {
             return this.rounds.size();
         }
-
 
     }
 }

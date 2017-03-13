@@ -20,7 +20,10 @@
             android:name=".activities.RoundActivity"
             android:parentActivityName=".activities.RoundListActivity"></activity>
 
+        <activity
+            android:name=".activities.PreferenceActivity"
+            android:parentActivityName=".activities.RoundListActivity" />
+
     </application>
 
 </manifest>
-

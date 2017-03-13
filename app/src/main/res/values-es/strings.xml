@@ -14,4 +14,5 @@
     <string name="negative">No</string>
     <string name="local_player_default_name">Jugador local</string>
     <string name="random_player_default_name">Jugaddor aleatorio</string>
+    <string name="settings">Ajustes</string>
 </resources>

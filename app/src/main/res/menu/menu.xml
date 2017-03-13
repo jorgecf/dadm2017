@@ -8,4 +8,11 @@
         android:icon="@drawable/ic_add_circle_outline_24dp"
         android:title="@string/new_round"
         app:showAsAction="ifRoom|withText" />
+
+    <item
+        android:id="@+id/menu_item_settings"
+        android:icon="@android:drawable/ic_menu_edit"
+        android:title="@string/settings"
+        app:showAsAction="ifRoom|withText" />
+
 </menu>

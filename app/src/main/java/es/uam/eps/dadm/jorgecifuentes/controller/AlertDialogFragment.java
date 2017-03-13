@@ -33,7 +33,7 @@ public class AlertDialogFragment extends DialogFragment {
                 new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
 
-                        Round round = new Round();
+                        Round round = new Round(RoundRepository.SIZE);
                         RoundRepository.get(getActivity()).addRound(round);
 
                         if (activity instanceof RoundListActivity)

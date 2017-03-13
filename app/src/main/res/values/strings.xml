@@ -13,4 +13,5 @@
     <string name="negative">No</string>
     <string name="local_player_default_name">Local player</string>
     <string name="random_player_default_name">Random player</string>
+    <string name="settings">Settings</string>
 </resources>

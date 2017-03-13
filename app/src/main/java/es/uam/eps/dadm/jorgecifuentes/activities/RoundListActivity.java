@@ -12,7 +12,7 @@ import es.uam.eps.dadm.jorgecifuentes.controller.RoundListFragment;
 import es.uam.eps.dadm.jorgecifuentes.model.Round;
 
 /**
- * Clase que representa la actividad con una lista de rondas.
+ * Clase que representa la actividad de una lista de rondas.
  *
  * @author Jorge Cifuentes
  */
@@ -43,6 +43,13 @@ public class RoundListActivity extends AppCompatActivity implements RoundListFra
             getSupportFragmentManager().beginTransaction().replace(R.id.detail_fragment_container, roundFragment).commit();
         }
     }
+
+    @Override
+    public void onPreferencesSelected() {
+        Intent intent = new Intent(this, PreferenceActivity.class);
+        this.startActivity(intent);
+    }
+
 
     @Override
     public void onRoundUpdated(Round round) {
