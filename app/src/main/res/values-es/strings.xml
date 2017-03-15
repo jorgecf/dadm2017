@@ -16,4 +16,5 @@
     <string name="random_player_default_name">Jugaddor aleatorio</string>
     <string name="settings">Ajustes</string>
     <string name="settings_title">Ajustes del juego</string>
+    <string name="repository_opening_error">Error abriendo repositorio de rondas</string>
 </resources>

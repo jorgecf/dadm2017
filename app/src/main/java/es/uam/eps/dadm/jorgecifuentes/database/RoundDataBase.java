@@ -8,6 +8,8 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 
 import es.uam.eps.dadm.jorgecifuentes.model.Round;
@@ -31,6 +33,10 @@ public class RoundDataBase implements RoundRepository {
     private DatabaseHelper helper;
     private SQLiteDatabase db;
 
+    public RoundDataBase(Context context) {
+
+    }
+
 
     private static class DatabaseHelper extends SQLiteOpenHelper {
 
@@ -38,17 +44,17 @@ public class RoundDataBase implements RoundRepository {
             super(context, DATABASE_NAME, null, DATABASE_VERSION);
         }
 
+        @Override
         public void onCreate(SQLiteDatabase db) {
             createTable(db);
         }
 
-
+        @Override
         public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
             db.execSQL("DROP TABLE IF EXISTS " + UserTable.NAME);
             db.execSQL("DROP TABLE IF EXISTS " + RoundTable.NAME);
             createTable(db);
         }
-
 
         private void createTable(SQLiteDatabase db) {
 
@@ -96,7 +102,7 @@ public class RoundDataBase implements RoundRepository {
         Cursor cursor = this.db.query(
                 UserTable.NAME, // tabla donde buscar
                 new String[]{UserTable.Cols.PLAYERUUID}, // columna devuelta
-                UserTable.Cols.PLAYERNAME + " = ? AND " + UserTable.Cols.PLAYERPASSWORD + " = ?", // filtro (query en si)
+                UserTable.Cols.PLAYERNAME + " = ? AND " + UserTable.Cols.PLAYERPASSWORD + " = ?", // filtro (query en si misma)
                 new String[]{playername, playerpassword}, // sustitucion de los ?
                 null,
                 null,
@@ -126,7 +132,6 @@ public class RoundDataBase implements RoundRepository {
         values.put(UserTable.Cols.PLAYERPASSWORD, password);
 
         long id = this.db.insert(UserTable.NAME, null, values);
-
         if (id < 0)
             callback.onError("Error inserting new player named " + playername);
         else
@@ -136,15 +141,76 @@ public class RoundDataBase implements RoundRepository {
     @Override
     public void getRounds(String playeruuid, String orderByField, String group, RoundsCallback callback) {
 
+        List<Round> rounds = new ArrayList<>();
+        RoundCursorWrapper cursor = queryRounds();
+
+        cursor.moveToFirst();
+        while (!cursor.isAfterLast()) {
+            Round round = cursor.getRound();
+
+            if (round.getPlayerUUID().equals(playeruuid)) //TODO
+                rounds.add(round);
+            cursor.moveToNext();
+        }
+
+        cursor.close();
+
+        if (cursor.getCount() > 0)
+            callback.onResponse(rounds);
+        else
+            callback.onError("No rounds found in database");
     }
+
+    private RoundCursorWrapper queryRounds() {
+
+        String sql = "SELECT " + UserTable.Cols.PLAYERNAME + ", " +
+                UserTable.Cols.PLAYERUUID + ", " +
+                RoundTable.Cols.ROUNDUUID + ", " +
+                RoundTable.Cols.DATE + ", " +
+                RoundTable.Cols.TITLE + ", " +
+                RoundTable.Cols.SIZE + ", " +
+                RoundTable.Cols.BOARD + " " +
+                "FROM " + UserTable.NAME + " AS p, " +
+                RoundTable.NAME + " AS r " +
+                "WHERE " + "p." + UserTable.Cols.PLAYERUUID + "=" +
+                "r." + RoundTable.Cols.PLAYERUUID + ";";
+
+        Cursor cursor = db.rawQuery(sql, null);
+        return new RoundCursorWrapper(cursor);
+    }
+
 
     @Override
     public void addRound(Round round, BooleanCallback callback) {
 
+        ContentValues values = this.getContentValues(round);
+
+        long id = this.db.insert(RoundTable.NAME, null, values);
+        if (callback != null)
+            callback.onResponse(id >= 0);
+    }
+
+    private ContentValues getContentValues(Round round) {
+
+        ContentValues values = new ContentValues();
+
+        values.put(RoundTable.Cols.PLAYERUUID, round.getPlayerUUID());
+        values.put(RoundTable.Cols.ROUNDUUID, round.getRoundUUID());
+        values.put(RoundTable.Cols.DATE, round.getDate());
+        values.put(RoundTable.Cols.TITLE, round.getTitle());
+        values.put(RoundTable.Cols.SIZE, round.getSize());
+        values.put(RoundTable.Cols.BOARD, round.getBoard().toSimpleString());
+
+        return values;
     }
 
     @Override
     public void updateRound(Round round, BooleanCallback callback) {
 
+        ContentValues values = this.getContentValues(round);
+
+        long id = this.db.update(RoundTable.NAME, values, null, null); //TODO comprobar
+        if (callback != null)
+            callback.onResponse(id >= 0);
     }
 }

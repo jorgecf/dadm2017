@@ -1,5 +1,6 @@
 package es.uam.eps.dadm.jorgecifuentes.controller;
 
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.content.Context;
 import android.os.Bundle;
@@ -21,6 +22,7 @@ import es.uam.eps.dadm.jorgecifuentes.R;
 import es.uam.eps.dadm.jorgecifuentes.activities.PreferenceActivity;
 import es.uam.eps.dadm.jorgecifuentes.model.Round;
 import es.uam.eps.dadm.jorgecifuentes.model.RoundRepository;
+import es.uam.eps.dadm.jorgecifuentes.model.RoundRepositoryFactory;
 
 /**
  * Clase que representa un  fragmento que incluye la lista de rondas.
@@ -65,16 +67,34 @@ public class RoundListFragment extends Fragment {
 
         // Inicializamos el listener de la CardView.
         roundRecyclerView.addOnItemTouchListener(new RecyclerItemClickListener(getActivity(), new RecyclerItemClickListener.OnItemClickListener() {
+
             @Override
-            public void onItemClick(View view, int position) {
+            public void onItemClick(View view, final int position) {
 
                 // Si la partida esta iniciada, clickar nuevamente sobre su CardView no la reiniciara.
                 //  Para eso esta el FAB.
+                /*
                 if (roundAdapter.isCurrent(position) == false) {
                     Round round = RoundRepository.get(getContext()).getRounds().get(position);
                     roundAdapter.setCurrent(position);
                     callbacks.onRoundSelected(round);
                 }
+                */
+
+                RoundRepository repository = RoundRepositoryFactory.createRepository(getActivity());
+                RoundRepository.RoundsCallback roundsCallback = new RoundRepository.RoundsCallback() {
+                    @Override
+                    public void onResponse(List<Round> rounds) {
+                        callbacks.onRoundSelected(rounds.get(position));
+                    }
+
+                    @Override
+                    public void onError(String error) {
+                        Snackbar.make(getView(), R.string.error_reading_rounds, Snackbar.LENGTH_LONG).show();
+                    }
+                };
+                String playeruuid = PreferenceActivity.getPlayerUUID(getActivity());
+                repository.getRounds(playeruuid, null, null, roundsCallback);
             }
         }));
 
@@ -134,6 +154,7 @@ public class RoundListFragment extends Fragment {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
 
+        /*
         switch (item.getItemId()) {
 
             case R.id.menu_item_new_round: // crea ronda al seleccionar item ( + new round )
@@ -149,14 +170,33 @@ public class RoundListFragment extends Fragment {
             default:
                 return super.onOptionsItemSelected(item);
         }
+        */
+
+        switch (item.getItemId()) {
+
+            case R.id.menu_item_new_round:
+                /*
+                 Instanciar una partida e inicializarla adecuadamente
+                Crear el repositorio
+                Instanciar un método callback de tipo BooleanCallback y llamar a onNewRoundAdded de callbacks. */
+                repository.addRound(round, callback); //TODO
+                updateUI();
+                return true;
+            case R.id.menu_item_settings:
+                callbacks.onPreferencesSelected();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
     }
+
 
     /**
      * Actualiza la lista de rondas graficas.
      */
     public void updateUI() {
 
-        RoundRepository repository = RoundRepository.get(getActivity());
+        RoundRepository repository = RoundRepository.get(getActivity()); //TODO
         List<Round> rounds = repository.getRounds();
 
         if (roundAdapter == null) {

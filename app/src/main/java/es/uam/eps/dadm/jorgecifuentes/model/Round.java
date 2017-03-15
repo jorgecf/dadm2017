@@ -14,9 +14,14 @@ public class Round {
     private String title;
     private String date;
     private TableroReversi board;
+    private String playerUUID;
+    private String roundUUID;
 
     public Round() {
         this.id = UUID.randomUUID().toString();
+        this.playerUUID = UUID.randomUUID().toString();
+        this.roundUUID = UUID.randomUUID().toString();
+
         this.title = "ROUND " + " " + id.toString().substring(19, 23).toUpperCase();
         this.date = new Date().toString();
         this.board = new TableroReversi();
@@ -55,4 +60,22 @@ public class Round {
         this.board = board;
     }
 
+    public int getSize() {
+        return this.board.getSize();
+    }
+
+    public void setFirstPlayerName(String n) {
+
+    }
+
+    public void setSecondPlayerName(String n) {
+    }
+
+    public String getPlayerUUID() {
+        return this.playerUUID;
+    }
+
+    public String getRoundUUID() {
+        return roundUUID;
+    }
 }

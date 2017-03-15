@@ -16,6 +16,7 @@ import java.util.ArrayList;
 import es.uam.eps.dadm.jorgecifuentes.R;
 import es.uam.eps.dadm.jorgecifuentes.model.Round;
 import es.uam.eps.dadm.jorgecifuentes.model.RoundRepository;
+import es.uam.eps.dadm.jorgecifuentes.model.RoundRepositoryFactory;
 import es.uam.eps.dadm.jorgecifuentes.model.TableroReversi;
 import es.uam.eps.dadm.jorgecifuentes.views.ReversiView;
 import es.uam.eps.multij.Evento;
@@ -33,6 +34,10 @@ import es.uam.eps.multij.Tablero;
 public class RoundFragment extends Fragment implements PartidaListener {
 
     public static final String ARG_ROUND_ID = "es.uam.eps.dadm.round_id";
+    public static final String ARG_FIRST_PLAYER_NAME = "es.uam.eps.dadm.first_player_name";
+    public static final String ARG_ROUND_TITLE = "es.uam.eps.dadm.round_title";
+
+
     public static final String BOARDSTRING = "es.uam.eps.dadm.boardstring";
 
 
@@ -62,17 +67,20 @@ public class RoundFragment extends Fragment implements PartidaListener {
      * @param roundId id de la ronda contenida
      * @return la nueva instancia
      */
-    public static RoundFragment newInstance(String roundId) {
+    public static RoundFragment newInstance(String roundId, String firstPlayerName, String roundTitle, int roundSize, String roundDate, String roundBoard) {
 
         // Almacenamos el id de la ronda en el Bundle.
         Bundle args = new Bundle();
         args.putString(ARG_ROUND_ID, roundId);
+        args.putString(ARG_FIRST_PLAYER_NAME, firstPlayerName);
+        args.putString(ARG_ROUND_TITLE, roundTitle);
 
         RoundFragment roundFragment = new RoundFragment();
         roundFragment.setArguments(args);
 
         return roundFragment;
     }
+
 
     @Override
     public void onAttach(Context context) {
@@ -92,10 +100,25 @@ public class RoundFragment extends Fragment implements PartidaListener {
         super.onCreate(savedInstanceState);
 
         // Recuperamos la ronda guardada, si existe.
+       /*
         if (getArguments().containsKey(ARG_ROUND_ID)) {
             String roundId = getArguments().getString(ARG_ROUND_ID);
             this.round = RoundRepository.get(getActivity()).getRound(roundId);
         }
+        */
+        if (getArguments().containsKey(ARG_ROUND_ID)) {
+            roundId = getArguments().getString(ARG_ROUND_ID);
+        }
+
+        if (getArguments().containsKey(ARG_FIRST_PLAYER_NAME)) {
+            firstPlayerName = getArguments().getString(ARG_FIRST_PLAYER_NAME);
+        }
+        if (getArguments().containsKey(ARG_ROUND_TITLE)) {
+            roundTitle = getArguments().getString(ARG_ROUND_TITLE);
+        }
+
+        if (savedInstanceState != null)
+            boardString = savedInstanceState.getString(BOARDSTRING);
 
     }
 
@@ -151,6 +174,21 @@ public class RoundFragment extends Fragment implements PartidaListener {
         super.onSaveInstanceState(outState);
     }
 
+    private Round createRound() {
+
+        Round round = new Round(roundSize);
+
+        round.setPlayerUUID(ERPreferenceActivity.getPlayerUUID(getActivity()));
+        round.setId(roundId);
+        round.setFirstPlayerName("random");
+        round.setSecondPlayerName(firstPlayerName);
+        round.setDate(roundDate);
+        round.setTitle(roundTitle);
+        round.setBoard(board);
+
+        return round;
+    }
+
     void startRound() {
 
         ArrayList<Jugador> players = new ArrayList<Jugador>();
@@ -173,6 +211,23 @@ public class RoundFragment extends Fragment implements PartidaListener {
 
         if (game.getTablero().getEstado() == Tablero.EN_CURSO)
             game.comenzar();
+    }
+
+    private void updateRound() {
+
+        Round round = createRound();
+
+        RoundRepository repository = RoundRepositoryFactory.createRepository(getActivity());
+        RoundRepository.BooleanCallback callback = new RoundRepository.BooleanCallback() {
+
+            @Override
+            public void onResponse(boolean response) {
+                if (response == false)
+                    Snackbar.make(getView(), R.string.error_updating_round, Snackbar.LENGTH_LONG).show();
+            }
+        };
+
+        repository.updateRound(round, callback);
     }
 
     @Override

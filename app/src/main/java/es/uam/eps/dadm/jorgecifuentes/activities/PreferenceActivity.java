@@ -18,6 +18,7 @@ public class PreferenceActivity extends AppCompatActivity {
 
     public final static String BOARDSIZE_KEY = "boardsize";
     public final static String BOARDSIZE_DEFAULT = "0";
+    private static final String PLAYERUUID = "playeruuid";
 
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -30,6 +31,14 @@ public class PreferenceActivity extends AppCompatActivity {
 
         fragmentTransaction.replace(android.R.id.content, fragment);
         fragmentTransaction.commit();
+    }
+
+    public static void setPlayerUUID(Context context, String id) {
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+
+        editor.putString(PreferenceActivity.PLAYERUUID, id);
+        editor.commit();
     }
 /*
     public static String getBoardSize(Context context) {

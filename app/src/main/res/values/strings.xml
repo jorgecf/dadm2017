@@ -15,4 +15,5 @@
     <string name="random_player_default_name">Random player</string>
     <string name="settings">Settings</string>
     <string name="settings_title">Game settings</string>
+    <string name="repository_opening_error">Error opening repository of rounds</string>
 </resources>
