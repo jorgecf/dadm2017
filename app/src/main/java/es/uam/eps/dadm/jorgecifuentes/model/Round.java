@@ -13,17 +13,13 @@ public class Round {
     private String id;
     private String title;
     private String date;
-    private int size;
     private TableroReversi board;
 
-    public Round(int size) {
-
-        this.size = size;
-
+    public Round() {
         this.id = UUID.randomUUID().toString();
         this.title = "ROUND " + " " + id.toString().substring(19, 23).toUpperCase();
         this.date = new Date().toString();
-        this.board = new TableroReversi(this.size);
+        this.board = new TableroReversi();
     }
 
 

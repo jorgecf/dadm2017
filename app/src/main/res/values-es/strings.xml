@@ -15,4 +15,5 @@
     <string name="local_player_default_name">Jugador local</string>
     <string name="random_player_default_name">Jugaddor aleatorio</string>
     <string name="settings">Ajustes</string>
+    <string name="settings_title">Ajustes del juego</string>
 </resources>

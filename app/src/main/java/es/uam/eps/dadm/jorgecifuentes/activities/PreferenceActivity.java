@@ -31,7 +31,7 @@ public class PreferenceActivity extends AppCompatActivity {
         fragmentTransaction.replace(android.R.id.content, fragment);
         fragmentTransaction.commit();
     }
-
+/*
     public static String getBoardSize(Context context) {
         return PreferenceManager.getDefaultSharedPreferences(context).getString(BOARDSIZE_KEY, BOARDSIZE_DEFAULT);
     }
@@ -43,5 +43,5 @@ public class PreferenceActivity extends AppCompatActivity {
         editor.putInt(PreferenceActivity.BOARDSIZE_KEY, size);
         editor.commit();
     }
-
+*/
 }

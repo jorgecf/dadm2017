@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
+
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
-    <PreferenceCategory android:title="Ajustes del juego">
+    <PreferenceCategory android:title="@string/settings_title">
 
         <ListPreference
             android:defaultValue="8"
@@ -14,6 +15,13 @@
             android:key="music"
             android:summary="Click if you feel like listening to music"
             android:title="Music" />
+
+        <EditTextPreference
+            android:key="Edit local player name"
+            android:summary="Select your name"
+            android:title="Player name">
+
+        </EditTextPreference>
 
     </PreferenceCategory>
 </PreferenceScreen>

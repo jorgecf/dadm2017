@@ -13,7 +13,6 @@ import java.util.List;
 public class RoundRepository {
 
     private static final int DEFAULT_ROUNDS = 4;
-    public static final int SIZE = 8;
     private static RoundRepository repository;
     private List<Round> rounds;
 
@@ -39,7 +38,7 @@ public class RoundRepository {
         rounds = new ArrayList<>();
 
         for (int i = 0; i < this.DEFAULT_ROUNDS; i++) {
-            Round round = new Round(RoundRepository.SIZE);
+            Round round = new Round();
             rounds.add(round);
         }
     }

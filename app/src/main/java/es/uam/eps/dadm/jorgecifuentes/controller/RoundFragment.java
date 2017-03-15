@@ -119,7 +119,7 @@ public class RoundFragment extends Fragment implements PartidaListener {
                     return;
                 }
 
-                round.setBoard(new TableroReversi(size)); // nuevo tablero
+                round.setBoard(new TableroReversi()); // nuevo tablero
                 startRound();
                 callbacks.onRoundUpdated(round);
                 Snackbar.make(getView(), R.string.round_restarted, Snackbar.LENGTH_SHORT).show();

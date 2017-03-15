@@ -137,7 +137,7 @@ public class RoundListFragment extends Fragment {
         switch (item.getItemId()) {
 
             case R.id.menu_item_new_round: // crea ronda al seleccionar item ( + new round )
-                Round round = new Round(Integer.parseInt(PreferenceActivity.getBoardSize(getActivity())));
+                Round round = new Round();
                 RoundRepository.get(getActivity()).addRound(round);
                 updateUI();
                 return true;
