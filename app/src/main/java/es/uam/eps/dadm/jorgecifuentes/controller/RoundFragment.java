@@ -155,7 +155,7 @@ public class RoundFragment extends Fragment implements PartidaListener {
 
         ArrayList<Jugador> players = new ArrayList<Jugador>();
         JugadorAleatorio randomPlayer = new JugadorAleatorio(this.getContext().getString(R.string.random_player_default_name));
-        ReversiLocalPlayer localPlayer = new ReversiLocalPlayer(this.getContext());
+        ReversiLocalPlayer localPlayer = new ReversiLocalPlayer(this.getContext()); //TODO pasar nombre guardado en preferencias
 
         players.add(localPlayer);
         players.add(randomPlayer);

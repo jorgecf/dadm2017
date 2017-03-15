@@ -1,71 +1,47 @@
 package es.uam.eps.dadm.jorgecifuentes.model;
 
-import android.content.Context;
-
-import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Clase que representa un repositorio de diferentes rondas como un singleton.
+ * Interfaz que representa un repositorio de diferentes rondas, y su acceso a ellas.
  *
  * @author Jorge Cifuentes
  */
-public class RoundRepository {
+public interface RoundRepository {
 
-    private static final int DEFAULT_ROUNDS = 4;
-    private static RoundRepository repository;
-    private List<Round> rounds;
+    //
+    interface RoundsCallback {
+        void onResponse(List<Round> rounds);
 
-    /**
-     * Devuelve "el" RoundRepository. Solo existe uno al estar implementado como Singleton.
-     *
-     * @param context contexto
-     * @return el repositorio creado o ya existente
-     */
-    public static RoundRepository get(Context context) {
-        if (repository == null) {
-            repository = new RoundRepository(context);
-        }
-        return repository;
+        void onError(String error);
     }
 
-    /**
-     * Crea un nuevo RoundRepository. Solo se llama una vez en cada ejecucion.
-     *
-     * @param context contexto
-     */
-    private RoundRepository(Context context) {
-        rounds = new ArrayList<>();
 
-        for (int i = 0; i < this.DEFAULT_ROUNDS; i++) {
-            Round round = new Round();
-            rounds.add(round);
-        }
+    void open() throws Exception;
+
+    void close();
+
+    //
+    interface LoginRegisterCallback {
+        void onLogin(String playerUuid);
+
+        void onError(String error);
     }
 
-    /**
-     * Obtiene una ronda asociada al id pasado.
-     *
-     * @param id id de la ronda a buscar
-     * @return ronda devuelta o Null
-     */
-    public Round getRound(String id) {
+    void login(String playername, String password, LoginRegisterCallback callback);
 
-        for (Round round : rounds) {
-            if (round.getId().compareTo(id) == 0) {
-                return round;
-            }
-        }
+    void register(String playername, String password, LoginRegisterCallback callback);
 
-        return null;
+    //
+    interface BooleanCallback {
+        void onResponse(boolean ok);
     }
 
-    public void addRound(Round round) {
-        rounds.add(round);
-    }
+    void getRounds(String playeruuid, String orderByField, String group, RoundsCallback callback);
 
-    public List<Round> getRounds() {
-        return rounds;
-    }
+    void addRound(Round round, BooleanCallback callback);
 
+    void updateRound(Round round, BooleanCallback callback);
 }
+
+

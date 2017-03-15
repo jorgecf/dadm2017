@@ -23,6 +23,7 @@ public class ReversiLocalPlayer implements ReversiView.OnPlayListener, Jugador {
 
     private Partida game;
     private Context context;
+    private String name;
 
     public ReversiLocalPlayer() {
 
@@ -30,6 +31,12 @@ public class ReversiLocalPlayer implements ReversiView.OnPlayListener, Jugador {
 
     public ReversiLocalPlayer(Context c) {
         this.context = c;
+        this.name = this.context.getString(R.string.local_player_default_name);
+    }
+
+    public ReversiLocalPlayer(Context c, String newName) {
+        this.context = c;
+        this.name = newName;
     }
 
     public void setPartida(Partida game) {
@@ -38,7 +45,7 @@ public class ReversiLocalPlayer implements ReversiView.OnPlayListener, Jugador {
 
     @Override
     public String getNombre() {
-        return this.context.getString(R.string.local_player_default_name);
+        return this.name;
     }
 
     @Override
