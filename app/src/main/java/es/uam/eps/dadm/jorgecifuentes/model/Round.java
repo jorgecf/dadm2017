@@ -17,6 +17,8 @@ public class Round {
     private String playerUUID;
     private String roundUUID;
 
+    private String playername;
+
     public Round() {
         this.id = UUID.randomUUID().toString();
         this.playerUUID = UUID.randomUUID().toString();
@@ -65,8 +67,12 @@ public class Round {
     }
 
     public void setFirstPlayerName(String n) {
-
+        this.playername = n;
     }
+    public String getPlayername() {
+        return playername;
+    }
+
 
     public void setSecondPlayerName(String n) {
     }
@@ -77,5 +83,9 @@ public class Round {
 
     public String getRoundUUID() {
         return roundUUID;
+    }
+
+    public void setPlayerUUID(String playerUUID) {
+        this.playerUUID = playerUUID;
     }
 }

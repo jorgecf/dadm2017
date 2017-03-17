@@ -23,6 +23,7 @@ import es.uam.eps.dadm.jorgecifuentes.activities.PreferenceActivity;
 import es.uam.eps.dadm.jorgecifuentes.model.Round;
 import es.uam.eps.dadm.jorgecifuentes.model.RoundRepository;
 import es.uam.eps.dadm.jorgecifuentes.model.RoundRepositoryFactory;
+import es.uam.eps.multij.Partida;
 
 /**
  * Clase que representa un  fragmento que incluye la lista de rondas.
@@ -179,6 +180,15 @@ public class RoundListFragment extends Fragment {
                  Instanciar una partida e inicializarla adecuadamente
                 Crear el repositorio
                 Instanciar un método callback de tipo BooleanCallback y llamar a onNewRoundAdded de callbacks. */
+                Partida p = new Partida();
+                RoundRepository r = RoundRepositoryFactory.createRepository(getActivity());
+                RoundRepository.BooleanCallback b = new RoundRepository.BooleanCallback() {
+                    @Override
+                    public void onResponse(boolean ok) {
+                        callbacks.onNewRoundAdded();
+                    }
+                };
+
                 repository.addRound(round, callback); //TODO
                 updateUI();
                 return true;
@@ -196,10 +206,13 @@ public class RoundListFragment extends Fragment {
      */
     public void updateUI() {
 
-        RoundRepository repository = RoundRepository.get(getActivity()); //TODO
+        /*
+        RoundRepository repository = RoundRepository.get(getActivity());
         List<Round> rounds = repository.getRounds();
+        */
+        //List<Round> rounds = repository.getRounds();
 
-        if (roundAdapter == null) {
+        if (roundAdapter == null) { //TODO
             roundAdapter = new RoundAdapter(rounds);
             roundRecyclerView.setAdapter(roundAdapter);
         } else {

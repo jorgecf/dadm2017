@@ -14,12 +14,14 @@ import android.widget.TextView;
 import java.util.ArrayList;
 
 import es.uam.eps.dadm.jorgecifuentes.R;
+import es.uam.eps.dadm.jorgecifuentes.activities.PreferenceActivity;
 import es.uam.eps.dadm.jorgecifuentes.model.Round;
 import es.uam.eps.dadm.jorgecifuentes.model.RoundRepository;
 import es.uam.eps.dadm.jorgecifuentes.model.RoundRepositoryFactory;
 import es.uam.eps.dadm.jorgecifuentes.model.TableroReversi;
 import es.uam.eps.dadm.jorgecifuentes.views.ReversiView;
 import es.uam.eps.multij.Evento;
+import es.uam.eps.multij.ExcepcionJuego;
 import es.uam.eps.multij.Jugador;
 import es.uam.eps.multij.JugadorAleatorio;
 import es.uam.eps.multij.Partida;
@@ -36,7 +38,8 @@ public class RoundFragment extends Fragment implements PartidaListener {
     public static final String ARG_ROUND_ID = "es.uam.eps.dadm.round_id";
     public static final String ARG_FIRST_PLAYER_NAME = "es.uam.eps.dadm.first_player_name";
     public static final String ARG_ROUND_TITLE = "es.uam.eps.dadm.round_title";
-
+    public static final String ARG_ROUND_DATE = "es.uam.eps.dadm.round_date";
+    public static final String ARG_ROUND_BOARD = "es.uam.eps.dadm.round_board";
 
     public static final String BOARDSTRING = "es.uam.eps.dadm.boardstring";
 
@@ -48,6 +51,16 @@ public class RoundFragment extends Fragment implements PartidaListener {
     private ReversiView boardView;
 
     private Callbacks callbacks;
+
+    private String roundId;
+    private String firstPlayerName;
+    private String roundTitle;
+    private String roundDate;
+    private String roundBoard;
+    private String boardString;
+
+    private TableroReversi board;
+
 
     /**
      * Funcion que define que hacer al actualizar el contenido de una ronda.
@@ -64,7 +77,12 @@ public class RoundFragment extends Fragment implements PartidaListener {
     /**
      * Devuelve una nueva instancia de este fragmento.
      *
-     * @param roundId id de la ronda contenida
+     * @param roundId         id de la ronda contenida
+     * @param firstPlayerName
+     * @param roundTitle
+     * @param roundSize
+     * @param roundDate
+     * @param roundBoard
      * @return la nueva instancia
      */
     public static RoundFragment newInstance(String roundId, String firstPlayerName, String roundTitle, int roundSize, String roundDate, String roundBoard) {
@@ -74,6 +92,9 @@ public class RoundFragment extends Fragment implements PartidaListener {
         args.putString(ARG_ROUND_ID, roundId);
         args.putString(ARG_FIRST_PLAYER_NAME, firstPlayerName);
         args.putString(ARG_ROUND_TITLE, roundTitle);
+        args.putString(ARG_ROUND_DATE, roundDate);
+        args.putString(ARG_ROUND_BOARD, roundBoard); //TODO en savedInstance??? (no)
+
 
         RoundFragment roundFragment = new RoundFragment();
         roundFragment.setArguments(args);
@@ -113,17 +134,34 @@ public class RoundFragment extends Fragment implements PartidaListener {
         if (getArguments().containsKey(ARG_FIRST_PLAYER_NAME)) {
             firstPlayerName = getArguments().getString(ARG_FIRST_PLAYER_NAME);
         }
+
         if (getArguments().containsKey(ARG_ROUND_TITLE)) {
             roundTitle = getArguments().getString(ARG_ROUND_TITLE);
         }
 
-        if (savedInstanceState != null)
-            boardString = savedInstanceState.getString(BOARDSTRING);
+        if (getArguments().containsKey(ARG_ROUND_DATE)) {
+            roundDate = getArguments().getString(ARG_ROUND_DATE);
+        }
 
+        if (getArguments().containsKey(ARG_ROUND_BOARD)) {
+            roundBoard = getArguments().getString(ARG_ROUND_BOARD);
+        }
+
+        if (savedInstanceState != null) {
+            boardString = savedInstanceState.getString(BOARDSTRING);
+        }
+
+        // cargamos el tablero
+        this.board = new TableroReversi();
+        try {
+            board.stringToTablero(boardString);
+        } catch (ExcepcionJuego e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) { // inicializaciones graficas, va despues de oncreate
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) { // inicializaciones graficas, va despues de onCreate
 
         final View rootView = inflater.inflate(R.layout.fragment_round, container, false);
 
@@ -176,9 +214,9 @@ public class RoundFragment extends Fragment implements PartidaListener {
 
     private Round createRound() {
 
-        Round round = new Round(roundSize);
+        Round round = new Round();
 
-        round.setPlayerUUID(ERPreferenceActivity.getPlayerUUID(getActivity()));
+        round.setPlayerUUID(PreferenceActivity.getPlayerUUID(getActivity()));
         round.setId(roundId);
         round.setFirstPlayerName("random");
         round.setSecondPlayerName(firstPlayerName);

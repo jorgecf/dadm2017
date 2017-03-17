@@ -17,4 +17,6 @@
     <string name="settings">Ajustes</string>
     <string name="settings_title">Ajustes del juego</string>
     <string name="repository_opening_error">Error abriendo repositorio de rondas</string>
+    <string name="error_reading_rounds">Error leyendo las rondas</string>
+    <string name="error_updating_round">Error actualizanco la ronda </string>
 </resources>

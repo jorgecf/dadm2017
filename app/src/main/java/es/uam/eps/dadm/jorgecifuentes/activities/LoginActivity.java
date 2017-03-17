@@ -67,13 +67,14 @@ public class LoginActivity extends Activity implements View.OnClickListener {
                         PreferenceActivity.setPlayerUUID(LoginActivity.this, playerId);
                         PreferenceActivity.setPlayerName(LoginActivity.this, playername);
                         PreferenceActivity.setPlayerPassword(LoginActivity.this, password);
+
                         startActivity(new Intent(LoginActivity.this, RoundListActivity.class));
                         finish();
                     }
 
                     @Override
                     public void onError(String error) {
-                        // TODO Se instancia diálogo de alerta
+                        // TODO Se instancia dialogo de alerta
                     }
 
                 };
