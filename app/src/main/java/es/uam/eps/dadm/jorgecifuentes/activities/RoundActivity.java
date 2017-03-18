@@ -30,6 +30,7 @@ import es.uam.eps.dadm.jorgecifuentes.model.Round;
 
         if (fragment == null) {
             String roundId = getIntent().getStringExtra(EXTRA_ROUND_ID);
+            //TODO gettear demas datos de extras
             RoundFragment roundFragment = RoundFragment.newInstance(roundId); // nuevo fragmento
             getSupportFragmentManager().beginTransaction().add(R.id.fragment_container, roundFragment).commit();
         }
@@ -42,9 +43,10 @@ import es.uam.eps.dadm.jorgecifuentes.model.Round;
      * @param roundId        Id de la ronda que se va a asociar a la actividad.
      * @return intencion creada
      */
-    public static Intent newIntent(Context packageContext, String roundId) {
+    public static Intent newIntent(Context packageContext, String roundId, String firstPlayerName, String roundTitle, int roundSize, String roundDate, String roundBoard) {
         Intent intent = new Intent(packageContext, RoundActivity.class);
         intent.putExtra(EXTRA_ROUND_ID, roundId);
+        //TODO guardar demas datos en extras
         return intent;
     }
 
