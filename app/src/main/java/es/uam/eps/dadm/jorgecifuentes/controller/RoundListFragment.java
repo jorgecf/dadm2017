@@ -185,10 +185,11 @@ public class RoundListFragment extends Fragment {
                 RoundRepository.BooleanCallback b = new RoundRepository.BooleanCallback() {
                     @Override
                     public void onResponse(boolean ok) {
-                        callbacks.onNewRoundAdded();
+                        callbacks.onNewRoundAdded(); //TODO ????
                     }
                 };
 
+                RoundRepository repository = RoundRepositoryFactory.createRepository(getActivity());
                 repository.addRound(round, callback); //TODO
                 updateUI();
                 return true;
@@ -210,15 +211,28 @@ public class RoundListFragment extends Fragment {
         RoundRepository repository = RoundRepository.get(getActivity());
         List<Round> rounds = repository.getRounds();
         */
-        //List<Round> rounds = repository.getRounds();
 
-        if (roundAdapter == null) { //TODO
-            roundAdapter = new RoundAdapter(rounds);
-            roundRecyclerView.setAdapter(roundAdapter);
-        } else {
-            roundAdapter.notifyDataSetChanged();
-        }
+        // Creamos el callback.
+        RoundRepository.RoundsCallback roundsCallback = new RoundRepository.RoundsCallback() {
+            @Override
+            public void onResponse(List<Round> rounds) {
+                if (roundAdapter == null) { //TODO esto va al onResponse ---> lo que hara al obtener las rondas de la bbdd
+                    roundAdapter = new RoundAdapter(rounds);
+                    roundRecyclerView.setAdapter(roundAdapter);
+                } else {
+                    roundAdapter.notifyDataSetChanged();
+                }
+            }
 
+            @Override
+            public void onError(String error) {
+                Snackbar.make(getView(), R.string.error_reading_rounds, Snackbar.LENGTH_LONG).show();
+            }
+        };
+
+        // Obtenemos las rondas.
+        RoundRepository repository = RoundRepositoryFactory.createRepository(getActivity());
+        repository.getRounds(PreferenceActivity.getPlayerUUID(getActivity()), null, null, roundsCallback);
     }
 
 
