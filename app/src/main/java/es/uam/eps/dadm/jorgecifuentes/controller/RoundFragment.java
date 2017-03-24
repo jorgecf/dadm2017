@@ -95,6 +95,7 @@ public class RoundFragment extends Fragment implements PartidaListener {
         args.putString(ARG_ROUND_DATE, roundDate);
         args.putString(ARG_ROUND_BOARD, roundBoard); //TODO en savedInstance??? (no)
 
+     //   args.putString(ARG_ROUND_UUID, );
 
         RoundFragment roundFragment = new RoundFragment();
         roundFragment.setArguments(args);
@@ -151,7 +152,17 @@ public class RoundFragment extends Fragment implements PartidaListener {
             boardString = savedInstanceState.getString(BOARDSTRING);
         }
 
-        // cargamos el tablero
+        // Cargamos la ronda contenida en este fragmento.
+        this.round = new Round();
+
+        this.round.setId(roundId); //TODO esto que es???
+        this.round.setFirstPlayerName(firstPlayerName);
+        this.round.setTitle(roundTitle);
+        this.round.setDate(roundDate);
+        this.round.setPlayerUUID(null);
+        this.round.setRoundUUID(null);
+
+        // Cargamos el tablero.
         this.board = new TableroReversi();
         try {
             board.stringToTablero(boardString);
