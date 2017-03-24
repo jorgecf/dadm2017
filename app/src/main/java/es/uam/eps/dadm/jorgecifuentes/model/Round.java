@@ -21,7 +21,7 @@ public class Round {
 
     public Round() {
         this.id = UUID.randomUUID().toString();
-        this.playerUUID = UUID.randomUUID().toString();
+        this.playerUUID = UUID.randomUUID().toString(); //TODO ???
         this.roundUUID = UUID.randomUUID().toString();
 
         this.title = "ROUND " + " " + id.toString().substring(19, 23).toUpperCase();

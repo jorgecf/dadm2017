@@ -50,6 +50,11 @@ public class RoundListActivity extends AppCompatActivity implements RoundListFra
         this.startActivity(intent);
     }
 
+    @Override
+    public void onNewRoundAdded() {
+        
+    }
+
 
     @Override
     public void onRoundUpdated(Round round) {

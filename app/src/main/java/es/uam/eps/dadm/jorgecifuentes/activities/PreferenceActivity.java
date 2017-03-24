@@ -21,6 +21,7 @@ public class PreferenceActivity extends AppCompatActivity {
     private static final String PLAYERUUID = "playeruuid";
     private static final String PLAYERNAME = "playername";
     private static final String PLAYERPASSWORD = "password";
+    public static final String PLAYERNAME_DEFAULT = "defoe";
 
 
     public void onCreate(Bundle savedInstanceState) {
@@ -48,6 +49,10 @@ public class PreferenceActivity extends AppCompatActivity {
         return PreferenceManager.getDefaultSharedPreferences(context).getString(PLAYERUUID, "0"); //TODO defvalue
     }
 
+    public static String getPlayerName(Context context) {
+        return PreferenceManager.getDefaultSharedPreferences(context).getString(PLAYERNAME, PLAYERNAME_DEFAULT);
+    }
+
     public static void setPlayerName(Context context, String name) {
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
         SharedPreferences.Editor editor = sharedPreferences.edit();
@@ -63,6 +68,8 @@ public class PreferenceActivity extends AppCompatActivity {
         editor.putString(PreferenceActivity.PLAYERPASSWORD, password);
         editor.commit();
     }
+
+
 /*
     public static String getBoardSize(Context context) {
         return PreferenceManager.getDefaultSharedPreferences(context).getString(BOARDSIZE_KEY, BOARDSIZE_DEFAULT);

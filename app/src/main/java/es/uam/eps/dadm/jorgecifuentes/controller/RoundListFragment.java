@@ -23,7 +23,6 @@ import es.uam.eps.dadm.jorgecifuentes.activities.PreferenceActivity;
 import es.uam.eps.dadm.jorgecifuentes.model.Round;
 import es.uam.eps.dadm.jorgecifuentes.model.RoundRepository;
 import es.uam.eps.dadm.jorgecifuentes.model.RoundRepositoryFactory;
-import es.uam.eps.multij.Partida;
 
 /**
  * Clase que representa un  fragmento que incluye la lista de rondas.
@@ -41,6 +40,8 @@ public class RoundListFragment extends Fragment {
         void onRoundSelected(Round round);
 
         void onPreferencesSelected();
+
+        void onNewRoundAdded();
     }
 
     @Override
@@ -180,9 +181,11 @@ public class RoundListFragment extends Fragment {
                  Instanciar una partida e inicializarla adecuadamente
                 Crear el repositorio
                 Instanciar un método callback de tipo BooleanCallback y llamar a onNewRoundAdded de callbacks. */
-                Partida p = new Partida();
-                RoundRepository r = RoundRepositoryFactory.createRepository(getActivity());
-                RoundRepository.BooleanCallback b = new RoundRepository.BooleanCallback() {
+
+                Round round = new Round();
+
+              //  RoundRepository r = RoundRepositoryFactory.createRepository(getActivity());
+                RoundRepository.BooleanCallback callback = new RoundRepository.BooleanCallback() {
                     @Override
                     public void onResponse(boolean ok) {
                         callbacks.onNewRoundAdded(); //TODO ????
@@ -190,7 +193,7 @@ public class RoundListFragment extends Fragment {
                 };
 
                 RoundRepository repository = RoundRepositoryFactory.createRepository(getActivity());
-                repository.addRound(round, callback); //TODO
+                repository.addRound(round, callback);
                 updateUI();
                 return true;
             case R.id.menu_item_settings:

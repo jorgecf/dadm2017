@@ -12,6 +12,7 @@ import es.uam.eps.dadm.jorgecifuentes.activities.RoundActivity;
 import es.uam.eps.dadm.jorgecifuentes.activities.RoundListActivity;
 import es.uam.eps.dadm.jorgecifuentes.model.Round;
 import es.uam.eps.dadm.jorgecifuentes.model.RoundRepository;
+import es.uam.eps.dadm.jorgecifuentes.model.RoundRepositoryFactory;
 
 /**
  * Clase que representa una alerta dentro de un fragmento.
@@ -34,7 +35,8 @@ public class AlertDialogFragment extends DialogFragment {
                     public void onClick(DialogInterface dialog, int which) {
 
                         Round round = new Round();
-                        RoundRepository.get(getActivity()).addRound(round);
+                        //RoundRepository.get(getActivity()).addRound(round);
+                        RoundRepositoryFactory.createRepository(getActivity()).addRound(round, null); //pasarle callback de debugueo???
 
                         if (activity instanceof RoundListActivity)
                             ((RoundListActivity) activity).onRoundUpdated(round);
