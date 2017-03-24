@@ -23,6 +23,18 @@ public class Round {
         this.id = UUID.randomUUID().toString();
         this.playerUUID = UUID.randomUUID().toString(); //TODO ???
         this.roundUUID = UUID.randomUUID().toString();
+        // this.playername="CAMBIAME"; //TODO pasar por param? cargando desde preferencias
+
+        this.title = "ROUND " + " " + id.toString().substring(19, 23).toUpperCase();
+        this.date = new Date().toString();
+        this.board = new TableroReversi();
+    }
+
+    public Round(String playerUUID) {
+        this.id = UUID.randomUUID().toString();
+        this.playerUUID = playerUUID;
+        this.roundUUID = UUID.randomUUID().toString();
+        // this.playername="CAMBIAME"; //TODO pasar por param? cargando desde preferencias
 
         this.title = "ROUND " + " " + id.toString().substring(19, 23).toUpperCase();
         this.date = new Date().toString();
@@ -34,7 +46,7 @@ public class Round {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(String id) { //TODO necesaria???
         this.id = id;
     }
 
@@ -69,6 +81,7 @@ public class Round {
     public void setFirstPlayerName(String n) {
         this.playername = n;
     }
+
     public String getPlayername() {
         return playername;
     }
@@ -81,11 +94,16 @@ public class Round {
         return this.playerUUID;
     }
 
-    public String getRoundUUID() {
-        return roundUUID;
-    }
 
     public void setPlayerUUID(String playerUUID) {
         this.playerUUID = playerUUID;
+    }
+
+    public void setRoundUUID(String roundUUID) {
+        this.roundUUID = roundUUID;
+    }
+
+    public String getRoundUUID() {
+        return roundUUID;
     }
 }

@@ -28,13 +28,17 @@ public class RoundDataBase implements RoundRepository {
     private final String DEBUG_TAG = "DEBUG";
 
     private static final String DATABASE_NAME = "er.db";
+    // private static final String DATABASE_PATH = "/data/data/es.uam.eps.dadm.jorgecifuentes/databases/";
+
     private static final int DATABASE_VERSION = 1;
 
     private DatabaseHelper helper;
     private SQLiteDatabase db;
 
     public RoundDataBase(Context context) {
-
+        // this.db=new SQLiteDatabase();
+        // this.db = SQLiteDatabase.openOrCreateDatabase(DATABASE_PATH + DATABASE_NAME, null);
+        this.helper = new DatabaseHelper(context);
     }
 
 
@@ -81,6 +85,7 @@ public class RoundDataBase implements RoundRepository {
         }
 
     }
+
 
     @Override
     public void open() throws SQLException {
@@ -148,7 +153,7 @@ public class RoundDataBase implements RoundRepository {
         while (!cursor.isAfterLast()) {
             Round round = cursor.getRound();
 
-            if (round.getPlayerUUID().equals(playeruuid)) //TODO
+            if (round.getPlayerUUID().equals(playeruuid))
                 rounds.add(round);
             cursor.moveToNext();
         }
@@ -186,8 +191,21 @@ public class RoundDataBase implements RoundRepository {
         ContentValues values = this.getContentValues(round);
 
         long id = this.db.insert(RoundTable.NAME, null, values);
+
+        Log.d(DEBUG_TAG, "Dev insert ronda = " + id);
+
         if (callback != null)
             callback.onResponse(id >= 0);
+    }
+
+    @Override
+    public void removeRound(Round round) {
+        ContentValues values = this.getContentValues(round);
+
+        long id = this.db.delete(RoundTable.NAME, RoundTable.Cols.ROUNDUUID + "=?", new String[]{round.getRoundUUID()});
+
+        Log.d(DEBUG_TAG, "Dev remove ronda = " + id);
+
     }
 
     private ContentValues getContentValues(Round round) {
@@ -199,7 +217,7 @@ public class RoundDataBase implements RoundRepository {
         values.put(RoundTable.Cols.DATE, round.getDate());
         values.put(RoundTable.Cols.TITLE, round.getTitle());
         values.put(RoundTable.Cols.SIZE, round.getSize());
-        values.put(RoundTable.Cols.BOARD, round.getBoard().toSimpleString());
+        values.put(RoundTable.Cols.BOARD, round.getBoard().tableroToString());
 
         return values;
     }

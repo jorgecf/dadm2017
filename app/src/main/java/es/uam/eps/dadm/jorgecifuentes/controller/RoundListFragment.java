@@ -41,7 +41,7 @@ public class RoundListFragment extends Fragment {
 
         void onPreferencesSelected();
 
-        void onNewRoundAdded();
+        //  void onNewRoundAdded();
     }
 
     @Override
@@ -74,7 +74,7 @@ public class RoundListFragment extends Fragment {
             public void onItemClick(View view, final int position) {
 
                 // Si la partida esta iniciada, clickar nuevamente sobre su CardView no la reiniciara.
-                //  Para eso esta el FAB.
+                //  Para eso esta el FAB. TODO
                 /*
                 if (roundAdapter.isCurrent(position) == false) {
                     Round round = RoundRepository.get(getContext()).getRounds().get(position);
@@ -122,7 +122,9 @@ public class RoundListFragment extends Fragment {
 
             @Override
             public void onSwiped(RecyclerView.ViewHolder viewHolder, int swipeDir) {
-                roundAdapter.remove(viewHolder.getAdapterPosition());
+                Round round = roundAdapter.remove(viewHolder.getAdapterPosition());
+                RoundRepository repository = RoundRepositoryFactory.createRepository(getActivity());
+                repository.removeRound(round);
             }
         };
 
@@ -144,7 +146,8 @@ public class RoundListFragment extends Fragment {
 
         // Al cargar la vista de nuevo (solo en movil, en tablet nunca se oculta), reseteamos el
         //  actual.
-        this.roundAdapter.setCurrent(-1);
+        if (this.roundAdapter != null)
+            this.roundAdapter.setCurrent(-1);
     }
 
     @Override
@@ -182,19 +185,20 @@ public class RoundListFragment extends Fragment {
                 Crear el repositorio
                 Instanciar un método callback de tipo BooleanCallback y llamar a onNewRoundAdded de callbacks. */
 
-                Round round = new Round();
+                Round round = new Round(PreferenceActivity.getPlayerUUID(getActivity()));
 
-              //  RoundRepository r = RoundRepositoryFactory.createRepository(getActivity());
+                //  RoundRepository r = RoundRepositoryFactory.createRepository(getActivity());
                 RoundRepository.BooleanCallback callback = new RoundRepository.BooleanCallback() {
                     @Override
                     public void onResponse(boolean ok) {
-                        callbacks.onNewRoundAdded(); //TODO ????
+                        //  callbacks.onNewRoundAdded();
+                        updateUI();
                     }
                 };
 
                 RoundRepository repository = RoundRepositoryFactory.createRepository(getActivity());
                 repository.addRound(round, callback);
-                updateUI();
+                //  updateUI();
                 return true;
             case R.id.menu_item_settings:
                 callbacks.onPreferencesSelected();
@@ -219,17 +223,18 @@ public class RoundListFragment extends Fragment {
         RoundRepository.RoundsCallback roundsCallback = new RoundRepository.RoundsCallback() {
             @Override
             public void onResponse(List<Round> rounds) {
-                if (roundAdapter == null) { //TODO esto va al onResponse ---> lo que hara al obtener las rondas de la bbdd
+                if (roundAdapter == null) {
                     roundAdapter = new RoundAdapter(rounds);
                     roundRecyclerView.setAdapter(roundAdapter);
                 } else {
-                    roundAdapter.notifyDataSetChanged();
+                    // roundAdapter.notifyDataSetChanged();
+                    roundAdapter.setRounds(rounds);
                 }
             }
 
             @Override
             public void onError(String error) {
-                Snackbar.make(getView(), R.string.error_reading_rounds, Snackbar.LENGTH_LONG).show();
+
             }
         };
 
@@ -296,9 +301,19 @@ public class RoundListFragment extends Fragment {
             holder.bindRound(round);
         }
 
-        public void remove(int position) {
+        public Round remove(int position) {
+            Round r = this.rounds.get(position);
+
             this.rounds.remove(position);
             this.notifyItemRemoved(position);
+
+            return r;
+        }
+
+        public void setRounds(List<Round> r) {
+            this.rounds.clear();
+            this.rounds = r;
+            roundAdapter.notifyDataSetChanged();
         }
 
 

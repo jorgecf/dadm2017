@@ -21,7 +21,7 @@ public class PreferenceActivity extends AppCompatActivity {
     private static final String PLAYERUUID = "playeruuid";
     private static final String PLAYERNAME = "playername";
     private static final String PLAYERPASSWORD = "password";
-    public static final String PLAYERNAME_DEFAULT = "defoe";
+    public static final String PLAYERNAME_DEFAULT = "def";
 
 
     public void onCreate(Bundle savedInstanceState) {
@@ -68,6 +68,8 @@ public class PreferenceActivity extends AppCompatActivity {
         editor.putString(PreferenceActivity.PLAYERPASSWORD, password);
         editor.commit();
     }
+
+
 
 
 /*

@@ -29,11 +29,13 @@ public class LoginActivity extends Activity implements View.OnClickListener {
 
         this.setContentView(R.layout.activity_login);
 
+
         if (!PreferenceActivity.getPlayerName(this).equals(PreferenceActivity.PLAYERNAME_DEFAULT)) {
             startActivity(new Intent(LoginActivity.this, RoundListActivity.class));
             finish();
             return;
-        }
+        } //TODO quitar o no
+
 
         usernameEditText = (EditText) findViewById(R.id.login_username);
         passwordEditText = (EditText) findViewById(R.id.login_password);

@@ -40,6 +40,7 @@ public interface RoundRepository {
     void getRounds(String playeruuid, String orderByField, String group, RoundsCallback callback);
 
     void addRound(Round round, BooleanCallback callback);
+    void removeRound(Round round);
 
     void updateRound(Round round, BooleanCallback callback);
 }

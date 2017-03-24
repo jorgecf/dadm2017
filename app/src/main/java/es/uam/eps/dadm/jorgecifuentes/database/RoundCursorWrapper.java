@@ -30,16 +30,20 @@ public class RoundCursorWrapper extends CursorWrapper {
 
         String playername = getString(getColumnIndex(UserTable.Cols.PLAYERNAME));
         String board = getString(getColumnIndex(RoundTable.Cols.BOARD)); //TODO probar que todos los campos se llenan
-        String id = getString(getColumnIndex(RoundTable.Cols.ROUNDUUID));
+        String rounduuid = getString(getColumnIndex(RoundTable.Cols.ROUNDUUID));
         String date = getString(getColumnIndex(RoundTable.Cols.DATE));
         String title = getString(getColumnIndex(RoundTable.Cols.TITLE));
+        String playeruuid = getString(getColumnIndex(UserTable.Cols.PLAYERUUID));
 
         Round round = new Round();
         round.setFirstPlayerName("random");
         round.setSecondPlayerName(playername);
-        round.setId(id);
+    //    round.setId(id);
         round.setDate(date);
         round.setTitle(title);
+
+        round.setPlayerUUID(playeruuid);
+        round.setRoundUUID(rounduuid);
 
         try {
             round.getBoard().stringToTablero(board);
