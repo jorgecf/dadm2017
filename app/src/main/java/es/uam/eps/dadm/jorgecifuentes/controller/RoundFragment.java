@@ -40,6 +40,7 @@ public class RoundFragment extends Fragment implements PartidaListener {
     public static final String ARG_ROUND_TITLE = "es.uam.eps.dadm.round_title";
     public static final String ARG_ROUND_DATE = "es.uam.eps.dadm.round_date";
     public static final String ARG_ROUND_BOARD = "es.uam.eps.dadm.round_board";
+    public static final String ARG_ROUND_UUID = "es.uam.eps.dadm.rounduuid";
 
     public static final String BOARDSTRING = "es.uam.eps.dadm.boardstring";
 
@@ -58,6 +59,7 @@ public class RoundFragment extends Fragment implements PartidaListener {
     private String roundDate;
     private String roundBoard;
     private String boardString;
+    private String rounduuid;
 
     private TableroReversi board;
 
@@ -77,25 +79,23 @@ public class RoundFragment extends Fragment implements PartidaListener {
     /**
      * Devuelve una nueva instancia de este fragmento.
      *
-     * @param roundId         id de la ronda contenida
      * @param firstPlayerName
      * @param roundTitle
-     * @param roundSize
      * @param roundDate
      * @param roundBoard
      * @return la nueva instancia
      */
-    public static RoundFragment newInstance(String roundId, String firstPlayerName, String roundTitle, int roundSize, String roundDate, String roundBoard) {
+    public static RoundFragment newInstance(String rounduuid, String firstPlayerName, String roundTitle, String roundDate, String roundBoard) {
 
-        // Almacenamos el id de la ronda en el Bundle.
+        // Almacenamos los datos de la ronda en el Bundle.
         Bundle args = new Bundle();
-        args.putString(ARG_ROUND_ID, roundId);
+
         args.putString(ARG_FIRST_PLAYER_NAME, firstPlayerName);
         args.putString(ARG_ROUND_TITLE, roundTitle);
         args.putString(ARG_ROUND_DATE, roundDate);
-        args.putString(ARG_ROUND_BOARD, roundBoard); //TODO en savedInstance??? (no)
+        args.putString(ARG_ROUND_BOARD, roundBoard);
 
-     //   args.putString(ARG_ROUND_UUID, );
+        args.putString(ARG_ROUND_UUID, rounduuid);
 
         RoundFragment roundFragment = new RoundFragment();
         roundFragment.setArguments(args);
@@ -122,16 +122,6 @@ public class RoundFragment extends Fragment implements PartidaListener {
         super.onCreate(savedInstanceState);
 
         // Recuperamos la ronda guardada, si existe.
-       /*
-        if (getArguments().containsKey(ARG_ROUND_ID)) {
-            String roundId = getArguments().getString(ARG_ROUND_ID);
-            this.round = RoundRepository.get(getActivity()).getRound(roundId);
-        }
-        */
-        if (getArguments().containsKey(ARG_ROUND_ID)) {
-            roundId = getArguments().getString(ARG_ROUND_ID);
-        }
-
         if (getArguments().containsKey(ARG_FIRST_PLAYER_NAME)) {
             firstPlayerName = getArguments().getString(ARG_FIRST_PLAYER_NAME);
         }
@@ -148,24 +138,18 @@ public class RoundFragment extends Fragment implements PartidaListener {
             roundBoard = getArguments().getString(ARG_ROUND_BOARD);
         }
 
-        if (savedInstanceState != null) {
-            boardString = savedInstanceState.getString(BOARDSTRING);
+        if (getArguments().containsKey(ARG_ROUND_UUID)) {
+            rounduuid = getArguments().getString(ARG_ROUND_UUID);
         }
 
-        // Cargamos la ronda contenida en este fragmento.
-        this.round = new Round();
 
-        this.round.setId(roundId); //TODO esto que es???
-        this.round.setFirstPlayerName(firstPlayerName);
-        this.round.setTitle(roundTitle);
-        this.round.setDate(roundDate);
-        this.round.setPlayerUUID(null);
-        this.round.setRoundUUID(null);
+        // Cargamos la ronda contenida en este fragmento.
+        this.round = new Round(firstPlayerName, roundTitle, roundDate, PreferenceActivity.getPlayerUUID(getActivity()), rounduuid);
 
         // Cargamos el tablero.
-        this.board = new TableroReversi();
+        this.round.setBoard(new TableroReversi());
         try {
-            board.stringToTablero(boardString);
+            this.round.getBoard().stringToTablero(roundBoard);
         } catch (ExcepcionJuego e) {
             e.printStackTrace();
         }
@@ -228,7 +212,6 @@ public class RoundFragment extends Fragment implements PartidaListener {
         Round round = new Round();
 
         round.setPlayerUUID(PreferenceActivity.getPlayerUUID(getActivity()));
-        round.setId(roundId);
         round.setFirstPlayerName("random");
         round.setSecondPlayerName(firstPlayerName);
         round.setDate(roundDate);
@@ -264,11 +247,10 @@ public class RoundFragment extends Fragment implements PartidaListener {
 
     private void updateRound() {
 
-        Round round = createRound();
+        //  Round round = this.createRound();
 
         RoundRepository repository = RoundRepositoryFactory.createRepository(getActivity());
         RoundRepository.BooleanCallback callback = new RoundRepository.BooleanCallback() {
-
             @Override
             public void onResponse(boolean response) {
                 if (response == false)
@@ -296,6 +278,9 @@ public class RoundFragment extends Fragment implements PartidaListener {
             white_score.setTypeface(null, Typeface.BOLD);
             black_score.setTypeface(null, Typeface.NORMAL);
         }
+
+        // Actualizamos los datos en la base de datos.
+        this.updateRound();
 
         // Repintamos el tablero.
         this.boardView.setBoard(this.round.getBoard());

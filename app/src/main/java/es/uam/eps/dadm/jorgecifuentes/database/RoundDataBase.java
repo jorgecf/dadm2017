@@ -199,10 +199,20 @@ public class RoundDataBase implements RoundRepository {
     }
 
     @Override
+    public void updateRound(Round round, BooleanCallback callback) {
+
+        ContentValues values = this.getContentValues(round);
+
+        long id = this.db.update(RoundTable.NAME, values, RoundTable.Cols.ROUNDUUID + "= ?", new String[]{round.getRoundUUID()});
+        if (callback != null)
+            callback.onResponse(id >= 0);
+    }
+
+    @Override
     public void removeRound(Round round) {
         ContentValues values = this.getContentValues(round);
 
-        long id = this.db.delete(RoundTable.NAME, RoundTable.Cols.ROUNDUUID + "=?", new String[]{round.getRoundUUID()});
+        long id = this.db.delete(RoundTable.NAME, RoundTable.Cols.ROUNDUUID + "= ?", new String[]{round.getRoundUUID()});
 
         Log.d(DEBUG_TAG, "Dev remove ronda = " + id);
 
@@ -220,15 +230,5 @@ public class RoundDataBase implements RoundRepository {
         values.put(RoundTable.Cols.BOARD, round.getBoard().tableroToString());
 
         return values;
-    }
-
-    @Override
-    public void updateRound(Round round, BooleanCallback callback) {
-
-        ContentValues values = this.getContentValues(round);
-
-        long id = this.db.update(RoundTable.NAME, values, null, null); //TODO comprobar
-        if (callback != null)
-            callback.onResponse(id >= 0);
     }
 }

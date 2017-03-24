@@ -74,7 +74,7 @@ public class RoundListFragment extends Fragment {
             public void onItemClick(View view, final int position) {
 
                 // Si la partida esta iniciada, clickar nuevamente sobre su CardView no la reiniciara.
-                //  Para eso esta el FAB. TODO
+                //  Para eso esta el FAB. TODO !
                 /*
                 if (roundAdapter.isCurrent(position) == false) {
                     Round round = RoundRepository.get(getContext()).getRounds().get(position);

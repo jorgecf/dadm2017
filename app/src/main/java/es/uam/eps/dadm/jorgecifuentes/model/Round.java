@@ -10,7 +10,7 @@ import java.util.UUID;
  */
 public class Round {
 
-    private String id;
+    //   private String id;
     private String title;
     private String date;
     private TableroReversi board;
@@ -20,34 +20,35 @@ public class Round {
     private String playername;
 
     public Round() {
-        this.id = UUID.randomUUID().toString();
-        this.playerUUID = UUID.randomUUID().toString(); //TODO ???
+        //    this.id = UUID.randomUUID().toString();
+        this.playerUUID = null;
         this.roundUUID = UUID.randomUUID().toString();
         // this.playername="CAMBIAME"; //TODO pasar por param? cargando desde preferencias
 
-        this.title = "ROUND " + " " + id.toString().substring(19, 23).toUpperCase();
+        this.title = "ROUND " + " " + roundUUID.toString().substring(19, 23).toUpperCase();
         this.date = new Date().toString();
         this.board = new TableroReversi();
     }
 
     public Round(String playerUUID) {
-        this.id = UUID.randomUUID().toString();
+        //   this.id = UUID.randomUUID().toString();
         this.playerUUID = playerUUID;
         this.roundUUID = UUID.randomUUID().toString();
         // this.playername="CAMBIAME"; //TODO pasar por param? cargando desde preferencias
 
-        this.title = "ROUND " + " " + id.toString().substring(19, 23).toUpperCase();
+        this.title = "ROUND " + " " + roundUUID.toString().substring(19, 23).toUpperCase();
         this.date = new Date().toString();
         this.board = new TableroReversi();
     }
 
+    public Round(String firstPlayerName, String roundTitle, String roundDate, String playerUUID, String rounduuid) {
+        this.setFirstPlayerName(firstPlayerName);
+        this.setTitle(roundTitle);
+        this.setDate(roundDate);
+        this.setPlayerUUID(playerUUID);
+        this.setRoundUUID(rounduuid);
 
-    public String getId() {
-        return id;
-    }
-
-    public void setId(String id) { //TODO necesaria???
-        this.id = id;
+        this.board = new TableroReversi();
     }
 
     public String getTitle() {

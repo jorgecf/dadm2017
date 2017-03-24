@@ -34,7 +34,7 @@ public class LoginActivity extends Activity implements View.OnClickListener {
             startActivity(new Intent(LoginActivity.this, RoundListActivity.class));
             finish();
             return;
-        } //TODO quitar o no
+        } //TODO quitar o no ---> preferencia "mantenerme logueado"
 
 
         usernameEditText = (EditText) findViewById(R.id.login_username);

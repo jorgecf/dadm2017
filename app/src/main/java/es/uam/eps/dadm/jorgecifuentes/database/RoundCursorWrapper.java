@@ -29,7 +29,7 @@ public class RoundCursorWrapper extends CursorWrapper {
     public Round getRound() {
 
         String playername = getString(getColumnIndex(UserTable.Cols.PLAYERNAME));
-        String board = getString(getColumnIndex(RoundTable.Cols.BOARD)); //TODO probar que todos los campos se llenan
+        String board = getString(getColumnIndex(RoundTable.Cols.BOARD));
         String rounduuid = getString(getColumnIndex(RoundTable.Cols.ROUNDUUID));
         String date = getString(getColumnIndex(RoundTable.Cols.DATE));
         String title = getString(getColumnIndex(RoundTable.Cols.TITLE));
@@ -38,7 +38,6 @@ public class RoundCursorWrapper extends CursorWrapper {
         Round round = new Round();
         round.setFirstPlayerName("random");
         round.setSecondPlayerName(playername);
-    //    round.setId(id);
         round.setDate(date);
         round.setTitle(title);
 
