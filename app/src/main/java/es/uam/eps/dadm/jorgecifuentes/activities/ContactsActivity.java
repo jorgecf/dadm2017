@@ -34,7 +34,10 @@ public class ContactsActivity extends AppCompatActivity {
     public static final int LOADER_ID = 78;
     private SimpleCursorAdapter adapter;
 
+    // Columnas que vaos a leer.
     private static final String[] FROM = {ContactsContract.Contacts.DISPLAY_NAME_PRIMARY, ContactsContract.Contacts.HAS_PHONE_NUMBER};
+
+    // Views donde guardar las columnas leidas (en este caso de contacts.xml).
     private static final int[] TO = {R.id.contactName, R.id.emailDirection};
 
 
@@ -48,7 +51,9 @@ public class ContactsActivity extends AppCompatActivity {
             String[] projectionFields = new String[]{
                     ContactsContract.Contacts._ID,
                     ContactsContract.Contacts.DISPLAY_NAME,
-                    ContactsContract.Contacts.HAS_PHONE_NUMBER};
+                    ContactsContract.Contacts.HAS_PHONE_NUMBER,
+                    //  ContactsContract.CommonDataKinds.Email._ID, ContactsContract.CommonDataKinds.Email.ADDRESS
+            };
 
             // Constructor del CursorLoader
             CursorLoader cursorLoader = new CursorLoader(
@@ -92,35 +97,26 @@ public class ContactsActivity extends AppCompatActivity {
 
         setContentView(R.layout.activity_contacts_list);
 
-        Button button = (Button) findViewById(R.id.button);
-        button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
+        // Comprobamos si tenemos permisos.
+        Log.d("DEBUG", "PERMISO? = " + ContextCompat.checkSelfPermission(ContactsActivity.this, Manifest.permission.READ_CONTACTS)); //TODO quitar logd
 
-                // Comprobamos si tenemos permisos.
-                Log.d("DEBUG", "PERMISO? = " + ContextCompat.checkSelfPermission(ContactsActivity.this, Manifest.permission.READ_CONTACTS)); //TODO quitar logd
+        if (ContextCompat.checkSelfPermission(ContactsActivity.this, Manifest.permission.READ_CONTACTS) != PackageManager.PERMISSION_GRANTED) {
 
-                if (ContextCompat.checkSelfPermission(ContactsActivity.this, Manifest.permission.READ_CONTACTS) != PackageManager.PERMISSION_GRANTED) {
-
-                    // Debemos presentar una explicación?
-                    if (ActivityCompat.shouldShowRequestPermissionRationale(ContactsActivity.this, Manifest.permission.READ_CONTACTS)) {
-                        // Mostramos una explicación al usuario y
-                        // solicitamos el permiso otra vez
-                        Snackbar.make(findViewById(R.id.contactsListView), "The contacts are required just to show them", Snackbar.LENGTH_LONG).show();
-                        ActivityCompat.requestPermissions(ContactsActivity.this, new String[]{Manifest.permission.READ_CONTACTS}, MY_PERMISSIONS_REQUEST_READ_CONTACTS);
-                    } else {
-                        // No se necesita explicación, se solicita el permiso.
-                        ActivityCompat.requestPermissions(ContactsActivity.this, new String[]{Manifest.permission.READ_CONTACTS}, MY_PERMISSIONS_REQUEST_READ_CONTACTS);
-                    }
-                }
-                  else {
-                       showContacts();
-                   }
+            // Debemos presentar una explicación?
+            if (ActivityCompat.shouldShowRequestPermissionRationale(ContactsActivity.this, Manifest.permission.READ_CONTACTS)) {
+                // Mostramos una explicación al usuario y
+                // solicitamos el permiso otra vez
+                Snackbar.make(findViewById(R.id.contactsListView), "The contacts are required just to show them", Snackbar.LENGTH_LONG).show();
+                ActivityCompat.requestPermissions(ContactsActivity.this, new String[]{Manifest.permission.READ_CONTACTS}, MY_PERMISSIONS_REQUEST_READ_CONTACTS);
+            } else {
+                // No se necesita explicación, se solicita el permiso.
+                ActivityCompat.requestPermissions(ContactsActivity.this, new String[]{Manifest.permission.READ_CONTACTS}, MY_PERMISSIONS_REQUEST_READ_CONTACTS);
             }
-        });
+        } else {
+            showContacts();
+        }
 
-        // Instanciamos el SimpleCursorAdapter.
-        this.setupCursorAdapter();
+
     }
 
 
@@ -137,7 +133,7 @@ public class ContactsActivity extends AppCompatActivity {
                     //
                     // Aquí colocaremos el código para mostrar los contactos
                     //
-                       this.showContacts();
+                    this.showContacts();
 
                 } else {
                     Snackbar.make(findViewById(R.id.contactsListView), "The contacts won't be shown since permission has been denied", Snackbar.LENGTH_INDEFINITE).show();
@@ -150,8 +146,10 @@ public class ContactsActivity extends AppCompatActivity {
 
     private void showContacts() {
 
-        ((ListView) findViewById(R.id.contactsListView)).setAdapter(this.adapter);
+        // Instanciamos el SimpleCursorAdapter.
+        this.setupCursorAdapter();
 
+        ((ListView) findViewById(R.id.contactsListView)).setAdapter(this.adapter);
     }
 
 }

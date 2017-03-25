@@ -3,11 +3,7 @@
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <Button
-        android:id="@+id/button"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="SHOW CONTACTS" /> <!-- TOODO STRINGS -->
+ <!-- TODO STRINGS -->
 
     <ListView
         android:id="@+id/contactsListView"
