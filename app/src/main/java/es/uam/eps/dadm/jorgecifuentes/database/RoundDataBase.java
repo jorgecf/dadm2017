@@ -192,8 +192,6 @@ public class RoundDataBase implements RoundRepository {
 
         long id = this.db.insert(RoundTable.NAME, null, values);
 
-        Log.d(DEBUG_TAG, "Dev insert ronda = " + id);
-
         if (callback != null)
             callback.onResponse(id >= 0);
     }
@@ -210,12 +208,7 @@ public class RoundDataBase implements RoundRepository {
 
     @Override
     public void removeRound(Round round) {
-        ContentValues values = this.getContentValues(round);
-
         long id = this.db.delete(RoundTable.NAME, RoundTable.Cols.ROUNDUUID + "= ?", new String[]{round.getRoundUUID()});
-
-        Log.d(DEBUG_TAG, "Dev remove ronda = " + id);
-
     }
 
     private ContentValues getContentValues(Round round) {

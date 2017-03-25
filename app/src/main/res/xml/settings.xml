@@ -24,4 +24,13 @@
         </EditTextPreference>
 
     </PreferenceCategory>
+
+
+    <PreferenceCategory android:title="Contacts">
+        <Preference android:title="Access your contacts list">
+            <intent android:action="open.contacts.action" />
+        </Preference>
+    </PreferenceCategory>
+
+
 </PreferenceScreen>

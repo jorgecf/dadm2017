@@ -16,8 +16,6 @@ import es.uam.eps.dadm.jorgecifuentes.controller.PreferencesFragment;
  */
 public class PreferenceActivity extends AppCompatActivity {
 
-    public final static String BOARDSIZE_KEY = "boardsize";
-    public final static String BOARDSIZE_DEFAULT = "0";
     private static final String PLAYERUUID = "playeruuid";
     private static final String PLAYERNAME = "playername";
     private static final String PLAYERPASSWORD = "password";
@@ -68,21 +66,4 @@ public class PreferenceActivity extends AppCompatActivity {
         editor.putString(PreferenceActivity.PLAYERPASSWORD, password);
         editor.commit();
     }
-
-
-
-
-/*
-    public static String getBoardSize(Context context) {
-        return PreferenceManager.getDefaultSharedPreferences(context).getString(BOARDSIZE_KEY, BOARDSIZE_DEFAULT);
-    }
-
-    public static void setBoardsize(Context context, int size) {
-
-        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
-        SharedPreferences.Editor editor = sharedPreferences.edit();
-        editor.putInt(PreferenceActivity.BOARDSIZE_KEY, size);
-        editor.commit();
-    }
-*/
 }

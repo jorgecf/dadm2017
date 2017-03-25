@@ -53,12 +53,10 @@ public class RoundFragment extends Fragment implements PartidaListener {
 
     private Callbacks callbacks;
 
-    private String roundId;
     private String firstPlayerName;
     private String roundTitle;
     private String roundDate;
     private String roundBoard;
-    private String boardString;
     private String rounduuid;
 
     private TableroReversi board;
@@ -207,20 +205,6 @@ public class RoundFragment extends Fragment implements PartidaListener {
         super.onSaveInstanceState(outState);
     }
 
-    private Round createRound() {
-
-        Round round = new Round();
-
-        round.setPlayerUUID(PreferenceActivity.getPlayerUUID(getActivity()));
-        round.setFirstPlayerName("random");
-        round.setSecondPlayerName(firstPlayerName);
-        round.setDate(roundDate);
-        round.setTitle(roundTitle);
-        round.setBoard(board);
-
-        return round;
-    }
-
     void startRound() {
 
         ArrayList<Jugador> players = new ArrayList<Jugador>();
@@ -246,8 +230,6 @@ public class RoundFragment extends Fragment implements PartidaListener {
     }
 
     private void updateRound() {
-
-        //  Round round = this.createRound();
 
         RoundRepository repository = RoundRepositoryFactory.createRepository(getActivity());
         RoundRepository.BooleanCallback callback = new RoundRepository.BooleanCallback() {

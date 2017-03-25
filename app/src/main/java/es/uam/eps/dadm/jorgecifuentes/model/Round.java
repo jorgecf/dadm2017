@@ -10,7 +10,6 @@ import java.util.UUID;
  */
 public class Round {
 
-    //   private String id;
     private String title;
     private String date;
     private TableroReversi board;
@@ -20,7 +19,6 @@ public class Round {
     private String playername;
 
     public Round() {
-        //    this.id = UUID.randomUUID().toString();
         this.playerUUID = null;
         this.roundUUID = UUID.randomUUID().toString();
         // this.playername="CAMBIAME"; //TODO pasar por param? cargando desde preferencias
@@ -31,7 +29,6 @@ public class Round {
     }
 
     public Round(String playerUUID) {
-        //   this.id = UUID.randomUUID().toString();
         this.playerUUID = playerUUID;
         this.roundUUID = UUID.randomUUID().toString();
         // this.playername="CAMBIAME"; //TODO pasar por param? cargando desde preferencias

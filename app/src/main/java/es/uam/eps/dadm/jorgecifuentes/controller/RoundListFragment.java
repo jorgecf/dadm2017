@@ -40,8 +40,6 @@ public class RoundListFragment extends Fragment {
         void onRoundSelected(Round round);
 
         void onPreferencesSelected();
-
-        //  void onNewRoundAdded();
     }
 
     @Override
@@ -152,46 +150,20 @@ public class RoundListFragment extends Fragment {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
 
-        /*
         switch (item.getItemId()) {
-
-            case R.id.menu_item_new_round: // crea ronda al seleccionar item ( + new round )
-                Round round = new Round();
-                RoundRepository.get(getActivity()).addRound(round);
-                updateUI();
-                return true;
-
-            case R.id.menu_item_settings:
-                callbacks.onPreferencesSelected();
-                return true;
-
-            default:
-                return super.onOptionsItemSelected(item);
-        }
-        */
-
-        switch (item.getItemId()) {
-
             case R.id.menu_item_new_round:
-                /*
-                 Instanciar una partida e inicializarla adecuadamente
-                Crear el repositorio
-                Instanciar un método callback de tipo BooleanCallback y llamar a onNewRoundAdded de callbacks. */
 
                 Round round = new Round(PreferenceActivity.getPlayerUUID(getActivity()));
 
-                //  RoundRepository r = RoundRepositoryFactory.createRepository(getActivity());
                 RoundRepository.BooleanCallback callback = new RoundRepository.BooleanCallback() {
                     @Override
                     public void onResponse(boolean ok) {
-                        //  callbacks.onNewRoundAdded();
                         updateUI();
                     }
                 };
 
                 RoundRepository repository = RoundRepositoryFactory.createRepository(getActivity());
                 repository.addRound(round, callback);
-                //  updateUI();
                 return true;
             case R.id.menu_item_settings:
                 callbacks.onPreferencesSelected();
@@ -207,12 +179,7 @@ public class RoundListFragment extends Fragment {
      */
     public void updateUI() {
 
-        /*
-        RoundRepository repository = RoundRepository.get(getActivity());
-        List<Round> rounds = repository.getRounds();
-        */
-
-        // Creamos el callback.
+// Creamos el callback.
         RoundRepository.RoundsCallback roundsCallback = new RoundRepository.RoundsCallback() {
             @Override
             public void onResponse(List<Round> rounds) {
@@ -220,7 +187,6 @@ public class RoundListFragment extends Fragment {
                     roundAdapter = new RoundAdapter(rounds);
                     roundRecyclerView.setAdapter(roundAdapter);
                 } else {
-                    // roundAdapter.notifyDataSetChanged();
                     roundAdapter.setRounds(rounds);
                 }
             }

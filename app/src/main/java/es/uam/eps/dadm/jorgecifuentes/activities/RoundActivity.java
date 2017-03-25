@@ -69,5 +69,4 @@ public class RoundActivity extends AppCompatActivity implements RoundFragment.Ca
     public void onRoundUpdated(Round round) {
 
     }
-
 }
