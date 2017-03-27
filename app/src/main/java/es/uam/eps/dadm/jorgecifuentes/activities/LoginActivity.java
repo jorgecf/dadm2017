@@ -30,7 +30,7 @@ public class LoginActivity extends Activity implements View.OnClickListener {
         this.setContentView(R.layout.activity_login);
 
 
-        if (!PreferenceActivity.getPlayerName(this).equals(PreferenceActivity.PLAYERNAME_DEFAULT)) {
+        if (!RoundPreferenceActivity.getPlayerName(this).equals(RoundPreferenceActivity.PLAYERNAME_DEFAULT)) {
             startActivity(new Intent(LoginActivity.this, RoundListActivity.class));
             finish();
             return;
@@ -66,9 +66,9 @@ public class LoginActivity extends Activity implements View.OnClickListener {
 
                     @Override
                     public void onLogin(String playerId) {
-                        PreferenceActivity.setPlayerUUID(LoginActivity.this, playerId);
-                        PreferenceActivity.setPlayerName(LoginActivity.this, playername);
-                        PreferenceActivity.setPlayerPassword(LoginActivity.this, password);
+                        RoundPreferenceActivity.setPlayerUUID(LoginActivity.this, playerId);
+                        RoundPreferenceActivity.setPlayerName(LoginActivity.this, playername);
+                        RoundPreferenceActivity.setPlayerPassword(LoginActivity.this, password);
 
                         startActivity(new Intent(LoginActivity.this, RoundListActivity.class));
                         finish();

@@ -3,6 +3,8 @@
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
     <PreferenceCategory android:title="@string/settings_title">
 
+        <!-- TODO STRINGS -->
+
         <ListPreference
             android:defaultValue="8"
             android:entries="@array/levelsArray"
@@ -17,7 +19,7 @@
             android:title="Music" />
 
         <EditTextPreference
-            android:key="Edit local player name"
+            android:key="playername"
             android:summary="Select your name"
             android:title="Player name">
 
@@ -25,9 +27,8 @@
 
     </PreferenceCategory>
 
-
     <PreferenceCategory android:title="Contacts">
-        <Preference android:title="Access your contacts list">
+        <Preference android:title="@string/access_contacts">
             <intent android:action="open.contacts.action" />
         </Preference>
     </PreferenceCategory>

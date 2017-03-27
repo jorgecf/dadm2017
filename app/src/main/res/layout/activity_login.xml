@@ -20,6 +20,12 @@
         android:inputType="textPassword"
         android:text="abc" />
 
+    <Switch
+        android:id="@+id/remember_me_switch"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/remember_user" />
+
     <Button
         android:id="@+id/login_button"
         android:layout_width="match_parent"

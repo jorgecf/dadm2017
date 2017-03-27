@@ -24,4 +24,6 @@
     <string name="login">iniciar sesión</string>
     <string name="help">Ayuda</string>
     <string name="scoreboard">Marcador</string>
+    <string name="remember_user">¿Recordarme?</string>
+    <string name="access_contacts">Accede a tu lista de contactos</string>
 </resources>

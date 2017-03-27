@@ -14,7 +14,7 @@ import android.widget.TextView;
 import java.util.ArrayList;
 
 import es.uam.eps.dadm.jorgecifuentes.R;
-import es.uam.eps.dadm.jorgecifuentes.activities.PreferenceActivity;
+import es.uam.eps.dadm.jorgecifuentes.activities.RoundPreferenceActivity;
 import es.uam.eps.dadm.jorgecifuentes.model.Round;
 import es.uam.eps.dadm.jorgecifuentes.model.RoundRepository;
 import es.uam.eps.dadm.jorgecifuentes.model.RoundRepositoryFactory;
@@ -142,7 +142,7 @@ public class RoundFragment extends Fragment implements PartidaListener {
 
 
         // Cargamos la ronda contenida en este fragmento.
-        this.round = new Round(firstPlayerName, roundTitle, roundDate, PreferenceActivity.getPlayerUUID(getActivity()), rounduuid);
+        this.round = new Round(firstPlayerName, roundTitle, roundDate, RoundPreferenceActivity.getPlayerUUID(getActivity()), rounduuid);
 
         // Cargamos el tablero.
         this.round.setBoard(new TableroReversi());
@@ -209,7 +209,7 @@ public class RoundFragment extends Fragment implements PartidaListener {
 
         ArrayList<Jugador> players = new ArrayList<Jugador>();
         JugadorAleatorio randomPlayer = new JugadorAleatorio(this.getContext().getString(R.string.random_player_default_name));
-        ReversiLocalPlayer localPlayer = new ReversiLocalPlayer(this.getContext()); //TODO pasar nombre guardado en preferencias
+        ReversiLocalPlayer localPlayer = new ReversiLocalPlayer(this.getContext(), RoundPreferenceActivity.getPlayerName(this.getContext()));
 
         players.add(localPlayer);
         players.add(randomPlayer);

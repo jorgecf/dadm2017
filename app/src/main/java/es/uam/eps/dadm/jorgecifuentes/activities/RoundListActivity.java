@@ -46,7 +46,7 @@ public class RoundListActivity extends AppCompatActivity implements RoundListFra
 
     @Override
     public void onPreferencesSelected() {
-        Intent intent = new Intent(this, PreferenceActivity.class);
+        Intent intent = new Intent(this, RoundPreferenceActivity.class);
         this.startActivity(intent);
     }
 

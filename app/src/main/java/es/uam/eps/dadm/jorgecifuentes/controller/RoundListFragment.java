@@ -19,7 +19,7 @@ import android.widget.TextView;
 import java.util.List;
 
 import es.uam.eps.dadm.jorgecifuentes.R;
-import es.uam.eps.dadm.jorgecifuentes.activities.PreferenceActivity;
+import es.uam.eps.dadm.jorgecifuentes.activities.RoundPreferenceActivity;
 import es.uam.eps.dadm.jorgecifuentes.model.Round;
 import es.uam.eps.dadm.jorgecifuentes.model.RoundRepository;
 import es.uam.eps.dadm.jorgecifuentes.model.RoundRepositoryFactory;
@@ -90,7 +90,7 @@ public class RoundListFragment extends Fragment {
                         Snackbar.make(getView(), R.string.error_reading_rounds, Snackbar.LENGTH_LONG).show();
                     }
                 };
-                String playeruuid = PreferenceActivity.getPlayerUUID(getActivity());
+                String playeruuid = RoundPreferenceActivity.getPlayerUUID(getActivity());
                 repository.getRounds(playeruuid, null, null, roundsCallback);
             }
         }));
@@ -157,7 +157,7 @@ public class RoundListFragment extends Fragment {
         switch (item.getItemId()) {
             case R.id.menu_item_new_round:
 
-                Round round = new Round(PreferenceActivity.getPlayerUUID(getActivity()));
+                Round round = new Round(RoundPreferenceActivity.getPlayerUUID(getActivity()));
 
                 RoundRepository.BooleanCallback callback = new RoundRepository.BooleanCallback() {
                     @Override
@@ -209,7 +209,7 @@ public class RoundListFragment extends Fragment {
 
         // Obtenemos las rondas.
         RoundRepository repository = RoundRepositoryFactory.createRepository(getActivity());
-        repository.getRounds(PreferenceActivity.getPlayerUUID(getActivity()), null, null, roundsCallback);
+        repository.getRounds(RoundPreferenceActivity.getPlayerUUID(getActivity()), null, null, roundsCallback);
     }
 
 

@@ -11,7 +11,7 @@ import es.uam.eps.dadm.jorgecifuentes.R;
  * Created by jorgecf on 13/03/17.
  */
 
-public class PreferencesFragment extends PreferenceFragment {
+public class RoundPreferenceFragment extends PreferenceFragment {
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState){
