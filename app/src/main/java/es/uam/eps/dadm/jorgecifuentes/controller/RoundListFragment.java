@@ -40,6 +40,10 @@ public class RoundListFragment extends Fragment {
         void onRoundSelected(Round round);
 
         void onPreferencesSelected();
+
+        void onHelpSelected();
+
+        void onScoresSelected();
     }
 
     @Override
@@ -167,6 +171,12 @@ public class RoundListFragment extends Fragment {
                 return true;
             case R.id.menu_item_settings:
                 callbacks.onPreferencesSelected();
+                return true;
+            case R.id.menu_help_settings:
+                callbacks.onHelpSelected();
+                return true;
+            case R.id.menu_item_scoreboard:
+                callbacks.onScoresSelected();
                 return true;
             default:
                 return super.onOptionsItemSelected(item);

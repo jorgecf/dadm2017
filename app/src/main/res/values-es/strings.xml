@@ -19,4 +19,9 @@
     <string name="repository_opening_error">Error abriendo repositorio de rondas</string>
     <string name="error_reading_rounds">Error leyendo las rondas</string>
     <string name="error_updating_round">Error actualizando la ronda </string>
+    <string name="new_user">nuevo usuario</string>
+    <string name="cancel_login">cancelar</string>
+    <string name="login">iniciar sesión</string>
+    <string name="help">Ayuda</string>
+    <string name="scoreboard">Marcador</string>
 </resources>

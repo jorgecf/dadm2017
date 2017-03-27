@@ -36,7 +36,7 @@ public class AlertDialogFragment extends DialogFragment {
 
                         Round round = new Round();
                         //RoundRepository.get(getActivity()).addRound(round);
-                        RoundRepositoryFactory.createRepository(getActivity()).addRound(round, null); //pasarle callback de debugueo???
+                        RoundRepositoryFactory.createRepository(getActivity()).addRound(round, null); //TODO pasarle callback de debugueo???
 
                         if (activity instanceof RoundListActivity)
                             ((RoundListActivity) activity).onRoundUpdated(round);

@@ -9,7 +9,9 @@
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme">
+        android:theme="@style/AppTheme.Launcher">
+
+
 
         <activity android:name=".activities.LoginActivity">
 
@@ -40,6 +42,14 @@
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
+
+        <activity
+            android:name=".activities.HelpActivity"
+            android:parentActivityName=".activities.RoundListActivity" />
+
+        <activity
+            android:name=".activities.ScoreActivity"
+            android:parentActivityName=".activities.RoundListActivity" />
 
 
     </application>

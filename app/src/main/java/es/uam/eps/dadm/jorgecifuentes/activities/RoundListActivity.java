@@ -50,6 +50,17 @@ public class RoundListActivity extends AppCompatActivity implements RoundListFra
         this.startActivity(intent);
     }
 
+    @Override
+    public void onHelpSelected() {
+        Intent intent = new Intent(this, HelpActivity.class);
+        this.startActivity(intent);
+    }
+
+    @Override
+    public void onScoresSelected() {
+        Intent intent = new Intent(this, ScoreActivity.class);
+        this.startActivity(intent);
+    }
 
     @Override
     public void onRoundUpdated(Round round) {
