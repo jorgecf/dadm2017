@@ -7,6 +7,7 @@ import android.preference.Preference;
 import android.preference.PreferenceFragment;
 import android.preference.PreferenceManager;
 import android.support.annotation.Nullable;
+import android.support.design.widget.Snackbar;
 
 import es.uam.eps.dadm.jorgecifuentes.R;
 import es.uam.eps.dadm.jorgecifuentes.activities.ContactsActivity;
@@ -28,29 +29,55 @@ public class RoundPreferenceFragment extends PreferenceFragment {
         // Cargamos los ajustes desde el xml.
         this.addPreferencesFromResource(R.xml.settings);
 
+        Preference access_contacts = this.findPreference("access_contacts");
+        Preference logout = this.findPreference("logout");
+        Preference switch_theme = this.findPreference("switch_theme");
+
+
         //TODO string
-        this.findPreference("access_contacts").setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
+        if (access_contacts != null) {
+            access_contacts.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
 
-            @Override
-            public boolean onPreferenceClick(Preference preference) {
-                startActivity(new Intent(getActivity(), ContactsActivity.class));
-                return true;
-            }
-        });
+                @Override
+                public boolean onPreferenceClick(Preference preference) {
+                    startActivity(new Intent(getActivity(), ContactsActivity.class));
+                    return true;
+                }
+            });
+        }
 
-        this.findPreference("logout").setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
+        if (logout != null) {
+            logout.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
 
-            @Override
-            public boolean onPreferenceClick(Preference preference) {
+                @Override
+                public boolean onPreferenceClick(Preference preference) {
 
-                // Borramos las preferencias y realizamos el logout.
-                startActivity(new Intent(getActivity(), LoginActivity.class));
+                    // Borramos las preferencias y realizamos el logout.
+                    startActivity(new Intent(getActivity(), LoginActivity.class));
 
-               RoundPreferenceActivity.clearPreferences(getActivity());
+                    RoundPreferenceActivity.clearPreferences(getActivity());
 
-                return true;
-            }
-        });
+                    return true;
+                }
+            });
+        }
+
+        // Switch para elegir tema.
+        if (switch_theme != null) {
+            switch_theme.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
+
+                @Override
+                public boolean onPreferenceChange(Preference preference, Object newValue) {
+
+                    getActivity().getApplication().setTheme(R.style.AppTheme_Dark);
+                 //   getActivity().setContentView(R.layout.activity_fragment);
+
+
+                 //   Snackbar.make(getView(), "Changeado", Snackbar.LENGTH_SHORT).show();
+                    return true;
+                }
+            });
+        }
 
     }
 }
