@@ -23,6 +23,6 @@
     <string name="login">login</string>
     <string name="help">Help</string>
     <string name="scoreboard">Scoreboard</string>
-    <string name="remember_user">Remember me?</string>
+    <string name="remember_user">Keep me logged in?</string>
     <string name="access_contacts">Access your contacts list</string>
 </resources>

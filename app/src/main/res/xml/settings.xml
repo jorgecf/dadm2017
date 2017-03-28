@@ -11,12 +11,7 @@
             android:entryValues="@array/levelsValues"
             android:key="boardsize"
             android:summary="Choose the size of the board"
-            android:title="Board size" />
-
-        <CheckBoxPreference
-            android:key="music"
-            android:summary="Click if you feel like listening to music"
-            android:title="Music" />
+            android:title="Board size (quitame)" />
 
         <EditTextPreference
             android:key="playername"
@@ -28,9 +23,19 @@
     </PreferenceCategory>
 
     <PreferenceCategory android:title="Contacts">
-        <Preference android:title="@string/access_contacts">
-            <intent android:action="open.contacts.action" />
-        </Preference>
+
+        <Preference
+            android:key="access_contacts"
+            android:title="@string/access_contacts"></Preference>
+
+    </PreferenceCategory>
+
+    <PreferenceCategory android:title="Account">
+
+        <Preference
+            android:key="logout"
+            android:title="Log-out"></Preference>
+
     </PreferenceCategory>
 
 

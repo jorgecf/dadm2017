@@ -21,7 +21,7 @@
         android:text="abc" />
 
     <Switch
-        android:id="@+id/remember_me_switch"
+        android:id="@+id/keep_me_logged_in_switch"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/remember_user" />

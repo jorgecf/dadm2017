@@ -19,8 +19,8 @@ public class RoundPreferenceActivity extends AppCompatActivity {
     private static final String PLAYERUUID = "playeruuid";
     private static final String PLAYERNAME = "playername";
     private static final String PLAYERPASSWORD = "password";
-    public static final String PLAYERNAME_DEFAULT = "def";
-
+    protected static final String PLAYERNAME_DEFAULT = "def";
+    private static final String KEEP_ME_LOGGED_IN = "keepMeLoggedIn";
 
 
     public void onCreate(Bundle savedInstanceState) {
@@ -56,7 +56,7 @@ public class RoundPreferenceActivity extends AppCompatActivity {
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
         SharedPreferences.Editor editor = sharedPreferences.edit();
 
-        editor.putString(RoundPreferenceActivity.PLAYERNAME, name); //TODO guardar tambien en base de datos
+        editor.putString(RoundPreferenceActivity.PLAYERNAME, name); //TODO guardar tambien en base de datos -> o directamente no guardarlo en preferencias (ver usos)
         editor.commit();
     }
 
@@ -65,6 +65,27 @@ public class RoundPreferenceActivity extends AppCompatActivity {
         SharedPreferences.Editor editor = sharedPreferences.edit();
 
         editor.putString(RoundPreferenceActivity.PLAYERPASSWORD, password);
+        editor.commit();
+    }
+
+
+    public static Boolean getKeepLogged(Context context) {
+        return PreferenceManager.getDefaultSharedPreferences(context).getBoolean(KEEP_ME_LOGGED_IN, false);
+    }
+
+    public static void setKeepLogged(Context context, Boolean b) {
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+
+        editor.putBoolean(KEEP_ME_LOGGED_IN, b);
+        editor.commit();
+    }
+
+    public static void clearPreferences(Context context) {
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+
+        editor.clear();
         editor.commit();
     }
 }

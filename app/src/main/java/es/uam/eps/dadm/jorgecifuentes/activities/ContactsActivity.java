@@ -87,7 +87,7 @@ public class ContactsActivity extends AppCompatActivity {
 
         this.adapter = new SimpleCursorAdapter(this, R.layout.contacts, null, FROM, TO, CursorAdapter.FLAG_REGISTER_CONTENT_OBSERVER);
 
-        // Cargamos el LoaderManager de los contacos.
+        // Cargamos el LoaderManager de los contactos.
         this.getSupportLoaderManager().initLoader(LOADER_ID, new Bundle(), contactsLoader);
     }
 
@@ -136,7 +136,7 @@ public class ContactsActivity extends AppCompatActivity {
                     this.showContacts();
 
                 } else {
-                    Snackbar.make(findViewById(R.id.contactsListView), "The contacts won't be shown since permission has been denied", Snackbar.LENGTH_INDEFINITE).show();
+                    Snackbar.make(findViewById(R.id.contactsListView), "The contacts won't be shown since permission has been denied", Snackbar.LENGTH_INDEFINITE).show(); //TODO string
                 }
                 return;
 

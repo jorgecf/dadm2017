@@ -38,13 +38,7 @@
 
         <activity
             android:name=".activities.ContactsActivity"
-            android:parentActivityName=".activities.RoundPreferenceActivity">
-
-            <intent-filter>
-                <action android:name="open.contacts.action" />
-                <category android:name="android.intent.category.DEFAULT" />
-            </intent-filter>
-        </activity>
+            android:parentActivityName=".activities.RoundPreferenceActivity"></activity>
 
         <activity
             android:name=".activities.HelpActivity"
