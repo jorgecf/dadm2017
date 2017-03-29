@@ -34,4 +34,5 @@
     <string name="select_name_title">Nombre de usuario</string>
     <string name="switch_online_summary">Activar para jugar online</string>
     <string name="switch_online_title">¿Jugar online?</string>
+    <string name="contacts_permission_denied">Los contactos no se mostrarán dado que no se ha otorgado permiso</string>
 </resources>

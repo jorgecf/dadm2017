@@ -241,6 +241,7 @@ public class RoundFragment extends Fragment implements PartidaListener {
         };
 
         repository.updateRound(round, callback);
+        repository.close();
     }
 
     @Override

@@ -14,9 +14,10 @@ import es.uam.eps.dadm.jorgecifuentes.model.RoundRepository;
 import es.uam.eps.dadm.jorgecifuentes.model.RoundRepositoryFactory;
 
 /**
- * Created by jorgecf on 15/03/17.
+ * Actividad para el login de usuario.
+ *
+ * @author Jorge Cifuentes
  */
-
 public class LoginActivity extends Activity implements View.OnClickListener {
 
     private RoundRepository repository;
@@ -31,7 +32,6 @@ public class LoginActivity extends Activity implements View.OnClickListener {
 
         this.setContentView(R.layout.activity_login);
 
-
         // Si si hay nombre almacenado (no devuelve el default), es que se ha hecho login, si ademas
         // el usuario eligio "mantenerme logueado", se salta la pantalla de login.
         if (RoundPreferenceActivity.getPlayerName(this).equals(RoundPreferenceActivity.PLAYERNAME_DEFAULT) == false
@@ -40,7 +40,6 @@ public class LoginActivity extends Activity implements View.OnClickListener {
             finish();
             return;
         }
-
 
         this.usernameEditText = (EditText) this.findViewById(R.id.login_username);
         this.passwordEditText = (EditText) this.findViewById(R.id.login_password);

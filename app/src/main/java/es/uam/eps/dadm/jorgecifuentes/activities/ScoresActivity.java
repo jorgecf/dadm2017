@@ -13,9 +13,10 @@ import es.uam.eps.dadm.jorgecifuentes.model.RoundRepository;
 import es.uam.eps.dadm.jorgecifuentes.model.RoundRepositoryFactory;
 
 /**
- * Created by jorgecf on 27/03/17.
+ * Actividad que muestra en la pantalla informacion sobre las partidas alojadas en la base de datos.
+ *
+ * @author Jorge Cifuentes
  */
-
 public class ScoresActivity extends AppCompatActivity {
 
     @Override
@@ -46,6 +47,6 @@ public class ScoresActivity extends AppCompatActivity {
         playername.setText(RoundPreferenceActivity.getPlayerName(this));
         repository.getRounds(RoundPreferenceActivity.getPlayerUUID(this), null, null, rc);
 
-
+        repository.close();
     }
 }

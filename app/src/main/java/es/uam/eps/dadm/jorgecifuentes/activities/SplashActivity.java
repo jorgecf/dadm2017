@@ -6,10 +6,13 @@ import android.support.v7.app.AppCompatActivity;
 
 import es.uam.eps.dadm.jorgecifuentes.R;
 
-/**
- * Created by jorgecf on 27/03/17.
- */
 
+/**
+ * Actividad que muestra un Splash Screen. No agrega tiempo de carga, solo lo muestra durante el
+ * tiempo que la app esta cargandose.
+ *
+ * @author Jorge Cifuentes
+ */
 public class SplashActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {

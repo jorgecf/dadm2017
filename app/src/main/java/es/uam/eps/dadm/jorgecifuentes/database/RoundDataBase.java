@@ -18,30 +18,28 @@ import es.uam.eps.dadm.jorgecifuentes.model.RoundRepository;
 import static es.uam.eps.dadm.jorgecifuentes.database.RoundDataBaseSchema.RoundTable;
 import static es.uam.eps.dadm.jorgecifuentes.database.RoundDataBaseSchema.UserTable;
 
-
 /**
- * Created by jorgecf on 15/03/17.
+ * RoundRepository en forma de base de datos local de rondas.
+ *
+ * @author Jorge Cifuentes
  */
-
 public class RoundDataBase implements RoundRepository {
 
     private final String DEBUG_TAG = "DEBUG";
 
     private static final String DATABASE_NAME = "er.db";
-    // private static final String DATABASE_PATH = "/data/data/es.uam.eps.dadm.jorgecifuentes/databases/";
-
     private static final int DATABASE_VERSION = 1;
 
     private DatabaseHelper helper;
     private SQLiteDatabase db;
 
     public RoundDataBase(Context context) {
-        // this.db=new SQLiteDatabase();
-        // this.db = SQLiteDatabase.openOrCreateDatabase(DATABASE_PATH + DATABASE_NAME, null);
         this.helper = new DatabaseHelper(context);
     }
 
-
+    /**
+     * Clase auxiliar para el creado y actualizacion de la base de datos.
+     */
     private static class DatabaseHelper extends SQLiteOpenHelper {
 
         public DatabaseHelper(Context context) {
@@ -60,6 +58,11 @@ public class RoundDataBase implements RoundRepository {
             createTable(db);
         }
 
+        /**
+         * Crea las tablas de la base de datos.
+         *
+         * @param db Base de datos SQLite.
+         */
         private void createTable(SQLiteDatabase db) {
 
             String str1 = "CREATE TABLE " + UserTable.NAME + " ("
@@ -85,7 +88,6 @@ public class RoundDataBase implements RoundRepository {
         }
 
     }
-
 
     @Override
     public void open() throws SQLException {
@@ -113,9 +115,7 @@ public class RoundDataBase implements RoundRepository {
                 null,
                 null);
 
-
         int count = cursor.getCount();
-
         String uuid = count == 1 && cursor.moveToFirst() ? cursor.getString(0) : "";
         cursor.close();
 
@@ -166,6 +166,11 @@ public class RoundDataBase implements RoundRepository {
             callback.onError("No rounds found in database");
     }
 
+    /**
+     * Selecciona las rondas de la base de datos y las devuelve como RoundCursorWrapper.
+     *
+     * @return RoundCursorWrapper creado.
+     */
     private RoundCursorWrapper queryRounds() {
 
         String sql = "SELECT " + UserTable.Cols.PLAYERNAME + ", " +

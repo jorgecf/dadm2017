@@ -22,9 +22,10 @@ import android.widget.ListView;
 import es.uam.eps.dadm.jorgecifuentes.R;
 
 /**
- * Created by jorgecf on 25/03/17.
+ * Actividad que pide permiso para mostrar la lista de contactos.
+ *
+ * @author Jorge Cifuentes
  */
-
 public class ContactsActivity extends AppCompatActivity {
 
     // Un identificador para el permiso de lectura de contactos
@@ -98,8 +99,6 @@ public class ContactsActivity extends AppCompatActivity {
         setContentView(R.layout.activity_contacts_list);
 
         // Comprobamos si tenemos permisos.
-        Log.d("DEBUG", "PERMISO? = " + ContextCompat.checkSelfPermission(ContactsActivity.this, Manifest.permission.READ_CONTACTS)); //TODO quitar logd
-
         if (ContextCompat.checkSelfPermission(ContactsActivity.this, Manifest.permission.READ_CONTACTS) != PackageManager.PERMISSION_GRANTED) {
 
             // Debemos presentar una explicación?
@@ -115,10 +114,7 @@ public class ContactsActivity extends AppCompatActivity {
         } else {
             showContacts();
         }
-
-
     }
-
 
     @Override
     public void onRequestPermissionsResult(int requestCode, String permissions[], int[] grantResults) {
@@ -129,14 +125,9 @@ public class ContactsActivity extends AppCompatActivity {
             case MY_PERMISSIONS_REQUEST_READ_CONTACTS: {
                 // el argumento grantResults está vacio si la solicitud se rechaza
                 if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-
-                    //
-                    // Aquí colocaremos el código para mostrar los contactos
-                    //
                     this.showContacts();
-
                 } else {
-                    Snackbar.make(findViewById(R.id.contactsListView), "The contacts won't be shown since permission has been denied", Snackbar.LENGTH_INDEFINITE).show(); //TODO string
+                    Snackbar.make(findViewById(R.id.contactsListView), R.string.contacts_permission_denied, Snackbar.LENGTH_INDEFINITE).show(); //TODO string
                 }
                 return;
 
@@ -144,8 +135,10 @@ public class ContactsActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     * Inicializa el SimpleCursorAdapter y se lo pasa a la ListView.
+     */
     private void showContacts() {
-
         // Instanciamos el SimpleCursorAdapter.
         this.setupCursorAdapter();
 

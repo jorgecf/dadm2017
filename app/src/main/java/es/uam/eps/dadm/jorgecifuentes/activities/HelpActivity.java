@@ -6,10 +6,12 @@ import android.support.v7.app.AppCompatActivity;
 
 import es.uam.eps.dadm.jorgecifuentes.R;
 
-/**
- * Created by jorgecf on 27/03/17.
- */
 
+/**
+ * Actividad que muestra la ayuda e información de la app.
+ *
+ * @author Jorge Cifuentes
+ */
 public class HelpActivity extends AppCompatActivity {
 
     @Override

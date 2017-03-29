@@ -5,16 +5,16 @@ import android.database.CursorWrapper;
 import android.util.Log;
 
 import es.uam.eps.dadm.jorgecifuentes.model.Round;
-import es.uam.eps.dadm.jorgecifuentes.model.TableroReversi;
 import es.uam.eps.multij.ExcepcionJuego;
 
 import static es.uam.eps.dadm.jorgecifuentes.database.RoundDataBaseSchema.UserTable;
 import static es.uam.eps.dadm.jorgecifuentes.database.RoundDataBaseSchema.RoundTable;
 
 /**
- * Created by jorgecf on 15/03/17.
+ * Wrapper para Cursor que crea una ronda con datos de la base de datos.
+ *
+ * @author Jorge Cifuentes
  */
-
 public class RoundCursorWrapper extends CursorWrapper {
 
     /**
@@ -37,7 +37,6 @@ public class RoundCursorWrapper extends CursorWrapper {
 
         Round round = new Round();
         round.setFirstPlayerName(playername);
-     //   round.setSecondPlayerName(playername);
         round.setDate(date);
         round.setTitle(title);
 

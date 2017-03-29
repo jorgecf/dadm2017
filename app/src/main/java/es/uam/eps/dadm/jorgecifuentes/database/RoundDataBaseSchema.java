@@ -1,9 +1,10 @@
 package es.uam.eps.dadm.jorgecifuentes.database;
 
 /**
- * Created by jorgecf on 15/03/17.
+ * Esquema de la base de datos, descripcion de tablas y columnas.
+ *
+ * @author Jorge Cifuentes
  */
-
 public class RoundDataBaseSchema {
 
     public static final class UserTable {

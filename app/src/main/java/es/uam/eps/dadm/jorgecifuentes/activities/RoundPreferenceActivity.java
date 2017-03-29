@@ -12,7 +12,9 @@ import es.uam.eps.dadm.jorgecifuentes.R;
 import es.uam.eps.dadm.jorgecifuentes.controller.RoundPreferenceFragment;
 
 /**
- * Created by jorgecf on 13/03/17.
+ * Actividad que maneja el acceso a preferencias de la aplicacion.
+ *
+ * @author Jorge Cifuentes
  */
 public class RoundPreferenceActivity extends AppCompatActivity {
 
@@ -24,7 +26,7 @@ public class RoundPreferenceActivity extends AppCompatActivity {
     private static final String KEEP_ME_LOGGED_IN = "keepMeLoggedIn";
     private static final String PLAY_ONLINE = "playOnline";
 
-
+    @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_fragment);
@@ -38,7 +40,13 @@ public class RoundPreferenceActivity extends AppCompatActivity {
         fragmentTransaction.commit();
     }
 
-
+    /**
+     * Guarda un string en las preferencias.
+     *
+     * @param context Contexto de la llamada.
+     * @param key     Clave del valor a guardar.
+     * @param id      Valor a guardar.
+     */
     private static void setString(Context context, String key, String id) {
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
         SharedPreferences.Editor editor = sharedPreferences.edit();
@@ -47,6 +55,13 @@ public class RoundPreferenceActivity extends AppCompatActivity {
         editor.commit();
     }
 
+    /**
+     * Guarda un booleano en las preferencias.
+     *
+     * @param context Contexto de la llamada.
+     * @param key     Clave del valor a guardar.
+     * @param b       Valor a guardar.
+     */
     private static void setBoolean(Context context, String key, Boolean b) {
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
         SharedPreferences.Editor editor = sharedPreferences.edit();
@@ -55,6 +70,11 @@ public class RoundPreferenceActivity extends AppCompatActivity {
         editor.commit();
     }
 
+    /**
+     * Limpia las preferencias guardadas.
+     *
+     * @param context Contexto de la llamada.
+     */
     public static void clearPreferences(Context context) {
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
         SharedPreferences.Editor editor = sharedPreferences.edit();
@@ -63,68 +83,76 @@ public class RoundPreferenceActivity extends AppCompatActivity {
         editor.commit();
     }
 
-
+    /**
+     * @param context Contexto de la llamada.
+     * @param id
+     */
     public static void setPlayerUUID(Context context, String id) {
-       /* SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
-        SharedPreferences.Editor editor = sharedPreferences.edit();
-
-        editor.putString(RoundPreferenceActivity.PLAYERUUID, id);
-        editor.commit();*/
         RoundPreferenceActivity.setString(context, RoundPreferenceActivity.PLAYERUUID, id);
     }
 
+    /**
+     * @param context Contexto de la llamada.
+     * @return
+     */
     public static String getPlayerUUID(Context context) {
         return PreferenceManager.getDefaultSharedPreferences(context).getString(PLAYERUUID, "0"); //TODO defvalue
     }
 
+    /**
+     * @param context Contexto de la llamada.
+     * @param name
+     */
     public static void setPlayerName(Context context, String name) {
-      /*  SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
-        SharedPreferences.Editor editor = sharedPreferences.edit();
-
-        editor.putString(RoundPreferenceActivity.PLAYERNAME, name);
-        editor.commit();*/
         //TODO guardar tambien en base de datos
         RoundPreferenceActivity.setString(context, RoundPreferenceActivity.PLAYERNAME, name);
     }
 
+    /**
+     * @param context Contexto de la llamada.
+     * @return
+     */
     public static String getPlayerName(Context context) {
         return PreferenceManager.getDefaultSharedPreferences(context).getString(PLAYERNAME, PLAYERNAME_DEFAULT);
     }
 
-
+    /**
+     * @param context  Contexto de la llamada.
+     * @param password
+     */
     public static void setPlayerPassword(Context context, String password) {
-     /*   SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
-        SharedPreferences.Editor editor = sharedPreferences.edit();
-
-        editor.putString(RoundPreferenceActivity.PLAYERPASSWORD, password);
-        editor.commit();*/
         RoundPreferenceActivity.setString(context, RoundPreferenceActivity.PLAYERPASSWORD, password);
     }
 
-
+    /**
+     * @param context Contexto de la llamada.
+     * @return
+     */
     public static Boolean getKeepLogged(Context context) {
         return PreferenceManager.getDefaultSharedPreferences(context).getBoolean(KEEP_ME_LOGGED_IN, false);
     }
 
+    /**
+     * @param context Contexto de la llamada.
+     * @param b
+     */
     public static void setKeepLogged(Context context, Boolean b) {
-     /*   SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
-        SharedPreferences.Editor editor = sharedPreferences.edit();
-
-        editor.putBoolean(KEEP_ME_LOGGED_IN, b);
-        editor.commit();*/
         RoundPreferenceActivity.setBoolean(context, RoundPreferenceActivity.KEEP_ME_LOGGED_IN, b);
     }
 
+    /**
+     * @param context Contexto de la llamada.
+     * @return
+     */
     public static Boolean getPlayOnline(Context context) {
         return PreferenceManager.getDefaultSharedPreferences(context).getBoolean(PLAY_ONLINE, false);
     }
 
+    /**
+     * @param context Contexto de la llamada.
+     * @param b
+     */
     public static void setPlayOnline(Context context, Boolean b) {
-     /*   SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
-        SharedPreferences.Editor editor = sharedPreferences.edit();
-
-        editor.putBoolean(PLAY_ONLINE, b);
-        editor.commit();*/
         RoundPreferenceActivity.setBoolean(context, RoundPreferenceActivity.PLAY_ONLINE, b);
     }
 }
