@@ -25,4 +25,12 @@
     <string name="scoreboard">Scoreboard</string>
     <string name="remember_user">Keep me logged in?</string>
     <string name="access_contacts">Access your contacts list</string>
+    <string name="switch_online_summary">Switch it to play online</string>
+    <string name="switch_online_title">Play online?</string>
+    <string name="contacts">Contacts</string>
+    <string name="account">Account</string>
+    <string name="select_name_summary">Select your name</string>
+    <string name="select_name_title">Player name</string>
+    <string name="logout_title">Log-out</string>
+    <string name="logout_summary">Go back to login screen</string>
 </resources>

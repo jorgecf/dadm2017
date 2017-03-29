@@ -1,21 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+
     <PreferenceCategory android:title="@string/settings_title">
-
-        <!-- TODO STRINGS -->
-
 
         <SwitchPreference
             android:key="switch_online"
-            android:summary="Switch it to play online"
-            android:title="Play online?">
+            android:summary="@string/switch_online_summary"
+            android:title="@string/switch_online_title">
 
         </SwitchPreference>
 
     </PreferenceCategory>
 
-    <PreferenceCategory android:title="Contacts">
+    <PreferenceCategory android:title="@string/contacts">
 
         <Preference
             android:key="access_contacts"
@@ -23,16 +21,21 @@
 
     </PreferenceCategory>
 
-    <PreferenceCategory android:title="Account">
+    <PreferenceCategory android:title="@string/account">
+
         <EditTextPreference
             android:key="playername"
-            android:summary="Select your name"
-            android:title="Player name">
+            android:summary="@string/select_name_summary"
+            android:title="@string/select_name_title">
 
         </EditTextPreference>
+
         <Preference
             android:key="logout"
-            android:title="Log-out"></Preference>
+            android:summary="@string/logout_summary"
+            android:title="@string/logout_title">
+
+        </Preference>
 
     </PreferenceCategory>
 

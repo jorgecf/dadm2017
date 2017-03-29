@@ -24,9 +24,7 @@
 
         <activity android:name=".activities.LoginActivity"></activity>
 
-        <activity
-            android:name=".activities.RoundListActivity"
-            android:parentActivityName=".activities.LoginActivity" />
+        <activity android:name=".activities.RoundListActivity" />
 
         <activity
             android:name=".activities.RoundActivity"
@@ -45,7 +43,7 @@
             android:parentActivityName=".activities.RoundListActivity" />
 
         <activity
-            android:name=".activities.ScoreActivity"
+            android:name=".activities.ScoresActivity"
             android:parentActivityName=".activities.RoundListActivity" />
 
 

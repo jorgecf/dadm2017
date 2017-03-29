@@ -26,4 +26,12 @@
     <string name="scoreboard">Marcador</string>
     <string name="remember_user">¿Mantenerme logueado?</string>
     <string name="access_contacts">Accede a tu lista de contactos</string>
+    <string name="account">Cuenta</string>
+    <string name="contacts">Contactos</string>
+    <string name="logout_summary">Volver a la panalla de login</string>
+    <string name="logout_title">Cerrar sesión</string>
+    <string name="select_name_summary">Elige tu nombre de usuario</string>
+    <string name="select_name_title">Nombre de usuario</string>
+    <string name="switch_online_summary">Activar para jugar online</string>
+    <string name="switch_online_title">¿Jugar online?</string>
 </resources>

@@ -83,7 +83,7 @@ public class RoundPreferenceActivity extends AppCompatActivity {
 
         editor.putString(RoundPreferenceActivity.PLAYERNAME, name);
         editor.commit();*/
-        //TODO guardar tambien en base de datos -> o directamente no guardarlo en preferencias (ver usos)
+        //TODO guardar tambien en base de datos
         RoundPreferenceActivity.setString(context, RoundPreferenceActivity.PLAYERNAME, name);
     }
 

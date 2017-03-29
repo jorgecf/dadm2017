@@ -4,7 +4,8 @@
     xmlns:card_view="http://schemas.android.com/apk/res-auto"
 
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:orientation="vertical">
 
     <LinearLayout
         android:layout_width="fill_parent"
@@ -29,10 +30,6 @@
 
             <android.support.v7.widget.CardView
                 android:layout_width="match_parent"
-                android:layout_height="match_parent" />
-
-            <android.support.v7.widget.CardView
-                android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_marginBottom="5dp"
 
@@ -41,11 +38,6 @@
                 card_view:cardBackgroundColor="@color/cardview_light_background"
                 card_view:cardCornerRadius="4dp">
 
-                <ImageView
-                    android:id="@+id/imageView2"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    app:srcCompat="@drawable/ic_launcher_144dp" />
             </android.support.v7.widget.CardView>
 
             <android.support.v7.widget.CardView
@@ -58,36 +50,49 @@
                 card_view:cardBackgroundColor="@color/cardview_light_background"
                 card_view:cardCornerRadius="4dp">
 
-                <EditText
-                    android:id="@+id/editText2"
-                    android:layout_width="match_parent"
+                <RelativeLayout
+                    android:id="@+id/layout"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:ems="10"
-                    android:gravity="center"
-                    android:inputType="textPersonName"
-                    android:maxLines="1"
-                    android:text="Version xx" />
-            </android.support.v7.widget.CardView>
+                    android:layout_alignBottom="@id/image"
+                    android:layout_alignTop="@id/image"
+                    android:layout_marginLeft="10dp"
+                    android:layout_toRightOf="@id/image">
 
-            <android.support.v7.widget.CardView
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_marginBottom="5dp"
+                    <ImageView
+                        android:id="@+id/image"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentLeft="true"
+                        android:src="@drawable/ic_undo_24dp" />
 
-                app:cardUseCompatPadding="true"
+                    <TextView
+                        android:id="@+id/playername"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
 
-                card_view:cardBackgroundColor="@color/cardview_light_background"
-                card_view:cardCornerRadius="4dp">
+                        android:layout_toEndOf="@id/image"
+                        android:layout_toRightOf="@id/image"
 
-                <EditText
-                    android:id="@+id/editText3"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:ems="10"
-                    android:gravity="center"
-                    android:inputType="textPersonName"
-                    android:maxLines="1"
-                    android:text="Ayuda" />
+                        android:text="Player"
+                        android:textSize="16sp" />
+<!-- TODO text size y strings -->
+                    <TextView
+                        android:id="@+id/playername_subtitle"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+
+                        android:layout_below="@id/playername"
+                        android:layout_marginTop="6dp"
+
+                        android:layout_toEndOf="@id/image"
+                        android:layout_toRightOf="@id/image"
+
+                        android:text="Subtitle"
+                        android:textSize="12sp" />
+
+                </RelativeLayout>
+
             </android.support.v7.widget.CardView>
 
 
