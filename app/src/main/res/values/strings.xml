@@ -34,4 +34,6 @@
     <string name="logout_title">Log-out</string>
     <string name="logout_summary">Go back to login screen</string>
     <string name="contacts_permission_denied">The contacts won\'t be shown since permission has been denied</string>
+    <string name="write_your_password">password</string>
+    <string name="write_playername">username</string>
 </resources>

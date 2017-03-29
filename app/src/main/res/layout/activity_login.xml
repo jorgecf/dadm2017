@@ -1,24 +1,26 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="20dp">
 
     <EditText
         android:id="@+id/login_username"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:ems="10"
-        android:inputType="textPersonName"
-        android:text="tu nombre" />
+        android:hint="@string/write_playername"
+        android:inputType="textPersonName" />
 
     <EditText
         android:id="@+id/login_password"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:ems="10"
-        android:inputType="textPassword"
-        android:text="abc" />
+        android:hint="@string/write_your_password"
+        android:inputType="textPassword" />
 
     <Switch
         android:id="@+id/keep_me_logged_in_switch"
@@ -26,22 +28,30 @@
         android:layout_height="wrap_content"
         android:text="@string/remember_user" />
 
-    <Button
-        android:id="@+id/login_button"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/login" />
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/login_button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/login" />
+
+        <Button
+            android:id="@+id/new_user_button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/new_user" />
+    </LinearLayout>
 
     <Button
         android:id="@+id/cancel_button"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/cancel_login" />
-
-    <Button
-        android:id="@+id/new_user_button"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/new_user" />
 
 </LinearLayout>

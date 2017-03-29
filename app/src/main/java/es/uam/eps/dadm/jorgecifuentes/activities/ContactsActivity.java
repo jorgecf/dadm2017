@@ -127,7 +127,7 @@ public class ContactsActivity extends AppCompatActivity {
                 if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                     this.showContacts();
                 } else {
-                    Snackbar.make(findViewById(R.id.contactsListView), R.string.contacts_permission_denied, Snackbar.LENGTH_INDEFINITE).show(); //TODO string
+                    Snackbar.make(findViewById(R.id.contactsListView), R.string.contacts_permission_denied, Snackbar.LENGTH_INDEFINITE).show();
                 }
                 return;
 
@@ -144,5 +144,4 @@ public class ContactsActivity extends AppCompatActivity {
 
         ((ListView) findViewById(R.id.contactsListView)).setAdapter(this.adapter);
     }
-
 }

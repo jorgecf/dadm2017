@@ -58,13 +58,12 @@
                 card_view:cardBackgroundColor="@color/cardview_light_background"
                 card_view:cardCornerRadius="4dp">
 
-                <EditText
-                    android:id="@+id/editText2"
+                <TextView
+                    android:id="@+id/text_version"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:ems="10"
                     android:gravity="center"
-                    android:inputType="textPersonName"
                     android:maxLines="1"
                     android:text="Version xx" />
             </android.support.v7.widget.CardView>
@@ -79,13 +78,12 @@
                 card_view:cardBackgroundColor="@color/cardview_light_background"
                 card_view:cardCornerRadius="4dp">
 
-                <EditText
+                <TextView
                     android:id="@+id/editText3"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:ems="10"
                     android:gravity="center"
-                    android:inputType="textPersonName"
                     android:maxLines="1"
                     android:text="Ayuda" />
             </android.support.v7.widget.CardView>

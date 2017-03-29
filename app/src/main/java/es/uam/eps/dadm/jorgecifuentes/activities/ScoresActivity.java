@@ -5,7 +5,9 @@ import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.widget.TextView;
 
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import es.uam.eps.dadm.jorgecifuentes.R;
 import es.uam.eps.dadm.jorgecifuentes.model.Round;
@@ -35,6 +37,14 @@ public class ScoresActivity extends AppCompatActivity {
             @Override
             public void onResponse(List<Round> rounds) {
                 playername_subtitle.setText(String.valueOf(rounds.size()) + " rounds played"); //TODO string
+
+                //TODO num jugadores
+                Set<String> numPlayers = new HashSet<>();
+                for (Round r : rounds) {
+                    numPlayers.add(r.getPlayerUUID());
+                }
+
+
             }
 
             @Override

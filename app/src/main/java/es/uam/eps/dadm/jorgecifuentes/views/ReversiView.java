@@ -56,8 +56,8 @@ public class ReversiView extends View {
         this.linePaint.setStrokeWidth(2);
 
         // Colores de las fichas.
-        this.playerColor=Color.BLACK;
-        this.oponentColor=Color.WHITE;
+        this.playerColor = Color.BLACK;
+        this.oponentColor = Color.WHITE;
     }
 
     @Override
