@@ -1,5 +1,7 @@
 package es.uam.eps.dadm.jorgecifuentes.controller;
 
+import android.content.res.Resources;
+import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.content.Context;
@@ -57,7 +59,6 @@ public class RoundListFragment extends Fragment {
         super.onDetach();
         callbacks = null;
     }
-
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {

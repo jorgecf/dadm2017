@@ -25,6 +25,9 @@ public class ReversiView extends View {
     private Paint linePaint = new Paint(Paint.ANTI_ALIAS_FLAG);
     private Paint gridPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
 
+    private int playerColor;
+    private int oponentColor;
+
     private float heightOfTile;
     private float widthOfTile;
     private float radio;
@@ -51,6 +54,10 @@ public class ReversiView extends View {
         this.gridPaint.setStrokeWidth(3);
 
         this.linePaint.setStrokeWidth(2);
+
+        // Colores de las fichas.
+        this.playerColor=Color.BLACK;
+        this.oponentColor=Color.WHITE;
     }
 
     @Override
@@ -156,9 +163,9 @@ public class ReversiView extends View {
     private void setPaintColor(Paint paint, int i, int j) {
 
         if (this.board.getTablero(i, j) == TableroReversi.Color.NEGRO)
-            paint.setColor(Color.BLACK);
+            paint.setColor(this.playerColor);
         else if (this.board.getTablero(i, j) == TableroReversi.Color.BLANCO)
-            paint.setColor(Color.WHITE);
+            paint.setColor(this.oponentColor);
         else
             paint.setColor(Color.TRANSPARENT);
     }

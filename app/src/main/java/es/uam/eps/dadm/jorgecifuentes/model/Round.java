@@ -21,7 +21,6 @@ public class Round {
     public Round() {
         this.playerUUID = null;
         this.roundUUID = UUID.randomUUID().toString();
-        // this.playername="CAMBIAME"; //TODO pasar por param? cargando desde preferencias
 
         this.title = "ROUND " + " " + roundUUID.toString().substring(19, 23).toUpperCase();
         this.date = new Date().toString();
@@ -31,7 +30,6 @@ public class Round {
     public Round(String playerUUID) {
         this.playerUUID = playerUUID;
         this.roundUUID = UUID.randomUUID().toString();
-        // this.playername="CAMBIAME"; //TODO pasar por param? cargando desde preferencias
 
         this.title = "ROUND " + " " + roundUUID.toString().substring(19, 23).toUpperCase();
         this.date = new Date().toString();
@@ -85,8 +83,8 @@ public class Round {
     }
 
 
-    public void setSecondPlayerName(String n) {
-    }
+    //   public void setSecondPlayerName(String n) {
+    //  }
 
     public String getPlayerUUID() {
         return this.playerUUID;

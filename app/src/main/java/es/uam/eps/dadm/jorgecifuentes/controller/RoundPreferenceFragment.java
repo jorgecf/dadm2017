@@ -1,18 +1,14 @@
 package es.uam.eps.dadm.jorgecifuentes.controller;
 
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.Preference;
 import android.preference.PreferenceFragment;
-import android.preference.PreferenceManager;
 import android.support.annotation.Nullable;
-import android.support.design.widget.Snackbar;
 
 import es.uam.eps.dadm.jorgecifuentes.R;
 import es.uam.eps.dadm.jorgecifuentes.activities.ContactsActivity;
 import es.uam.eps.dadm.jorgecifuentes.activities.LoginActivity;
-import es.uam.eps.dadm.jorgecifuentes.activities.RoundListActivity;
 import es.uam.eps.dadm.jorgecifuentes.activities.RoundPreferenceActivity;
 
 
@@ -29,12 +25,13 @@ public class RoundPreferenceFragment extends PreferenceFragment {
         // Cargamos los ajustes desde el xml.
         this.addPreferencesFromResource(R.xml.settings);
 
+        //TODO string
         Preference access_contacts = this.findPreference("access_contacts");
         Preference logout = this.findPreference("logout");
-        Preference switch_theme = this.findPreference("switch_theme");
+        Preference switch_online = this.findPreference("switch_online");
 
 
-        //TODO string
+        // Preferencia para mostrar a lista de contactos.
         if (access_contacts != null) {
             access_contacts.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
 
@@ -46,6 +43,7 @@ public class RoundPreferenceFragment extends PreferenceFragment {
             });
         }
 
+        // Preferencia para salir a la pantalla de login.
         if (logout != null) {
             logout.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
 
@@ -62,18 +60,13 @@ public class RoundPreferenceFragment extends PreferenceFragment {
             });
         }
 
-        // Switch para elegir tema.
-        if (switch_theme != null) {
-            switch_theme.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
+        // Switch de eleccion de juego online.
+        if (switch_online != null) {
+            switch_online.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
 
                 @Override
                 public boolean onPreferenceChange(Preference preference, Object newValue) {
-
-                    getActivity().getApplication().setTheme(R.style.AppTheme_Dark);
-                 //   getActivity().setContentView(R.layout.activity_fragment);
-
-
-                 //   Snackbar.make(getView(), "Changeado", Snackbar.LENGTH_SHORT).show();
+                    RoundPreferenceActivity.setPlayOnline(getActivity(), (boolean) newValue);
                     return true;
                 }
             });

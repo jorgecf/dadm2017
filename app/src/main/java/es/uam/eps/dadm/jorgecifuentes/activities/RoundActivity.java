@@ -19,7 +19,7 @@ import es.uam.eps.dadm.jorgecifuentes.model.Round;
 public class RoundActivity extends AppCompatActivity implements RoundFragment.Callbacks {
 
     public static final String EXTRA_FIRST_PLAYERNAME = "es.uam.eps.dadm.first_playername";
-    public static final String EXTRA_ROUND_TITLE = "es.uam.eps.dadm.first_playername";
+    public static final String EXTRA_ROUND_TITLE = "es.uam.eps.dadm.round_title";
     public static final String EXTRA_ROUND_DATE = "es.uam.eps.dadm.round_date";
     public static final String EXTRA_ROUND_BOARD = "es.uam.eps.dadm.round_board";
     public static final String EXTRA_ROUND_UUID = "es.uam.eps.dadm.round_uuid";

@@ -36,8 +36,8 @@ public class RoundCursorWrapper extends CursorWrapper {
         String playeruuid = getString(getColumnIndex(UserTable.Cols.PLAYERUUID));
 
         Round round = new Round();
-        round.setFirstPlayerName("random");
-        round.setSecondPlayerName(playername);
+        round.setFirstPlayerName(playername);
+     //   round.setSecondPlayerName(playername);
         round.setDate(date);
         round.setTitle(title);
 

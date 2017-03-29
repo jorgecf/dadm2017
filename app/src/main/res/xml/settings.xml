@@ -5,24 +5,13 @@
 
         <!-- TODO STRINGS -->
 
-        <ListPreference
-            android:defaultValue="8"
-            android:entries="@array/levelsArray"
-            android:entryValues="@array/levelsValues"
-            android:key="boardsize"
-            android:summary="Choose the size of the board"
-            android:title="Board size (quitame)" />
 
-        <EditTextPreference
-            android:key="playername"
-            android:summary="Select your name"
-            android:title="Player name">
-
-        </EditTextPreference>
         <SwitchPreference
-            android:defaultValue="false"
-            android:key="switch_theme"
-            android:title="Switch to night theme" />
+            android:key="switch_online"
+            android:summary="Switch it to play online"
+            android:title="Play online?">
+
+        </SwitchPreference>
 
     </PreferenceCategory>
 
@@ -35,7 +24,12 @@
     </PreferenceCategory>
 
     <PreferenceCategory android:title="Account">
+        <EditTextPreference
+            android:key="playername"
+            android:summary="Select your name"
+            android:title="Player name">
 
+        </EditTextPreference>
         <Preference
             android:key="logout"
             android:title="Log-out"></Preference>
