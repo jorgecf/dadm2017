@@ -39,7 +39,7 @@ public class RoundPreferenceActivity extends AppCompatActivity {
     /**
      * Nombre por defecto.
      */
-    protected static final String PLAYERNAME_DEFAULT = "def";
+    protected static final String PLAYERNAME_DEFAULT = "";
 
     /**
      * Preferencia que, en caso de ser true, hace que se salte la pantalla de login.

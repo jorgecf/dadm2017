@@ -1,10 +1,14 @@
 package es.uam.eps.dadm.jorgecifuentes.activities;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.TextInputLayout;
+import android.support.v7.app.AlertDialog;
 import android.view.View;
+import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.Switch;
 import android.widget.Toast;
@@ -100,7 +104,20 @@ public class LoginActivity extends Activity implements View.OnClickListener {
 
                     @Override
                     public void onError(String error) {
-                        //TODO se instancia dialogo de alerta
+
+                        // "Bajamos" el teclado en pantalla.
+                        View view = getCurrentFocus();
+                        if (view != null) {
+                            InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+                            imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
+                        }
+
+                        // Instanciamos un dialogo de aviso.
+                        AlertDialog.Builder builder = new AlertDialog.Builder(LoginActivity.this, R.style.AppTheme_DialogAlert);
+                        builder.setTitle("Dialog"); //TODO strings a todo el dialog
+                        builder.setMessage(error);
+                        builder.setPositiveButton("OK", null);
+                        builder.show().getWindow().setLayout(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
                     }
 
                 };

@@ -121,7 +121,7 @@ public class RoundListFragment extends Fragment {
             public void onSwiped(RecyclerView.ViewHolder viewHolder, int swipeDir) {
                 Round round = roundAdapter.remove(viewHolder.getAdapterPosition());
                 RoundRepository repository = RoundRepositoryFactory.createRepository(getActivity());
-                repository.removeRound(round);
+                repository.removeRound(round, null);
             }
         };
 

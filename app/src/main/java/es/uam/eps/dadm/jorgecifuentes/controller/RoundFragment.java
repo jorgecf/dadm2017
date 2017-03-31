@@ -47,7 +47,6 @@ public class RoundFragment extends Fragment implements PartidaListener {
 
     private Round round;
     private Partida game;
-    private int size;
 
     private ReversiView boardView;
 
@@ -63,7 +62,7 @@ public class RoundFragment extends Fragment implements PartidaListener {
 
 
     /**
-     * Funcion que define que hacer al actualizar el contenido de una ronda.
+     * Interfaz que define que hacer al actualizar el contenido de una ronda.
      */
     public interface Callbacks {
         void onRoundUpdated(Round round);
@@ -209,7 +208,7 @@ public class RoundFragment extends Fragment implements PartidaListener {
 
         ArrayList<Jugador> players = new ArrayList<Jugador>();
         JugadorAleatorio randomPlayer = new JugadorAleatorio(this.getContext().getString(R.string.random_player_default_name));
-        ReversiLocalPlayer localPlayer = new ReversiLocalPlayer(this.getContext(), firstPlayerName);//RoundPreferenceActivity.getPlayerName(this.getContext())); todo check me
+        ReversiLocalPlayer localPlayer = new ReversiLocalPlayer(this.getContext(), firstPlayerName);
 
         players.add(localPlayer);
         players.add(randomPlayer);

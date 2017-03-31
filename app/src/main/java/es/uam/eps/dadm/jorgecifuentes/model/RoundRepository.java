@@ -114,7 +114,7 @@ public interface RoundRepository {
      *
      * @param round Ronda a borrar.
      */
-    void removeRound(Round round); //TODO callback???
+    void removeRound(Round round, BooleanCallback callback);
 
     /**
      * Actualiza una ronda.

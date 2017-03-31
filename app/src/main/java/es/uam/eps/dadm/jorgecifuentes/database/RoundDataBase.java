@@ -136,11 +136,27 @@ public class RoundDataBase implements RoundRepository {
         values.put(UserTable.Cols.PLAYERNAME, playername);
         values.put(UserTable.Cols.PLAYERPASSWORD, password);
 
-        long id = this.db.insert(UserTable.NAME, null, values);
-        if (id < 0)
-            callback.onError("Error inserting new player named " + playername);
-        else
-            callback.onLogin(uuid);
+        // Comprobamos si el nombre de usuario ya existe.
+        Cursor cursor = this.db.query(
+                UserTable.NAME, // tabla donde buscar
+                new String[]{UserTable.Cols.PLAYERUUID}, // columna devuelta
+                UserTable.Cols.PLAYERNAME + " = ?", // filtro (query en si misma)
+                new String[]{playername}, // sustitucion de los ?
+                null,
+                null,
+                null);
+
+
+        if (cursor.getCount() != 0) {
+            callback.onError("A player with this name already exists!"); //TODO string
+        } else {
+
+            long id = this.db.insert(UserTable.NAME, null, values);
+            if (id < 0)
+                callback.onError("Error inserting new player named " + playername);
+            else
+                callback.onLogin(uuid);
+        }
     }
 
     @Override
@@ -212,17 +228,20 @@ public class RoundDataBase implements RoundRepository {
     }
 
     @Override
+    public void removeRound(Round round, BooleanCallback callback) {
+        long id = this.db.delete(RoundTable.NAME, RoundTable.Cols.ROUNDUUID + " = ?", new String[]{round.getRoundUUID()});
+
+        if (callback != null)
+            callback.onResponse(id >= 0);
+    }
+
+    @Override
     public void updateUser(String userUUID, String name, String password) { //TODO callback?
 
         ContentValues values = this.getContentValues(userUUID, name, password);
 
         long id = this.db.update(UserTable.NAME, values, UserTable.Cols.PLAYERUUID + " = ?", new String[]{userUUID}); //TODO que pasa con password???
         Log.d("DEBUG", "updateUser: " + id);
-    }
-
-    @Override
-    public void removeRound(Round round) {
-        long id = this.db.delete(RoundTable.NAME, RoundTable.Cols.ROUNDUUID + " = ?", new String[]{round.getRoundUUID()});
     }
 
     private ContentValues getContentValues(Round round) {
