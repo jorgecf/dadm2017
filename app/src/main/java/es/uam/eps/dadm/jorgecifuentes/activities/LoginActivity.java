@@ -3,9 +3,9 @@ package es.uam.eps.dadm.jorgecifuentes.activities;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.design.widget.TextInputLayout;
 import android.view.View;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.Switch;
 import android.widget.Toast;
 
@@ -21,8 +21,8 @@ import es.uam.eps.dadm.jorgecifuentes.model.RoundRepositoryFactory;
 public class LoginActivity extends Activity implements View.OnClickListener {
 
     private RoundRepository repository;
-    private EditText usernameEditText;
-    private EditText passwordEditText;
+    private TextInputLayout usernameEditText;
+    private TextInputLayout passwordEditText;
     private Switch keepMeLoggedInSwitch;
 
 
@@ -41,8 +41,8 @@ public class LoginActivity extends Activity implements View.OnClickListener {
             return;
         }
 
-        this.usernameEditText = (EditText) this.findViewById(R.id.login_username);
-        this.passwordEditText = (EditText) this.findViewById(R.id.login_password);
+        this.usernameEditText = (TextInputLayout) this.findViewById(R.id.login_username_wrapper);
+        this.passwordEditText = (TextInputLayout) this.findViewById(R.id.login_password_wrapper);
         this.keepMeLoggedInSwitch = (Switch) this.findViewById(R.id.keep_me_logged_in_switch);
 
         // Buscamos los botones y les pasamos esta actividad como listener, ya que son los botones
@@ -64,9 +64,24 @@ public class LoginActivity extends Activity implements View.OnClickListener {
     @Override
     public void onClick(View v) {
 
-        final String playername = this.usernameEditText.getText().toString();
-        final String password = this.passwordEditText.getText().toString();
+        final String playername = this.usernameEditText.getEditText().getText().toString();
+        final String password = this.passwordEditText.getEditText().getText().toString();
         final Boolean remember = this.keepMeLoggedInSwitch.isChecked();
+
+        // Control de errores de entrada.
+
+        usernameEditText.setError(null);
+        passwordEditText.setError(null);
+
+        if (playername.length() == 0) {
+            this.usernameEditText.setError("Rellene username"); //TODO string
+            return;
+        }
+
+        if (password.length() == 0) {
+            this.passwordEditText.setError("Rellene pass");
+            return;
+        }
 
         // Callback que se ejecutara al intentar hacer login.
         RoundRepository.LoginRegisterCallback loginRegisterCallback =
@@ -85,11 +100,13 @@ public class LoginActivity extends Activity implements View.OnClickListener {
 
                     @Override
                     public void onError(String error) {
-                        // TODO Se instancia dialogo de alerta
+                        //TODO se instancia dialogo de alerta
                     }
 
                 };
 
+
+        // Elegimos la accion dependiendo de la vista clickada.
         switch (v.getId()) {
             case R.id.login_button:
                 this.repository.login(playername, password, loginRegisterCallback);
@@ -101,5 +118,6 @@ public class LoginActivity extends Activity implements View.OnClickListener {
                 this.repository.register(playername, password, loginRegisterCallback);
                 break;
         }
+
     }
 }
