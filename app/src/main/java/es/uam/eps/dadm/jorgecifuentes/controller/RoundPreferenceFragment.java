@@ -6,6 +6,7 @@ import android.preference.EditTextPreference;
 import android.preference.Preference;
 import android.preference.PreferenceFragment;
 import android.support.annotation.Nullable;
+import android.util.Log;
 
 import es.uam.eps.dadm.jorgecifuentes.R;
 import es.uam.eps.dadm.jorgecifuentes.activities.ContactsActivity;
@@ -35,6 +36,8 @@ public class RoundPreferenceFragment extends PreferenceFragment {
 
         // Preferencia de cambio de nombre.
         if (select_name != null) {
+
+            // Al cambiar el valor del cambio de nombre, actualizamos las preferencias y bbdd.
             select_name.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
 
                 @Override
@@ -43,9 +46,20 @@ public class RoundPreferenceFragment extends PreferenceFragment {
                     return true;
                 }
             });
+
+            // Al pulsar en la preferencia, queremos que el nombre de usuario actual salga por defecto.
+            select_name.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
+
+                @Override
+                public boolean onPreferenceClick(Preference preference) {
+                    Log.d("DEBUG", "onPreferenceClick: "+RoundPreferenceActivity.getPlayerName(getActivity()));
+                    select_name.setText(RoundPreferenceActivity.getPlayerName(getActivity()));
+                    return true;
+                }
+            });
         }
 
-        // Preferencia para mostrar a lista de contactos.
+        // Preferencia para mostrar la lista de contactos.
         if (access_contacts != null) {
             access_contacts.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
 

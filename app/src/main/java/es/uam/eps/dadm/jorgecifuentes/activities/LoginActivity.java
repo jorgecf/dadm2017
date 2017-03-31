@@ -73,17 +73,18 @@ public class LoginActivity extends Activity implements View.OnClickListener {
         final Boolean remember = this.keepMeLoggedInSwitch.isChecked();
 
         // Control de errores de entrada.
-
-        usernameEditText.setError(null);
-        passwordEditText.setError(null);
+        this.usernameEditText.setError(null);
+        this.passwordEditText.setError(null);
 
         if (playername.length() == 0) {
             this.usernameEditText.setError("Rellene username"); //TODO string
+            this.usernameEditText.requestFocus();
             return;
         }
 
         if (password.length() == 0) {
             this.passwordEditText.setError("Rellene pass");
+            this.passwordEditText.requestFocus();
             return;
         }
 

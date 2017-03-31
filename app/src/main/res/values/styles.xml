@@ -12,6 +12,7 @@
         <item name="android:windowBackground">@drawable/launch_screen</item>
     </style>
 
+    <!-- DialogAlert theme with dim (background fade) enabled. -->
     <style name="AppTheme.DialogAlert">
         <item name="android:backgroundDimEnabled">true</item>
     </style>
