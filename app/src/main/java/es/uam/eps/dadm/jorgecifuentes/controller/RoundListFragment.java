@@ -1,7 +1,5 @@
 package es.uam.eps.dadm.jorgecifuentes.controller;
 
-import android.content.res.Resources;
-import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.content.Context;
@@ -25,6 +23,7 @@ import es.uam.eps.dadm.jorgecifuentes.activities.RoundPreferenceActivity;
 import es.uam.eps.dadm.jorgecifuentes.model.Round;
 import es.uam.eps.dadm.jorgecifuentes.model.RoundRepository;
 import es.uam.eps.dadm.jorgecifuentes.model.RoundRepositoryFactory;
+import es.uam.eps.dadm.jorgecifuentes.views.EmptyRecyclerView;
 
 /**
  * Clase que representa un  fragmento que incluye la lista de rondas.
@@ -33,7 +32,9 @@ import es.uam.eps.dadm.jorgecifuentes.model.RoundRepositoryFactory;
  */
 public class RoundListFragment extends Fragment {
 
-    private RecyclerView roundRecyclerView;
+    // private RecyclerView roundRecyclerView;
+    private EmptyRecyclerView roundRecyclerView;
+
     private RoundAdapter roundAdapter;
 
     private Callbacks callbacks;
@@ -63,12 +64,16 @@ public class RoundListFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
+        // Inflamos la vista con el layout en xml.
         final View view = inflater.inflate(R.layout.fragment_round_list, container, false);
-        roundRecyclerView = (RecyclerView) view.findViewById(R.id.round_recycler_view);
+        roundRecyclerView = (EmptyRecyclerView) view.findViewById(R.id.round_recycler_view);
 
+        // Vista recicladora.
         RecyclerView.LayoutManager linearLayoutManager = new LinearLayoutManager(getActivity());
         roundRecyclerView.setLayoutManager(linearLayoutManager);
         roundRecyclerView.setItemAnimator(new DefaultItemAnimator());
+        roundRecyclerView.setEmptyView(view.findViewById(R.id.rounds_empty_view));
+
 
         // Inicializamos el listener de la CardView.
         roundRecyclerView.addOnItemTouchListener(new RecyclerItemClickListener(getActivity(), new RecyclerItemClickListener.OnItemClickListener() {
@@ -122,6 +127,12 @@ public class RoundListFragment extends Fragment {
                 Round round = roundAdapter.remove(viewHolder.getAdapterPosition());
                 RoundRepository repository = RoundRepositoryFactory.createRepository(getActivity());
                 repository.removeRound(round, null);
+
+                // esta vacio???
+                //if(repository.getRounds)
+                TextView empty = new TextView(getActivity());
+                empty.setText("EMPTY");
+                empty.setVisibility(View.VISIBLE);
             }
         };
 

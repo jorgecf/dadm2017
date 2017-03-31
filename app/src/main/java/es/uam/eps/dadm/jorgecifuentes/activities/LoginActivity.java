@@ -106,7 +106,7 @@ public class LoginActivity extends Activity implements View.OnClickListener {
                     public void onError(String error) {
 
                         // "Bajamos" el teclado en pantalla.
-                        View view = getCurrentFocus();
+    git                    View view = getCurrentFocus();
                         if (view != null) {
                             InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
                             imm.hideSoftInputFromWindow(view.getWindowToken(), 0);

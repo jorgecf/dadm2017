@@ -37,4 +37,5 @@
     <string name="contacts_permission_denied">Los contactos no se mostrarán dado que no se ha otorgado permiso</string>
     <string name="write_playername">nombre de usuario</string>
     <string name="write_your_password">contrasena</string>
+    <string name="rounds_empty">No hay rondas empezadas</string>
 </resources>
