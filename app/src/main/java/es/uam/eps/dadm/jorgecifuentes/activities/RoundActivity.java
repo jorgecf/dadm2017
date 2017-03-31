@@ -54,6 +54,7 @@ public class RoundActivity extends AppCompatActivity implements RoundFragment.Ca
      * @return intencion creada
      */
     public static Intent newIntent(Context packageContext, String rounduuid, String firstPlayerName, String roundTitle, String roundDate, String roundBoard) {
+
         Intent intent = new Intent(packageContext, RoundActivity.class);
 
         intent.putExtra(EXTRA_FIRST_PLAYERNAME, firstPlayerName);

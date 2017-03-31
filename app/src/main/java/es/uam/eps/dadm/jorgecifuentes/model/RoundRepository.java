@@ -2,6 +2,8 @@ package es.uam.eps.dadm.jorgecifuentes.model;
 
 import java.util.List;
 
+import es.uam.eps.dadm.jorgecifuentes.controller.ReversiLocalPlayer;
+
 /**
  * Interfaz que representa un repositorio de diferentes rondas, y su acceso a ellas.
  *
@@ -121,4 +123,6 @@ public interface RoundRepository {
      * @param callback Callback a ejecutar despues de actualizar la ronda.
      */
     void updateRound(Round round, BooleanCallback callback);
+
+    void updateUser(String userUUID, String name, String password);
 }

@@ -2,6 +2,7 @@ package es.uam.eps.dadm.jorgecifuentes.controller;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.preference.EditTextPreference;
 import android.preference.Preference;
 import android.preference.PreferenceFragment;
 import android.support.annotation.Nullable;
@@ -26,10 +27,23 @@ public class RoundPreferenceFragment extends PreferenceFragment {
         this.addPreferencesFromResource(R.xml.settings);
 
         //TODO string
+        final EditTextPreference select_name = (EditTextPreference) this.findPreference("select_name");
         Preference access_contacts = this.findPreference("access_contacts");
         Preference logout = this.findPreference("logout");
         Preference switch_online = this.findPreference("switch_online");
 
+
+        // Preferencia de cambio de nombre.
+        if (select_name != null) {
+            select_name.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
+
+                @Override
+                public boolean onPreferenceChange(Preference preference, Object newValue) {
+                    RoundPreferenceActivity.setPlayerName(getActivity(), (String) newValue);
+                    return true;
+                }
+            });
+        }
 
         // Preferencia para mostrar a lista de contactos.
         if (access_contacts != null) {

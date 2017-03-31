@@ -206,14 +206,23 @@ public class RoundDataBase implements RoundRepository {
 
         ContentValues values = this.getContentValues(round);
 
-        long id = this.db.update(RoundTable.NAME, values, RoundTable.Cols.ROUNDUUID + "= ?", new String[]{round.getRoundUUID()});
+        long id = this.db.update(RoundTable.NAME, values, RoundTable.Cols.ROUNDUUID + " = ?", new String[]{round.getRoundUUID()});
         if (callback != null)
             callback.onResponse(id >= 0);
     }
 
     @Override
+    public void updateUser(String userUUID, String name, String password) { //TODO callback?
+
+        ContentValues values = this.getContentValues(userUUID, name, password);
+
+        long id = this.db.update(UserTable.NAME, values, UserTable.Cols.PLAYERUUID + " = ?", new String[]{userUUID}); //TODO que pasa con password???
+        Log.d("DEBUG", "updateUser: " + id);
+    }
+
+    @Override
     public void removeRound(Round round) {
-        long id = this.db.delete(RoundTable.NAME, RoundTable.Cols.ROUNDUUID + "= ?", new String[]{round.getRoundUUID()});
+        long id = this.db.delete(RoundTable.NAME, RoundTable.Cols.ROUNDUUID + " = ?", new String[]{round.getRoundUUID()});
     }
 
     private ContentValues getContentValues(Round round) {
@@ -226,6 +235,27 @@ public class RoundDataBase implements RoundRepository {
         values.put(RoundTable.Cols.TITLE, round.getTitle());
         values.put(RoundTable.Cols.SIZE, round.getSize());
         values.put(RoundTable.Cols.BOARD, round.getBoard().tableroToString());
+
+        return values;
+    }
+
+    private ContentValues getContentValues(String userUUID, String name, String password) {
+
+        ContentValues values = new ContentValues();
+
+/*
+        String sql = "SELECT " + UserTable.Cols.PLAYERPASSWORD + " " +
+                "FROM " + UserTable.NAME + " " +
+                "WHERE " + UserTable.Cols.PLAYERUUID + "='" +
+                userUUID + "';";
+
+        Cursor cursor = db.rawQuery(sql, null);
+        cursor.moveToFirst();
+        password = cursor.getString(0);
+
+*/
+        if (name != null) values.put(UserTable.Cols.PLAYERNAME, name);
+        if (password != null) values.put(UserTable.Cols.PLAYERPASSWORD, password);
 
         return values;
     }

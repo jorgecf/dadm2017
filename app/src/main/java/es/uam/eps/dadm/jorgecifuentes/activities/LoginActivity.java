@@ -34,7 +34,7 @@ public class LoginActivity extends Activity implements View.OnClickListener {
 
         // Si si hay nombre almacenado (no devuelve el default), es que se ha hecho login, si ademas
         // el usuario ha elegido "mantenerme logueado", se salta la pantalla de login.
-        if (RoundPreferenceActivity.getPlayerName(this).equals(RoundPreferenceActivity.PLAYERNAME_DEFAULT) == false
+        if (RoundPreferenceActivity.getPlayerName(this).equals(RoundPreferenceActivity.PLAYERNAME_DEFAULT) == false //TODO cerrar con keeplogged FALSE ---> clearPref??
                 && RoundPreferenceActivity.getKeepLogged(this) == true) {
             startActivity(new Intent(LoginActivity.this, RoundListActivity.class));
             finish();

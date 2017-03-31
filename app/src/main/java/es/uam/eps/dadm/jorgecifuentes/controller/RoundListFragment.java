@@ -80,6 +80,7 @@ public class RoundListFragment extends Fragment {
                 //  Para eso esta el FAB.
                 RoundRepository repository = RoundRepositoryFactory.createRepository(getActivity());
                 RoundRepository.RoundsCallback roundsCallback = new RoundRepository.RoundsCallback() {
+
                     @Override
                     public void onResponse(List<Round> rounds) {
                         roundAdapter.setCurrent(position);

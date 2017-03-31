@@ -24,7 +24,7 @@
     <PreferenceCategory android:title="@string/account">
 
         <EditTextPreference
-            android:key="playername"
+            android:key="select_name"
             android:summary="@string/select_name_summary"
             android:title="@string/select_name_title">
 

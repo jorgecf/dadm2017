@@ -10,6 +10,8 @@ import android.content.SharedPreferences;
 
 import es.uam.eps.dadm.jorgecifuentes.R;
 import es.uam.eps.dadm.jorgecifuentes.controller.RoundPreferenceFragment;
+import es.uam.eps.dadm.jorgecifuentes.model.RoundRepository;
+import es.uam.eps.dadm.jorgecifuentes.model.RoundRepositoryFactory;
 
 /**
  * Actividad que maneja el acceso a preferencias de la aplicacion.
@@ -18,13 +20,37 @@ import es.uam.eps.dadm.jorgecifuentes.controller.RoundPreferenceFragment;
  */
 public class RoundPreferenceActivity extends AppCompatActivity {
 
+
+    /**
+     * Id del jugador.
+     */
     private static final String PLAYERUUID = "playeruuid";
+
+    /**
+     * Nombre del jugador.
+     */
     private static final String PLAYERNAME = "playername";
+
+    /**
+     * Clave del jugador.
+     */
     private static final String PLAYERPASSWORD = "password";
+
+    /**
+     * Nombre por defecto.
+     */
     protected static final String PLAYERNAME_DEFAULT = "def";
 
+    /**
+     * Preferencia que, en caso de ser true, hace que se salte la pantalla de login.
+     */
     private static final String KEEP_ME_LOGGED_IN = "keepMeLoggedIn";
+
+    /**
+     * Preferencia de juego online.
+     */
     private static final String PLAY_ONLINE = "playOnline";
+
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -83,75 +109,52 @@ public class RoundPreferenceActivity extends AppCompatActivity {
         editor.commit();
     }
 
-    /**
-     * @param context Contexto de la llamada.
-     * @param id
-     */
+
     public static void setPlayerUUID(Context context, String id) {
         RoundPreferenceActivity.setString(context, RoundPreferenceActivity.PLAYERUUID, id);
     }
 
-    /**
-     * @param context Contexto de la llamada.
-     * @return
-     */
     public static String getPlayerUUID(Context context) {
         return PreferenceManager.getDefaultSharedPreferences(context).getString(PLAYERUUID, "0"); //TODO defvalue
     }
 
-    /**
-     * @param context Contexto de la llamada.
-     * @param name
-     */
+
     public static void setPlayerName(Context context, String name) {
-        //TODO guardar tambien en base de datos
+
+        // Actualizamos en la base de datos.
+        RoundRepository r = RoundRepositoryFactory.createRepository(context);
+
+        r.updateUser(RoundPreferenceActivity.getPlayerUUID(context), name, null);
+        r.close();
+
+        // Actualizamos en los ajustes.
         RoundPreferenceActivity.setString(context, RoundPreferenceActivity.PLAYERNAME, name);
     }
 
-    /**
-     * @param context Contexto de la llamada.
-     * @return
-     */
+
     public static String getPlayerName(Context context) {
         return PreferenceManager.getDefaultSharedPreferences(context).getString(PLAYERNAME, PLAYERNAME_DEFAULT);
     }
 
-    /**
-     * @param context  Contexto de la llamada.
-     * @param password
-     */
+
     public static void setPlayerPassword(Context context, String password) {
         RoundPreferenceActivity.setString(context, RoundPreferenceActivity.PLAYERPASSWORD, password);
     }
 
-    /**
-     * @param context Contexto de la llamada.
-     * @return
-     */
+
     public static Boolean getKeepLogged(Context context) {
         return PreferenceManager.getDefaultSharedPreferences(context).getBoolean(KEEP_ME_LOGGED_IN, false);
     }
 
-    /**
-     * @param context Contexto de la llamada.
-     * @param b
-     */
     public static void setKeepLogged(Context context, Boolean b) {
         RoundPreferenceActivity.setBoolean(context, RoundPreferenceActivity.KEEP_ME_LOGGED_IN, b);
     }
 
-    /**
-     * @param context Contexto de la llamada.
-     * @return
-     */
+
     public static Boolean getPlayOnline(Context context) {
         return PreferenceManager.getDefaultSharedPreferences(context).getBoolean(PLAY_ONLINE, false);
     }
 
-    /**
-     * @param context Contexto de la llamada.
-     * @param b
-     */
     public static void setPlayOnline(Context context, Boolean b) {
         RoundPreferenceActivity.setBoolean(context, RoundPreferenceActivity.PLAY_ONLINE, b);
     }
