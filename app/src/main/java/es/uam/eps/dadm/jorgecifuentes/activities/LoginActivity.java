@@ -115,7 +115,7 @@ public class LoginActivity extends Activity implements View.OnClickListener {
 
                         // Instanciamos un dialogo de aviso.
                         AlertDialog.Builder builder = new AlertDialog.Builder(LoginActivity.this, R.style.AppTheme_DialogAlert);
-                        builder.setTitle("Dialog"); //TODO strings a todo el dialog
+                        builder.setTitle("Dialog"); //TODO strings, a todo el dialog
                         builder.setMessage(error);
                         builder.setPositiveButton("OK", null);
                         builder.show().getWindow().setLayout(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);

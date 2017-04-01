@@ -52,12 +52,13 @@ public class RoundPreferenceFragment extends PreferenceFragment {
 
                 @Override
                 public boolean onPreferenceClick(Preference preference) {
-                    Log.d("DEBUG", "onPreferenceClick: "+RoundPreferenceActivity.getPlayerName(getActivity()));
+                    Log.d("DEBUG", "onPreferenceClick: " + RoundPreferenceActivity.getPlayerName(getActivity())); //TODO funciona? comprobar bien
                     select_name.setText(RoundPreferenceActivity.getPlayerName(getActivity()));
                     return true;
                 }
             });
         }
+
 
         // Preferencia para mostrar la lista de contactos.
         if (access_contacts != null) {
@@ -79,14 +80,20 @@ public class RoundPreferenceFragment extends PreferenceFragment {
                 public boolean onPreferenceClick(Preference preference) {
 
                     // Borramos las preferencias y realizamos el logout.
-                    startActivity(new Intent(getActivity(), LoginActivity.class));
-
                     RoundPreferenceActivity.clearPreferences(getActivity());
+                    Intent intent = new Intent(getActivity(), LoginActivity.class);
+
+                    // FLAG_ACTIVITY_CLEAR_TASK borra todas las actividades menos la del intent. Para
+                    // que esto funcione, la actual deberia estar aun en stack; es decir no haber sido
+                    // acabada, o bien usar la bandera FLAG_ACTIVITY_NEW_TASK.
+                    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                    startActivity(intent);
 
                     return true;
                 }
             });
         }
+
 
         // Switch de eleccion de juego online.
         if (switch_online != null) {
