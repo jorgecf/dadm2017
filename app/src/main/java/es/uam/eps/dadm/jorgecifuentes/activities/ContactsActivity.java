@@ -105,7 +105,7 @@ public class ContactsActivity extends AppCompatActivity {
             if (ActivityCompat.shouldShowRequestPermissionRationale(ContactsActivity.this, Manifest.permission.READ_CONTACTS)) {
                 // Mostramos una explicación al usuario y
                 // solicitamos el permiso otra vez
-                Snackbar.make(findViewById(R.id.contactsListView), "The contacts are required just to show them", Snackbar.LENGTH_LONG).show();
+                Snackbar.make(findViewById(R.id.contactsListView), "The contacts are required just to show them", Snackbar.LENGTH_LONG).show(); //TODO strings
                 ActivityCompat.requestPermissions(ContactsActivity.this, new String[]{Manifest.permission.READ_CONTACTS}, MY_PERMISSIONS_REQUEST_READ_CONTACTS);
             } else {
                 // No se necesita explicación, se solicita el permiso.

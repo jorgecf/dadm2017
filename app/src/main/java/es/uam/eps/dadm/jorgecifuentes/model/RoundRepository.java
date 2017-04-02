@@ -1,5 +1,7 @@
 package es.uam.eps.dadm.jorgecifuentes.model;
 
+import android.support.annotation.Nullable;
+
 import java.util.List;
 
 import es.uam.eps.dadm.jorgecifuentes.controller.ReversiLocalPlayer;
@@ -99,7 +101,7 @@ public interface RoundRepository {
      * @param group        Modo de agrupado o null.
      * @param callback     Callback a ejecutar despues de obtener las rondas.
      */
-    void getRounds(String playeruuid, String orderByField, String group, RoundsCallback callback);
+    void getRounds(@Nullable String playeruuid, @Nullable String orderByField, @Nullable String group, RoundsCallback callback);
 
     /**
      * Agrega una nueva ronda.

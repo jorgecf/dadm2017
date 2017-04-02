@@ -38,19 +38,22 @@ public class LoginActivity extends Activity implements View.OnClickListener {
 
         // Si si hay nombre almacenado (no devuelve el default), es que se ha hecho login, si ademas
         // el usuario ha elegido "mantenerme logueado", se salta la pantalla de login.
-        if (RoundPreferenceActivity.getPlayerName(this).equals(RoundPreferenceActivity.PLAYERNAME_DEFAULT) == false //TODO cerrar con keeplogged FALSE ---> clearPref??
+        if (RoundPreferenceActivity.getPlayerName(this).equals(RoundPreferenceActivity.PLAYERNAME_DEFAULT) == false
                 && RoundPreferenceActivity.getKeepLogged(this) == true) {
             startActivity(new Intent(LoginActivity.this, RoundListActivity.class));
             finish();
             return;
         }
 
+        // En caso de no estar activado recuerdo de sesion, borramos preferencias.
+        RoundPreferenceActivity.clearPreferences(this);
+
         this.usernameEditText = (TextInputLayout) this.findViewById(R.id.login_username_wrapper);
         this.passwordEditText = (TextInputLayout) this.findViewById(R.id.login_password_wrapper);
         this.keepMeLoggedInSwitch = (Switch) this.findViewById(R.id.keep_me_logged_in_switch);
 
         // Buscamos los botones y les pasamos esta actividad como listener, ya que son los botones
-        // que van a hacer algo.
+        // que van a hacer acciones.
         Button loginButton = (Button) findViewById(R.id.login_button);
         Button cancelButton = (Button) findViewById(R.id.cancel_button);
         Button newuserButton = (Button) findViewById(R.id.new_user_button);
@@ -76,17 +79,6 @@ public class LoginActivity extends Activity implements View.OnClickListener {
         this.usernameEditText.setError(null);
         this.passwordEditText.setError(null);
 
-        if (playername.length() == 0) {
-            this.usernameEditText.setError("Rellene username"); //TODO string
-            this.usernameEditText.requestFocus();
-            return;
-        }
-
-        if (password.length() == 0) {
-            this.passwordEditText.setError("Rellene pass");
-            this.passwordEditText.requestFocus();
-            return;
-        }
 
         // Callback que se ejecutara al intentar hacer login.
         RoundRepository.LoginRegisterCallback loginRegisterCallback =
@@ -98,6 +90,7 @@ public class LoginActivity extends Activity implements View.OnClickListener {
                         RoundPreferenceActivity.setPlayerName(LoginActivity.this, playername);
                         RoundPreferenceActivity.setPlayerPassword(LoginActivity.this, password);
                         RoundPreferenceActivity.setKeepLogged(LoginActivity.this, remember);
+                        RoundPreferenceActivity.setPlayOnline(LoginActivity.this, false);
 
                         startActivity(new Intent(LoginActivity.this, RoundListActivity.class));
                         finish();
@@ -126,16 +119,48 @@ public class LoginActivity extends Activity implements View.OnClickListener {
 
         // Elegimos la accion dependiendo de la vista clickada.
         switch (v.getId()) {
+
             case R.id.login_button:
-                this.repository.login(playername, password, loginRegisterCallback);
+                if (this.checkInputValid(playername, password)) {
+                    this.repository.login(playername, password, loginRegisterCallback);
+                }
                 break;
+
+            case R.id.new_user_button:
+                if (this.checkInputValid(playername, password)) {
+                    this.repository.register(playername, password, loginRegisterCallback);
+                }
+                break;
+
+
             case R.id.cancel_button:
                 finish();
                 break;
-            case R.id.new_user_button:
-                this.repository.register(playername, password, loginRegisterCallback);
-                break;
+
         }
 
+    }
+
+    /**
+     * Comprueba la validez del inicio de sesion antes de interactuar con la base de datos.
+     *
+     * @param playername Nombre de usuario introducido.
+     * @param password   Clave introducida.
+     * @return True con datos validos para la base de datos, false si no.
+     */
+    private boolean checkInputValid(String playername, String password) {
+        if (playername.length() == 0) {
+            this.usernameEditText.setError("Rellene username"); //TODO string
+            this.usernameEditText.requestFocus();
+            return false;
+        }
+
+        if (password.length() == 0) {
+            this.passwordEditText.setError("Rellene pass");
+            this.passwordEditText.requestFocus();
+            return false;
+        }
+
+        return true;
     }
 }

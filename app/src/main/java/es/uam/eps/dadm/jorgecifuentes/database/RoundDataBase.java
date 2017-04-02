@@ -6,6 +6,7 @@ import android.database.Cursor;
 import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.support.annotation.Nullable;
 import android.util.Log;
 
 import java.util.ArrayList;
@@ -160,8 +161,9 @@ public class RoundDataBase implements RoundRepository {
     }
 
     @Override
-    public void getRounds(String playeruuid, String orderByField, String group, RoundsCallback callback) {
+    public void getRounds(@Nullable String playeruuid, @Nullable String orderByField, @Nullable String group, RoundsCallback callback) {
 
+        // Obtenemos todas las rondas con su usuario asociado.
         List<Round> rounds = new ArrayList<>();
         RoundCursorWrapper cursor = queryRounds();
 
@@ -169,8 +171,12 @@ public class RoundDataBase implements RoundRepository {
         while (!cursor.isAfterLast()) {
             Round round = cursor.getRound();
 
-            if (round.getPlayerUUID().equals(playeruuid))
+            if (playeruuid == null) {
                 rounds.add(round);
+            } else if (round.getPlayerUUID().equals(playeruuid)) {
+                rounds.add(round);
+            }
+
             cursor.moveToNext();
         }
 
@@ -240,7 +246,7 @@ public class RoundDataBase implements RoundRepository {
 
         ContentValues values = this.getContentValues(userUUID, name, password);
 
-        long id = this.db.update(UserTable.NAME, values, UserTable.Cols.PLAYERUUID + " = ?", new String[]{userUUID}); //TODO que pasa con password???
+        long id = this.db.update(UserTable.NAME, values, UserTable.Cols.PLAYERUUID + " = ?", new String[]{userUUID});
         Log.d("DEBUG", "updateUser: " + id);
     }
 
@@ -262,17 +268,6 @@ public class RoundDataBase implements RoundRepository {
 
         ContentValues values = new ContentValues();
 
-/*
-        String sql = "SELECT " + UserTable.Cols.PLAYERPASSWORD + " " +
-                "FROM " + UserTable.NAME + " " +
-                "WHERE " + UserTable.Cols.PLAYERUUID + "='" +
-                userUUID + "';";
-
-        Cursor cursor = db.rawQuery(sql, null);
-        cursor.moveToFirst();
-        password = cursor.getString(0);
-
-*/
         if (name != null) values.put(UserTable.Cols.PLAYERNAME, name);
         if (password != null) values.put(UserTable.Cols.PLAYERPASSWORD, password);
 
