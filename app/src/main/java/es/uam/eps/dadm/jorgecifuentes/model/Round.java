@@ -31,7 +31,7 @@ public class Round {
         this.playerUUID = playerUUID;
         this.roundUUID = UUID.randomUUID().toString();
 
-        this.title = "ROUND " + " " + roundUUID.toString().substring(19, 23).toUpperCase();
+        this.title = roundUUID.toString().substring(19, 23).toUpperCase();
         this.date = new Date().toString();
         this.board = new TableroReversi();
     }

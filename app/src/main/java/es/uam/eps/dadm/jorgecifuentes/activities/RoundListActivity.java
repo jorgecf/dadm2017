@@ -35,7 +35,8 @@ public class RoundListActivity extends AppCompatActivity implements RoundListFra
 
     @Override
     public void onRoundSelected(Round round) {
-        if (findViewById(R.id.detail_fragment_container) == null) {
+
+        if (this.findViewById(R.id.detail_fragment_container) == null) {
             Intent intent = RoundActivity.newIntent(this, round.getRoundUUID(), round.getPlayername(), round.getTitle(), round.getDate(), round.getBoard().tableroToString());
             startActivity(intent);
         } else {

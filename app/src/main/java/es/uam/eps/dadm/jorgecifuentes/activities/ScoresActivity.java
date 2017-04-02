@@ -85,10 +85,12 @@ public class ScoresActivity extends AppCompatActivity {
                 }
 
 
-                top_player_list.setAdapter(new SimpleAdapter(ScoresActivity.this, adapterMaps, R.layout.scores_item, from, to));
+                top_player_list.setAdapter(new SimpleAdapter(ScoresActivity.this, adapterMaps, R.layout.list_scores_item, from, to));
 
                 // Jugador actual.
-                playername_subtitle.setText(gamesPlayed.get(RoundPreferenceActivity.getPlayerName(ScoresActivity.this)) + " rounds played"); //TODO string
+                Integer gp = gamesPlayed.get(RoundPreferenceActivity.getPlayerName(ScoresActivity.this));
+                if (gp == null) gp = 0;
+                playername_subtitle.setText(gp + " rounds played"); //TODO string
 
 
                 Log.d("TEST", "onResponse: ");

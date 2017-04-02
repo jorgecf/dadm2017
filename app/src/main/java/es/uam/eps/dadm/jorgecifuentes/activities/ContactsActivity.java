@@ -14,9 +14,6 @@ import android.support.v4.content.Loader;
 import android.support.v4.widget.CursorAdapter;
 import android.support.v4.widget.SimpleCursorAdapter;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
-import android.view.View;
-import android.widget.Button;
 import android.widget.ListView;
 
 import es.uam.eps.dadm.jorgecifuentes.R;
@@ -38,7 +35,7 @@ public class ContactsActivity extends AppCompatActivity {
     // Columnas que vaos a leer.
     private static final String[] FROM = {ContactsContract.Contacts.DISPLAY_NAME_PRIMARY, ContactsContract.Contacts.HAS_PHONE_NUMBER};
 
-    // Views donde guardar las columnas leidas (en este caso de contacts.xml).
+    // Views donde guardar las columnas leidas (en este caso de list_contacts_itemtacts_item.xml).
     private static final int[] TO = {R.id.contactName, R.id.emailDirection};
 
 
@@ -86,7 +83,7 @@ public class ContactsActivity extends AppCompatActivity {
 
     private void setupCursorAdapter() {
 
-        this.adapter = new SimpleCursorAdapter(this, R.layout.contacts, null, FROM, TO, CursorAdapter.FLAG_REGISTER_CONTENT_OBSERVER);
+        this.adapter = new SimpleCursorAdapter(this, R.layout.list_contacts_item, null, FROM, TO, CursorAdapter.FLAG_REGISTER_CONTENT_OBSERVER);
 
         // Cargamos el LoaderManager de los contactos.
         this.getSupportLoaderManager().initLoader(LOADER_ID, new Bundle(), contactsLoader);
@@ -105,7 +102,7 @@ public class ContactsActivity extends AppCompatActivity {
             if (ActivityCompat.shouldShowRequestPermissionRationale(ContactsActivity.this, Manifest.permission.READ_CONTACTS)) {
                 // Mostramos una explicación al usuario y
                 // solicitamos el permiso otra vez
-                Snackbar.make(findViewById(R.id.contactsListView), "The contacts are required just to show them", Snackbar.LENGTH_LONG).show(); //TODO strings
+                Snackbar.make(findViewById(R.id.contactsListView), "The list_contacts_item are required just to show them", Snackbar.LENGTH_LONG).show(); //TODO strings
                 ActivityCompat.requestPermissions(ContactsActivity.this, new String[]{Manifest.permission.READ_CONTACTS}, MY_PERMISSIONS_REQUEST_READ_CONTACTS);
             } else {
                 // No se necesita explicación, se solicita el permiso.

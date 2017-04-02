@@ -37,4 +37,5 @@
     <string name="write_your_password">password</string>
     <string name="write_playername">username</string>
     <string name="rounds_empty">No rounds started yet</string>
+    <string name="round">ROUND \u0020</string>
 </resources>

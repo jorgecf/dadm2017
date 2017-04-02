@@ -158,7 +158,7 @@ public class RoundFragment extends Fragment implements PartidaListener {
         final View rootView = inflater.inflate(R.layout.fragment_round, container, false);
 
         TextView roundTitleTextView = (TextView) rootView.findViewById(R.id.round_title);
-        roundTitleTextView.setText(round.getTitle());
+        roundTitleTextView.setText(getText(R.string.round) + round.getTitle());
 
         // FAB de reinicio de ronda
         FloatingActionButton resetButton = (FloatingActionButton) rootView.findViewById(R.id.reset_round_fab);
