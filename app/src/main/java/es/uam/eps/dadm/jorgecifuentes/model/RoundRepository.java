@@ -126,5 +126,12 @@ public interface RoundRepository {
      */
     void updateRound(Round round, BooleanCallback callback);
 
-    void updateUser(String userUUID, String name, String password); //TODO callback?
+    /**
+     * Actualiza un usuario.
+     * @param userUUID ID del usuario.
+     * @param name Nombre nuevo.
+     * @param password Clave nueva.
+     * @param callback Callback de respuesta.
+     */
+    void updateUser(String userUUID, String name, String password, BooleanCallback callback);
 }

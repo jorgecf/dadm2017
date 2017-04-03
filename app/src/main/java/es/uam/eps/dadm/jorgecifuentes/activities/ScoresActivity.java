@@ -32,6 +32,8 @@ import es.uam.eps.dadm.jorgecifuentes.model.RoundRepositoryFactory;
  */
 public class ScoresActivity extends AppCompatActivity {
 
+    private static final int NUM_TOP_PLAYERS=5;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -81,7 +83,7 @@ public class ScoresActivity extends AppCompatActivity {
                     map.put("gamesPlayed", e.getValue() + " rounds");
                     adapterMaps.add(map);
 
-                    if (++i == 5) break;  //TODO cte
+                    if (++i == NUM_TOP_PLAYERS) break;
                 }
 
 

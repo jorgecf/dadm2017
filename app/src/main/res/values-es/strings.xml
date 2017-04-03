@@ -41,4 +41,11 @@
     <string name="round">RONDA \u0020</string>
     <string name="change_password_sumary">Cambia tu contraseña</string>
     <string name="change_password_title">Contraseña</string>
+    <string name="contacts_permission_request">El acceso a los contactos solo es necesario para mostrarlos</string>
+    <string name="login_error_title">Autenticación</string>
+    <string name="ok">ACEPTAR</string>
+    <string name="username_already_exists">¡Ya existe un jugador con ese nombre de usuario!</string>
+    <string name="error_inserting_user">Error insertando al usuario \u0020</string>
+    <string name="no_rounds_found">No se encontraron rondas en la base de datos</string>
+    <string name="fill_text">Rellene este campo</string>
 </resources>

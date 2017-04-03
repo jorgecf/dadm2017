@@ -10,6 +10,7 @@
     <string name="no_valid_movements">No valid movements</string>
     <string name="round_title">ROUND</string>
     <string name="positive">Yes</string>
+    <string name="ok">OK</string>
     <string name="negative">No</string>
     <string name="local_player_default_name">Local player</string>
     <string name="random_player_default_name">Random player</string>
@@ -40,4 +41,10 @@
     <string name="round">ROUND \u0020</string>
     <string name="change_password_sumary">Change your password</string>
     <string name="change_password_title">Password</string>
+    <string name="contacts_permission_request">The access to contacts is required just to show them</string>
+    <string name="login_error_title">Authentication error</string>
+    <string name="username_already_exists">A player with this name already exists!</string>
+    <string name="error_inserting_user">Error inserting user named \u0020</string>
+    <string name="no_rounds_found">No rounds found on database</string>
+    <string name="fill_text">Fill this field</string>
 </resources>

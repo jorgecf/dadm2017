@@ -102,7 +102,7 @@ public class ContactsActivity extends AppCompatActivity {
             if (ActivityCompat.shouldShowRequestPermissionRationale(ContactsActivity.this, Manifest.permission.READ_CONTACTS)) {
                 // Mostramos una explicación al usuario y
                 // solicitamos el permiso otra vez
-                Snackbar.make(findViewById(R.id.contactsListView), "The list_contacts_item are required just to show them", Snackbar.LENGTH_LONG).show(); //TODO strings
+                Snackbar.make(findViewById(R.id.contactsListView), R.string.contacts_permission_request, Snackbar.LENGTH_LONG).show();
                 ActivityCompat.requestPermissions(ContactsActivity.this, new String[]{Manifest.permission.READ_CONTACTS}, MY_PERMISSIONS_REQUEST_READ_CONTACTS);
             } else {
                 // No se necesita explicación, se solicita el permiso.
@@ -132,13 +132,13 @@ public class ContactsActivity extends AppCompatActivity {
         }
     }
 
-    /**
-     * Inicializa el SimpleCursorAdapter y se lo pasa a la ListView.
-     */
+
     private void showContacts() {
+
         // Instanciamos el SimpleCursorAdapter.
         this.setupCursorAdapter();
 
+        // Le pasamos a la ListView los datos que va a contener.
         ((ListView) findViewById(R.id.contactsListView)).setAdapter(this.adapter);
     }
 }

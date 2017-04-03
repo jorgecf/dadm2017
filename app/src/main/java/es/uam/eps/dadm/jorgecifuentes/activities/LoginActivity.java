@@ -108,9 +108,9 @@ public class LoginActivity extends Activity implements View.OnClickListener {
 
                         // Instanciamos un dialogo de aviso.
                         AlertDialog.Builder builder = new AlertDialog.Builder(LoginActivity.this, R.style.AppTheme_DialogAlert);
-                        builder.setTitle("Dialog"); //TODO strings, a todo el dialog
+                        builder.setTitle(R.string.login_error_title);
                         builder.setMessage(error);
-                        builder.setPositiveButton("OK", null);
+                        builder.setPositiveButton(R.string.ok, null);
                         builder.show().getWindow().setLayout(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
                     }
 
@@ -132,13 +132,11 @@ public class LoginActivity extends Activity implements View.OnClickListener {
                 }
                 break;
 
-
             case R.id.cancel_button:
                 finish();
                 break;
 
         }
-
     }
 
     /**
@@ -150,13 +148,13 @@ public class LoginActivity extends Activity implements View.OnClickListener {
      */
     private boolean checkInputValid(String playername, String password) {
         if (playername.length() == 0) {
-            this.usernameEditText.setError("Rellene username"); //TODO string
+            this.usernameEditText.setError(this.getString(R.string.fill_text));
             this.usernameEditText.requestFocus();
             return false;
         }
 
         if (password.length() == 0) {
-            this.passwordEditText.setError("Rellene pass");
+            this.passwordEditText.setError(this.getString(R.string.fill_text));
             this.passwordEditText.requestFocus();
             return false;
         }

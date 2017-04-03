@@ -53,9 +53,6 @@ public class RoundPreferenceFragment extends PreferenceFragment {
 
                 @Override
                 public boolean onPreferenceClick(Preference preference) {
-
-                //    Log.d("DEBUG", "onPreferenceClick: " + RoundPreferenceActivity.getPlayerName(getActivity()));
-
                     select_name.setText(RoundPreferenceActivity.getPlayerName(getActivity()));
                     return true;
                 }

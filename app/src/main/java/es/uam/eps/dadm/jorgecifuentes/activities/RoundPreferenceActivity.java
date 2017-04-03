@@ -124,7 +124,7 @@ public class RoundPreferenceActivity extends AppCompatActivity {
         // Actualizamos en la base de datos.
         RoundRepository r = RoundRepositoryFactory.createRepository(context);
 
-        r.updateUser(RoundPreferenceActivity.getPlayerUUID(context), name, null);
+        r.updateUser(RoundPreferenceActivity.getPlayerUUID(context), name, null, null);
         r.close();
 
         // Actualizamos en los ajustes.
@@ -142,7 +142,7 @@ public class RoundPreferenceActivity extends AppCompatActivity {
         // Actualizamos en la base de datos.
         RoundRepository r = RoundRepositoryFactory.createRepository(context);
 
-        r.updateUser(RoundPreferenceActivity.getPlayerUUID(context), null, password);
+        r.updateUser(RoundPreferenceActivity.getPlayerUUID(context), null, password, null);
         r.close();
 
         // Actualizamos en los ajustes.

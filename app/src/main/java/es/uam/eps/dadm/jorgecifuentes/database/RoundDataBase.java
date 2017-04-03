@@ -13,6 +13,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
+import es.uam.eps.dadm.jorgecifuentes.R;
 import es.uam.eps.dadm.jorgecifuentes.model.Round;
 import es.uam.eps.dadm.jorgecifuentes.model.RoundRepository;
 
@@ -30,11 +31,13 @@ public class RoundDataBase implements RoundRepository {
 
     private static final String DATABASE_NAME = "er.db";
     private static final int DATABASE_VERSION = 1;
+    private Context context;
 
     private DatabaseHelper helper;
     private SQLiteDatabase db;
 
     public RoundDataBase(Context context) {
+        this.context = context;
         this.helper = new DatabaseHelper(context);
     }
 
@@ -149,12 +152,12 @@ public class RoundDataBase implements RoundRepository {
 
 
         if (cursor.getCount() != 0) {
-            callback.onError("A player with this name already exists!"); //TODO string
+            callback.onError(this.context.getString(R.string.username_already_exists));
         } else {
 
             long id = this.db.insert(UserTable.NAME, null, values);
             if (id < 0)
-                callback.onError("Error inserting new player named " + playername);
+                callback.onError(this.context.getString(R.string.error_inserting_user) + playername);
             else
                 callback.onLogin(uuid);
         }
@@ -185,7 +188,7 @@ public class RoundDataBase implements RoundRepository {
         if (cursor.getCount() > 0)
             callback.onResponse(rounds);
         else
-            callback.onError("No rounds found in database");
+            callback.onError(this.context.getString(R.string.no_rounds_found));
     }
 
     /**
@@ -242,12 +245,11 @@ public class RoundDataBase implements RoundRepository {
     }
 
     @Override
-    public void updateUser(String userUUID, String name, String password) { //TODO callback?
+    public void updateUser(String userUUID, String name, String password, BooleanCallback callback) {
 
-        ContentValues values = this.getContentValues(userUUID, name, password);
+        ContentValues values = this.getContentValues(name, password);
 
         long id = this.db.update(UserTable.NAME, values, UserTable.Cols.PLAYERUUID + " = ?", new String[]{userUUID});
-        Log.d("DEBUG", "updateUser: " + id);
     }
 
     private ContentValues getContentValues(Round round) {
@@ -264,7 +266,7 @@ public class RoundDataBase implements RoundRepository {
         return values;
     }
 
-    private ContentValues getContentValues(String userUUID, String name, String password) {
+    private ContentValues getContentValues(String name, String password) {
 
         ContentValues values = new ContentValues();
 
