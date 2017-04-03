@@ -42,7 +42,7 @@ public class RoundPreferenceActivity extends AppCompatActivity {
     protected static final String PLAYERNAME_DEFAULT = "";
 
     /**
-     * Preferencia que, en caso de ser true, hace que se salte la pantalla de login.
+     * Preferencia que, en caso de ser True, hace que se salte la pantalla de login.
      */
     private static final String KEEP_ME_LOGGED_IN = "keepMeLoggedIn";
 
@@ -138,6 +138,14 @@ public class RoundPreferenceActivity extends AppCompatActivity {
 
 
     public static void setPlayerPassword(Context context, String password) {
+
+        // Actualizamos en la base de datos.
+        RoundRepository r = RoundRepositoryFactory.createRepository(context);
+
+        r.updateUser(RoundPreferenceActivity.getPlayerUUID(context), null, password);
+        r.close();
+
+        // Actualizamos en los ajustes.
         RoundPreferenceActivity.setString(context, RoundPreferenceActivity.PLAYERPASSWORD, password);
     }
 

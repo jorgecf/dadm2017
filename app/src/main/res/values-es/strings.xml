@@ -39,4 +39,6 @@
     <string name="write_your_password">contraseña</string>
     <string name="rounds_empty">No hay rondas empezadas</string>
     <string name="round">RONDA \u0020</string>
+    <string name="change_password_sumary">Cambia tu contraseña</string>
+    <string name="change_password_title">Contraseña</string>
 </resources>

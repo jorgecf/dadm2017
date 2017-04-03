@@ -24,9 +24,18 @@
     <PreferenceCategory android:title="@string/account">
 
         <EditTextPreference
+            android:inputType="textPersonName"
             android:key="select_name"
             android:summary="@string/select_name_summary"
             android:title="@string/select_name_title">
+
+        </EditTextPreference>
+
+        <EditTextPreference
+            android:inputType="textPassword"
+            android:key="change_password"
+            android:summary="@string/change_password_sumary"
+            android:title="@string/change_password_title">
 
         </EditTextPreference>
 

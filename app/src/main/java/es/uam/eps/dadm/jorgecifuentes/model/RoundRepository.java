@@ -126,5 +126,5 @@ public interface RoundRepository {
      */
     void updateRound(Round round, BooleanCallback callback);
 
-    void updateUser(String userUUID, String name, String password);
+    void updateUser(String userUUID, String name, String password); //TODO callback?
 }

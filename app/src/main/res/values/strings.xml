@@ -38,4 +38,6 @@
     <string name="write_playername">username</string>
     <string name="rounds_empty">No rounds started yet</string>
     <string name="round">ROUND \u0020</string>
+    <string name="change_password_sumary">Change your password</string>
+    <string name="change_password_title">Password</string>
 </resources>

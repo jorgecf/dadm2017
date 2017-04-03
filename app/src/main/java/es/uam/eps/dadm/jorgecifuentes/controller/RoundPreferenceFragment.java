@@ -32,6 +32,7 @@ public class RoundPreferenceFragment extends PreferenceFragment {
         Preference access_contacts = this.findPreference("access_contacts");
         Preference logout = this.findPreference("logout");
         Preference switch_online = this.findPreference("switch_online");
+        EditTextPreference change_password = (EditTextPreference) this.findPreference("change_password");
 
 
         // Preferencia de cambio de nombre.
@@ -52,8 +53,23 @@ public class RoundPreferenceFragment extends PreferenceFragment {
 
                 @Override
                 public boolean onPreferenceClick(Preference preference) {
-                    Log.d("DEBUG", "onPreferenceClick: " + RoundPreferenceActivity.getPlayerName(getActivity())); //TODO funciona? comprobar bien
+
+                //    Log.d("DEBUG", "onPreferenceClick: " + RoundPreferenceActivity.getPlayerName(getActivity()));
+
                     select_name.setText(RoundPreferenceActivity.getPlayerName(getActivity()));
+                    return true;
+                }
+            });
+        }
+
+        // Preferencia de cambio de password.
+        if (change_password != null) {
+            change_password.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
+
+                @Override
+                public boolean onPreferenceChange(Preference preference, Object newValue) {
+                    RoundPreferenceActivity.setPlayerPassword(getActivity(), (String) newValue);
+
                     return true;
                 }
             });
