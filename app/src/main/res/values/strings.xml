@@ -47,4 +47,10 @@
     <string name="error_inserting_user">Error inserting user named \u0020</string>
     <string name="no_rounds_found">No rounds found on database</string>
     <string name="fill_text">Fill this field</string>
+    <string name="game_rules">Each reversi piece has a black side and a white side.
+        On your turn, you place one piece on the board with your color facing up.
+        It must be placed so that an opponent\'s piece, or a row of opponent\'s pieces, is flanked by your pieces.
+        All of the opponent\'s pieces between your pieces are then turned over to become your color.
+        The player with the most pieces on the board, when there isn\'t any more valid moves, is the one who wins the game.
+    </string>
 </resources>

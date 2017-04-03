@@ -48,4 +48,10 @@
     <string name="error_inserting_user">Error insertando al usuario \u0020</string>
     <string name="no_rounds_found">No se encontraron rondas en la base de datos</string>
     <string name="fill_text">Rellene este campo</string>
+    <string name="game_rules">Cada pieza del reversi tiene un lado negro y otro blanco.
+        En tu turno, debes colocar una en el tablero, con tu color hacia arriba.
+        Debes colocar dicha pieza de manera que una o varias de las de tu rival queden flanqueadas.
+        Todas esas fichas son volteadas y pasan a ser tuyas.
+        El jugador con más fichas en el tablero, cuando no queden más movimientos válidos, es el que gana.
+    </string>
 </resources>

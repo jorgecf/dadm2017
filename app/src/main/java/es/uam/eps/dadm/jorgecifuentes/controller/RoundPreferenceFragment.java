@@ -66,7 +66,6 @@ public class RoundPreferenceFragment extends PreferenceFragment {
                 @Override
                 public boolean onPreferenceChange(Preference preference, Object newValue) {
                     RoundPreferenceActivity.setPlayerPassword(getActivity(), (String) newValue);
-
                     return true;
                 }
             });

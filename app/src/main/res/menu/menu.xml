@@ -5,26 +5,23 @@
 
     <item
         android:id="@+id/menu_item_new_round"
-        android:icon="@drawable/ic_add_circle_outline_24dp"
+        android:icon="@drawable/ic_add"
         android:title="@string/new_round"
         app:showAsAction="ifRoom|withText" />
 
-    <!-- TODO iconos -->
     <item
         android:id="@+id/menu_item_scoreboard"
-        android:icon="@android:drawable/btn_star_big_on"
+        android:icon="@drawable/ic_scoreboard"
         android:title="@string/scoreboard"
         app:showAsAction="ifRoom" />
 
     <item
         android:id="@+id/menu_help_settings"
-        android:icon="@android:drawable/ic_menu_help"
         android:title="@string/help"
         app:showAsAction="never" />
 
     <item
         android:id="@+id/menu_item_settings"
-        android:icon="@android:drawable/ic_menu_edit"
         android:title="@string/settings"
         app:showAsAction="never" />
 

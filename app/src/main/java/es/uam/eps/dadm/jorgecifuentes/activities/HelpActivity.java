@@ -22,6 +22,9 @@ public class HelpActivity extends AppCompatActivity {
 
         this.setContentView(R.layout.activity_help);
 
+        TextView textVersion = (TextView) this.findViewById(R.id.text_version);
+        TextView textHelp = (TextView) this.findViewById(R.id.text_help);
+
         // Informacion del paquete.
         PackageInfo pkg;
         try {
@@ -32,8 +35,10 @@ public class HelpActivity extends AppCompatActivity {
         }
 
         // Version de la app.
-        TextView textVersion = (TextView) this.findViewById(R.id.text_version);
         textVersion.setText(pkg.packageName + " " + pkg.versionName);
+
+        // Texto tipo de ayuda.
+        textHelp.setText(R.string.game_rules);
 
     }
 }

@@ -48,7 +48,7 @@ public class ScoresActivity extends AppCompatActivity {
 
         RoundRepository repository = RoundRepositoryFactory.createRepository(this);
 
-        RoundRepository.RoundsCallback rc = new RoundRepository.RoundsCallback() { //TODO nueva func de repo solo para el num de rondas? o no?
+        RoundRepository.RoundsCallback rc = new RoundRepository.RoundsCallback() {
 
             @Override
             public void onResponse(List<Round> rounds) {
