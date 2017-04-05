@@ -24,6 +24,7 @@ import es.uam.eps.dadm.jorgecifuentes.R;
 import es.uam.eps.dadm.jorgecifuentes.model.Round;
 import es.uam.eps.dadm.jorgecifuentes.model.RoundRepository;
 import es.uam.eps.dadm.jorgecifuentes.model.RoundRepositoryFactory;
+import es.uam.eps.dadm.jorgecifuentes.model.Utils;
 
 /**
  * Actividad que muestra en la pantalla informacion sobre las partidas alojadas en la base de datos.
@@ -68,7 +69,7 @@ public class ScoresActivity extends AppCompatActivity {
 
 
                 // Ordenamos por numero de partidas jugadas descendentemente.
-                gamesPlayed = inverseValueSort(gamesPlayed);
+                gamesPlayed = Utils.inverseValueSort(gamesPlayed);
 
                 // Metemos los datos en la ListView.
                 String[] from = new String[]{"playername", "gamesPlayed"}; //TODO cte
@@ -113,30 +114,4 @@ public class ScoresActivity extends AppCompatActivity {
         repository.close();
     }
 
-
-    private static <K, V> Map<K, V> inverseValueSort(Map<K, V> map) { //TODO mover model.Utils
-
-        // Comparador invertido para la lista de Entries.
-        List<Map.Entry<K, V>> list = new LinkedList<>(map.entrySet());
-        Collections.sort(list, new Comparator<Object>() {
-
-            public int compare(Object o1, Object o2) {
-                V v1 = ((Map.Entry<K, V>) (o2)).getValue();
-                V v2 = ((Map.Entry<K, V>) (o1)).getValue();
-
-                return ((Comparable<V>) v1).compareTo(v2);
-            }
-        });
-
-        // Creacion de nuevo mapa.
-        Map<K, V> ret = new LinkedHashMap<>();
-
-        Iterator<Map.Entry<K, V>> it = list.iterator();
-        while (it.hasNext()) {
-            Map.Entry<K, V> entry = it.next();
-            ret.put(entry.getKey(), entry.getValue());
-        }
-
-        return ret;
-    }
 }

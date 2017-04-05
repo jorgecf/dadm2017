@@ -106,7 +106,8 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:text="Top 5 players"
-                        android:textSize="@dimen/title2_size" />
+                        android:textSize="@dimen/title2_size"
+                        android:gravity="center"/>
 
                     <ListView
                         android:id="@+id/top_player_list"

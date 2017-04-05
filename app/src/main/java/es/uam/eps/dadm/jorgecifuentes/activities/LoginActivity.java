@@ -10,6 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.Switch;
 import android.widget.Toast;
 
@@ -51,6 +52,7 @@ public class LoginActivity extends Activity implements View.OnClickListener {
         this.usernameEditText = (TextInputLayout) this.findViewById(R.id.login_username_wrapper);
         this.passwordEditText = (TextInputLayout) this.findViewById(R.id.login_password_wrapper);
         this.keepMeLoggedInSwitch = (Switch) this.findViewById(R.id.keep_me_logged_in_switch);
+
 
         // Buscamos los botones y les pasamos esta actividad como listener, ya que son los botones
         // que van a hacer acciones.

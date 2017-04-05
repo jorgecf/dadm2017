@@ -170,7 +170,7 @@ public class RoundListFragment extends Fragment {
         switch (item.getItemId()) {
             case R.id.menu_item_new_round:
 
-                Round round = new Round(RoundPreferenceActivity.getPlayerUUID(getActivity()));
+                Round round = new Round(RoundPreferenceActivity.getPlayerUUID(getActivity()), RoundPreferenceActivity.getPlayerName(getContext()));
 
                 RoundRepository.BooleanCallback callback = new RoundRepository.BooleanCallback() {
                     @Override

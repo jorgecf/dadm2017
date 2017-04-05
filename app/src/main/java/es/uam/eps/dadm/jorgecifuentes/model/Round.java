@@ -4,7 +4,7 @@ import java.util.Date;
 import java.util.UUID;
 
 /**
- * Clase que representa una ronda del juego, con un tablero y demas informacion adicional.
+ * Clase que representa una ronda del juego, con un tablero e informacion adicional.
  *
  * @author Jorge Cifuentes
  */
@@ -18,28 +18,24 @@ public class Round {
 
     private String playername;
 
-    public Round() {
-        this.playerUUID = null;
-        this.roundUUID = UUID.randomUUID().toString();
 
-        this.title = "ROUND " + " " + roundUUID.toString().substring(19, 23).toUpperCase();
-        this.date = new Date().toString();
-        this.board = new TableroReversi();
-    }
-
-    public Round(String playerUUID) {
+    public Round(String playerUUID, String playername) {
         this.playerUUID = playerUUID;
         this.roundUUID = UUID.randomUUID().toString();
 
-        this.title = roundUUID.toString().substring(19, 23).toUpperCase();
+        this.playername = playername;
+        this.title = this.roundUUID.toString().substring(19, 23).toUpperCase();
         this.date = new Date().toString();
+
         this.board = new TableroReversi();
     }
 
     public Round(String firstPlayerName, String roundTitle, String roundDate, String playerUUID, String rounduuid) {
+
         this.setFirstPlayerName(firstPlayerName);
         this.setTitle(roundTitle);
         this.setDate(roundDate);
+
         this.setPlayerUUID(playerUUID);
         this.setRoundUUID(rounduuid);
 

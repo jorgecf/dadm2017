@@ -10,6 +10,7 @@ import android.support.v7.app.AppCompatActivity;
 import es.uam.eps.dadm.jorgecifuentes.R;
 import es.uam.eps.dadm.jorgecifuentes.activities.RoundActivity;
 import es.uam.eps.dadm.jorgecifuentes.activities.RoundListActivity;
+import es.uam.eps.dadm.jorgecifuentes.activities.RoundPreferenceActivity;
 import es.uam.eps.dadm.jorgecifuentes.model.Round;
 import es.uam.eps.dadm.jorgecifuentes.model.RoundRepository;
 import es.uam.eps.dadm.jorgecifuentes.model.RoundRepositoryFactory;
@@ -30,26 +31,30 @@ public class AlertDialogFragment extends DialogFragment {
         alertDialogBuilder.setMessage(R.string.game_over_message);
 
         // Boton positivo.
-        alertDialogBuilder.setPositiveButton(R.string.positive,
-                new DialogInterface.OnClickListener() {
+        alertDialogBuilder.setPositiveButton(R.string.positive, new DialogInterface.OnClickListener() {
+
+                    @Override
                     public void onClick(DialogInterface dialog, int which) {
 
-                        Round round = new Round();
-                        //RoundRepository.get(getActivity()).addRound(round);
-                        RoundRepositoryFactory.createRepository(getActivity()).addRound(round, null);
+                        Round round = new Round(RoundPreferenceActivity.getPlayerUUID(getContext()), RoundPreferenceActivity.getPlayerName(getContext()));
+
+                        RoundRepository r = RoundRepositoryFactory.createRepository(getActivity());
+                        r.addRound(round, null);
+                        r.close();
 
                         if (activity instanceof RoundListActivity)
                             ((RoundListActivity) activity).onRoundUpdated(round);
                         else
                             ((RoundActivity) activity).finish();
                         dialog.dismiss();
-
                     }
                 }
         );
 
         // Boton negativo.
         alertDialogBuilder.setNegativeButton(R.string.negative, new DialogInterface.OnClickListener() {
+
+                    @Override
                     public void onClick(DialogInterface dialog, int which) {
                         if (activity instanceof RoundActivity)
                             activity.finish();

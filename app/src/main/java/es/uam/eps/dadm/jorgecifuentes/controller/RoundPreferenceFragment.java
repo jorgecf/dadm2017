@@ -6,7 +6,6 @@ import android.preference.EditTextPreference;
 import android.preference.Preference;
 import android.preference.PreferenceFragment;
 import android.support.annotation.Nullable;
-import android.util.Log;
 
 import es.uam.eps.dadm.jorgecifuentes.R;
 import es.uam.eps.dadm.jorgecifuentes.activities.ContactsActivity;
@@ -15,10 +14,19 @@ import es.uam.eps.dadm.jorgecifuentes.activities.RoundPreferenceActivity;
 
 
 /**
- * Created by jorgecf on 13/03/17.
+ * Fragmento de RoundPreference. Carga los ajustes XML y agrega los listener necesarios a los
+ * elementos de dicho XML.
+ *
+ * @author Jorge Cifuentes
  */
-
 public class RoundPreferenceFragment extends PreferenceFragment {
+
+    // Identificadores de las preferencias.
+    private static final String SELECT_NAME = "select_name";
+    private static final String ACCESS_CONTACTS = "access_contacts";
+    private static final String LOGOUT = "logout";
+    private static final String SWITCH_ONLINE = "switch_online";
+    private static final String CHANGE_PASSWORD = "change_password";
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -27,12 +35,11 @@ public class RoundPreferenceFragment extends PreferenceFragment {
         // Cargamos los ajustes desde el xml.
         this.addPreferencesFromResource(R.xml.settings);
 
-        //TODO string
-        final EditTextPreference select_name = (EditTextPreference) this.findPreference("select_name");
-        Preference access_contacts = this.findPreference("access_contacts");
-        Preference logout = this.findPreference("logout");
-        Preference switch_online = this.findPreference("switch_online");
-        EditTextPreference change_password = (EditTextPreference) this.findPreference("change_password");
+        final EditTextPreference select_name = (EditTextPreference) this.findPreference(SELECT_NAME);
+        Preference access_contacts = this.findPreference(ACCESS_CONTACTS);
+        Preference logout = this.findPreference(LOGOUT);
+        Preference switch_online = this.findPreference(SWITCH_ONLINE);
+        EditTextPreference change_password = (EditTextPreference) this.findPreference(CHANGE_PASSWORD);
 
 
         // Preferencia de cambio de nombre.
