@@ -34,7 +34,7 @@ public class HelpActivity extends AppCompatActivity {
             return;
         }
 
-        // Version de la app.
+        // Version de la app y demas info.
         textVersion.setText(pkg.packageName + " " + pkg.versionName);
 
         // Texto tipo de ayuda.

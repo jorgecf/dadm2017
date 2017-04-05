@@ -53,4 +53,5 @@
         All of the opponent\'s pieces between your pieces are then turned over to become your color.
         The player with the most pieces on the board, when there isn\'t any more valid moves, is the one who wins the game.
     </string>
+    <string name="email">jorge.cifuentesf@estudiante.uam.es</string>
 </resources>

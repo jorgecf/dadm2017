@@ -54,4 +54,5 @@
         Todas esas fichas son volteadas y pasan a ser tuyas.
         El jugador con más fichas en el tablero, cuando no queden más movimientos válidos, es el que gana.
     </string>
+    <string name="email">jorge.cifuentesf@estudiante.uam.es</string>
 </resources>

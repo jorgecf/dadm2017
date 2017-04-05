@@ -32,7 +32,7 @@ import es.uam.eps.dadm.jorgecifuentes.model.RoundRepositoryFactory;
  */
 public class ScoresActivity extends AppCompatActivity {
 
-    private static final int NUM_TOP_PLAYERS=5;
+    private static final int NUM_TOP_PLAYERS = 5;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -44,6 +44,7 @@ public class ScoresActivity extends AppCompatActivity {
         final TextView playername = (TextView) this.findViewById(R.id.playername);
         final TextView playername_subtitle = (TextView) this.findViewById(R.id.playername_subtitle);
         final ListView top_player_list = (ListView) this.findViewById(R.id.top_player_list);
+        final TextView number_rounds = (TextView) this.findViewById(R.id.number_rounds);
 
 
         RoundRepository repository = RoundRepositoryFactory.createRepository(this);
@@ -94,9 +95,8 @@ public class ScoresActivity extends AppCompatActivity {
                 if (gp == null) gp = 0;
                 playername_subtitle.setText(gp + " rounds played"); //TODO string
 
-
-                Log.d("TEST", "onResponse: ");
-
+                // Numero de rondas jugadas.
+                number_rounds.setText(String.valueOf(rounds.size() + " rounds stored" + "\n" + "played by " + gamesPlayed.size() + " players"));
 
             }
 
@@ -114,7 +114,7 @@ public class ScoresActivity extends AppCompatActivity {
     }
 
 
-    private static <K, V> Map<K, V> inverseValueSort(Map<K, V> map) {
+    private static <K, V> Map<K, V> inverseValueSort(Map<K, V> map) { //TODO mover model.Utils
 
         // Comparador invertido para la lista de Entries.
         List<Map.Entry<K, V>> list = new LinkedList<>(map.entrySet());
