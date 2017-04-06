@@ -68,6 +68,9 @@ public class ReversiLocalPlayer implements ReversiView.OnPlayListener, Jugador {
             }
         } catch (Exception e) {
 
+            /**
+             * @TODO darg aquí cabría notificar a la vista y mostrar desde allí un mensaje vía Snackbar. Basta crear un evento EVENTO_ERROR, enviarlo usando onCambioEnPartida() y capturarlo en RoundFragment(). Allí, se genera el mensaje con el Snackbar y luego se llama al método continuar() de Partida.
+             */
         }
     }
 }
