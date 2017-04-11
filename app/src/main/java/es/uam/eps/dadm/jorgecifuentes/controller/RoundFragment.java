@@ -167,6 +167,9 @@ public class RoundFragment extends Fragment implements PartidaListener {
             @Override
             public void onClick(View view) {
 
+                /**
+                 * @TODO darg esto es mejor hacerlo en el controlador
+                 */
                 if (round.getBoard().getEstado() != Tablero.EN_CURSO) {
                     Snackbar.make(getView(), R.string.round_already_finished, Snackbar.LENGTH_SHORT).show();
                     return;

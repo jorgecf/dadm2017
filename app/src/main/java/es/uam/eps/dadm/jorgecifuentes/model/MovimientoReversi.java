@@ -50,7 +50,9 @@ public class MovimientoReversi extends Movimiento {
 
     @Override
     public boolean equals(Object o) {
-
+/**
+ * @TODO darg te sobra la comprobación del null: ya lo hace instanceof()
+ */
         if (o != null && o instanceof MovimientoReversi) {
             MovimientoReversi mo = (MovimientoReversi) o;
             return (mo.inicio.equals(this.inicio) && mo.pasos.equals(this.pasos) && mo.destino.equals(this.destino));
