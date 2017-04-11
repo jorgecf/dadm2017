@@ -235,6 +235,7 @@ public class RoundFragment extends Fragment implements PartidaListener {
 
         RoundRepository repository = RoundRepositoryFactory.createRepository(getActivity());
         RoundRepository.BooleanCallback callback = new RoundRepository.BooleanCallback() {
+
             @Override
             public void onResponse(boolean response) {
                 if (response == false)
@@ -250,18 +251,22 @@ public class RoundFragment extends Fragment implements PartidaListener {
     public void onCambioEnPartida(Evento evento) { // esta funcion se encarga de pintar el tablero
 
         // Actualizamos el marcador.
-        TextView black_score = (TextView) getView().findViewById(R.id.black_score);
-        TextView white_score = (TextView) getView().findViewById(R.id.white_score);
+        View v = this.getView();
 
-        black_score.setText(round.getBoard().getFichas(TableroReversi.Color.NEGRO) + " " + game.getJugador(0).getNombre());
-        white_score.setText(game.getJugador(1).getNombre() + " " + round.getBoard().getFichas(TableroReversi.Color.BLANCO));
+        if (v != null) {
+            TextView black_score = (TextView) v.findViewById(R.id.black_score);
+            TextView white_score = (TextView) v.findViewById(R.id.white_score);
 
-        if (round.getBoard().getTurno() == 0) {
-            white_score.setTypeface(null, Typeface.NORMAL);
-            black_score.setTypeface(null, Typeface.BOLD);
-        } else {
-            white_score.setTypeface(null, Typeface.BOLD);
-            black_score.setTypeface(null, Typeface.NORMAL);
+            black_score.setText(round.getBoard().getFichas(TableroReversi.Color.NEGRO) + " " + game.getJugador(0).getNombre());
+            white_score.setText(game.getJugador(1).getNombre() + " " + round.getBoard().getFichas(TableroReversi.Color.BLANCO));
+
+            if (round.getBoard().getTurno() == 0) {
+                white_score.setTypeface(null, Typeface.NORMAL);
+                black_score.setTypeface(null, Typeface.BOLD);
+            } else {
+                white_score.setTypeface(null, Typeface.BOLD);
+                black_score.setTypeface(null, Typeface.NORMAL);
+            }
         }
 
         // Actualizamos los datos en la base de datos.
@@ -277,6 +282,10 @@ public class RoundFragment extends Fragment implements PartidaListener {
                 break;
             case Evento.EVENTO_FIN:
                 new AlertDialogFragment().show(getActivity().getSupportFragmentManager(), "ALERT DIALOG");
+                break;
+            case Evento.EVENTO_ERROR:
+                Snackbar.make(getView(), "error onPlay", Snackbar.LENGTH_SHORT).show();
+                this.game.continuar();
                 break;
         }
     }

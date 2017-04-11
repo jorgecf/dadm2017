@@ -1,8 +1,14 @@
 package es.uam.eps.dadm.jorgecifuentes.controller;
 
 import android.content.Context;
+import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import android.util.Log;
 
+import java.util.List;
+
+import es.uam.eps.dadm.jorgecifuentes.activities.RoundActivity;
+import es.uam.eps.dadm.jorgecifuentes.model.Round;
 import es.uam.eps.dadm.jorgecifuentes.model.TableroReversi;
 import es.uam.eps.dadm.jorgecifuentes.views.ReversiView;
 import es.uam.eps.multij.AccionMover;
@@ -56,22 +62,20 @@ public class ReversiLocalPlayer implements ReversiView.OnPlayListener, Jugador {
     @Override
     public void onPlay(int row, int column) {
 
-        try {
-            TableroReversi t = (TableroReversi) game.getTablero();
-            Movimiento m = t.getMovimientoValido(row, column);
+        TableroReversi t = (TableroReversi) game.getTablero();
+        Movimiento m = t.getMovimientoValido(row, column);
+        AccionMover acc = new AccionMover(this, m);
 
+        try {
             // Si SI hay movimientos validos y este no es uno de ellos, no hacemos nada,
             //  el turno sigue siendo de este jugador.
             if (m == null && t.movimientosValidos().size() > 0) {
                 Log.d("reversi", "onPlay: movimiento no valido");
             } else {
-                game.realizaAccion(new AccionMover(this, m));
+                game.realizaAccion(acc);
             }
         } catch (Exception e) {
-
-            /**
-             * @TODO darg aquí cabría notificar a la vista y mostrar desde allí un mensaje vía Snackbar. Basta crear un evento EVENTO_ERROR, enviarlo usando onCambioEnPartida() y capturarlo en RoundFragment(). Allí, se genera el mensaje con el Snackbar y luego se llama al método continuar() de Partida.
-             */
         }
+
     }
 }
