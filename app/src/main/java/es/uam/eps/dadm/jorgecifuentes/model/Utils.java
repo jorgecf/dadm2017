@@ -9,12 +9,20 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * Created by jorgecf on 5/04/17.
+ * Funciones de utilidad variadas.
+ *
+ * @author Jorge Cifuentes
  */
-
 public class Utils {
 
-
+    /**
+     * Ordena un mapa Key-Value por su Value en modo inverso.
+     *
+     * @param map
+     * @param <K>
+     * @param <V>
+     * @return
+     */
     public static <K, V> Map<K, V> inverseValueSort(Map<K, V> map) {
 
         // Comparador invertido para la lista de Entries.
