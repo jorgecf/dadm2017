@@ -24,11 +24,22 @@ public class RoundDataBaseSchema {
 
         public static final class Cols {
             public static final String PLAYERUUID = "playeruuid2";
-            public static final String ROUNDUUID = "rounduuid";
+            public static final String ROUNDUUID = "rounduuid1";
             public static final String DATE = "date";
             public static final String TITLE = "title";
             public static final String SIZE = "size";
             public static final String BOARD = "board";
+        }
+    }
+
+    public static final class ScoresTable {
+
+        public static final String NAME = "scores";
+
+        public static final class Cols {
+            public static final String ROUNDUUID = "rounduuid2";
+            public static final String BLACKSCORE = "blackscore";
+            public static final String WHITESCORE = "whitescore";
         }
     }
 }

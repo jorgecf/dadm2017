@@ -98,4 +98,12 @@ public class Round {
     public String getRoundUUID() {
         return roundUUID;
     }
+
+    public int getBlackScore () {
+        return this.board.getFichas(TableroReversi.Color.NEGRO);
+    }
+
+    public int getWhiteScore () {
+        return this.board.getFichas(TableroReversi.Color.BLANCO);
+    }
 }

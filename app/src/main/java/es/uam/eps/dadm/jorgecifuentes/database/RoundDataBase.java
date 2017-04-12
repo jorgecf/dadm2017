@@ -19,6 +19,7 @@ import es.uam.eps.dadm.jorgecifuentes.model.RoundRepository;
 
 import static es.uam.eps.dadm.jorgecifuentes.database.RoundDataBaseSchema.RoundTable;
 import static es.uam.eps.dadm.jorgecifuentes.database.RoundDataBaseSchema.UserTable;
+import static es.uam.eps.dadm.jorgecifuentes.database.RoundDataBaseSchema.ScoresTable;
 
 /**
  * RoundRepository en forma de base de datos local de rondas.
@@ -30,7 +31,7 @@ public class RoundDataBase implements RoundRepository {
     private final String DEBUG_TAG = "DEBUG";
 
     private static final String DATABASE_NAME = "er.db";
-    private static final int DATABASE_VERSION = 1;
+    private static final int DATABASE_VERSION = 2;
     private Context context;
 
     private DatabaseHelper helper;
@@ -57,8 +58,12 @@ public class RoundDataBase implements RoundRepository {
 
         @Override
         public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-            db.execSQL("DROP TABLE IF EXISTS " + UserTable.NAME);
-            db.execSQL("DROP TABLE IF EXISTS " + RoundTable.NAME);
+
+            String[] tables = {UserTable.NAME, RoundTable.NAME, ScoresTable.NAME};
+
+            for (String table : tables)
+                db.execSQL("DROP TABLE IF EXISTS " + table);
+
             createTable(db);
         }
 
@@ -83,9 +88,17 @@ public class RoundDataBase implements RoundRepository {
                     + RoundTable.Cols.TITLE + " TEXT, "
                     + RoundTable.Cols.SIZE + " TEXT, "
                     + RoundTable.Cols.BOARD + " TEXT);";
+
+            String str3 = "CREATE TABLE " + ScoresTable.NAME + " ("
+                    + "_id integer primary key autoincrement, "
+                    + ScoresTable.Cols.ROUNDUUID + " TEXT UNIQUE, "
+                    + ScoresTable.Cols.BLACKSCORE + " INTEGER, "
+                    + ScoresTable.Cols.WHITESCORE + " INTEGER);";
+
             try {
                 db.execSQL(str1);
                 db.execSQL(str2);
+                db.execSQL(str3);
             } catch (SQLException e) {
                 e.printStackTrace();
             }
@@ -219,29 +232,50 @@ public class RoundDataBase implements RoundRepository {
     public void addRound(Round round, BooleanCallback callback) {
 
         ContentValues values = this.getContentValues(round);
+        ContentValues score = this.getContentScores(round);
 
+        // Creamos la ronda en la tabla de rondas.
         long id = this.db.insert(RoundTable.NAME, null, values);
 
+        // Tambien creamos su entrada en la tabla de scores.
+        long id2 = this.db.insert(ScoresTable.NAME, null, score);
+
         if (callback != null)
-            callback.onResponse(id >= 0);
+            callback.onResponse(id >= 0 && id2 >= 0);
     }
 
     @Override
     public void updateRound(Round round, BooleanCallback callback) {
 
         ContentValues values = this.getContentValues(round);
+        ContentValues score = this.getContentScores(round);
 
-        long id = this.db.update(RoundTable.NAME, values, RoundTable.Cols.ROUNDUUID + " = ?", new String[]{round.getRoundUUID()});
+        String[] whereArgs = new String[]{round.getRoundUUID()};
+
+        // Actualizamos el contenido de la ronda
+        long id = this.db.update(RoundTable.NAME, values, RoundTable.Cols.ROUNDUUID + " = ?", whereArgs);
+
+        // Actualizamos el score
+        long id2 = this.db.update(ScoresTable.NAME, score, ScoresTable.Cols.ROUNDUUID + " = ?", whereArgs);
+
         if (callback != null)
-            callback.onResponse(id >= 0);
+            callback.onResponse(id >= 0 && id2 >= 0);
+
     }
 
     @Override
     public void removeRound(Round round, BooleanCallback callback) {
-        long id = this.db.delete(RoundTable.NAME, RoundTable.Cols.ROUNDUUID + " = ?", new String[]{round.getRoundUUID()});
+
+        String[] whereArgs = new String[]{round.getRoundUUID()};
+
+        // Borramos la ronda.
+        long id = this.db.delete(RoundTable.NAME, RoundTable.Cols.ROUNDUUID + " = ?", whereArgs);
+
+        // Borramos su entrada en la tabla de scores.
+        long id2 = this.db.delete(ScoresTable.NAME, ScoresTable.Cols.ROUNDUUID + " = ?", whereArgs);
 
         if (callback != null)
-            callback.onResponse(id >= 0);
+            callback.onResponse(id >= 0 && id2 >= 0);
     }
 
     @Override
@@ -250,6 +284,9 @@ public class RoundDataBase implements RoundRepository {
         ContentValues values = this.getContentValues(name, password);
 
         long id = this.db.update(UserTable.NAME, values, UserTable.Cols.PLAYERUUID + " = ?", new String[]{userUUID});
+
+        if (callback != null)
+            callback.onResponse(id > 0);
     }
 
     private ContentValues getContentValues(Round round) {
@@ -262,6 +299,17 @@ public class RoundDataBase implements RoundRepository {
         values.put(RoundTable.Cols.TITLE, round.getTitle());
         values.put(RoundTable.Cols.SIZE, round.getSize());
         values.put(RoundTable.Cols.BOARD, round.getBoard().tableroToString());
+
+        return values;
+    }
+
+    private ContentValues getContentScores(Round round) {
+
+        ContentValues values = new ContentValues();
+
+        values.put(ScoresTable.Cols.ROUNDUUID, round.getRoundUUID());
+        values.put(ScoresTable.Cols.BLACKSCORE, round.getBlackScore());
+        values.put(ScoresTable.Cols.WHITESCORE, round.getWhiteScore());
 
         return values;
     }
