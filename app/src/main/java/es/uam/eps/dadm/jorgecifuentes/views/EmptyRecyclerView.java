@@ -4,12 +4,12 @@ import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.util.AttributeSet;
 import android.view.View;
+import android.widget.SimpleAdapter;
 
-//recyclerView con empty text
+//recyclerView con empty text TODO comentarios
 public class EmptyRecyclerView extends RecyclerView {
 
     private View emptyView;
-
 
     /* Los tres constructores de la RecyclerView. */
     public EmptyRecyclerView(Context context) {
@@ -62,7 +62,6 @@ public class EmptyRecyclerView extends RecyclerView {
         checkEmptyRecyclerView();
     }
 
-
     void checkEmptyRecyclerView() {
         if (emptyView != null && getAdapter() != null) {
 
@@ -73,9 +72,9 @@ public class EmptyRecyclerView extends RecyclerView {
         }
     }
 
-
     public void setEmptyView(View emptyView) {
         this.emptyView = emptyView;
         checkEmptyRecyclerView();
     }
+
 }

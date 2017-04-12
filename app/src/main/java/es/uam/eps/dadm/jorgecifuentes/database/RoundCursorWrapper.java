@@ -5,13 +5,15 @@ import android.database.CursorWrapper;
 import android.util.Log;
 
 import es.uam.eps.dadm.jorgecifuentes.model.Round;
+import es.uam.eps.dadm.jorgecifuentes.model.Utils;
 import es.uam.eps.multij.ExcepcionJuego;
 
 import static es.uam.eps.dadm.jorgecifuentes.database.RoundDataBaseSchema.UserTable;
 import static es.uam.eps.dadm.jorgecifuentes.database.RoundDataBaseSchema.RoundTable;
+import static es.uam.eps.dadm.jorgecifuentes.database.RoundDataBaseSchema.ScoresTable;
 
 /**
- * Wrapper para Cursor que crea una ronda con datos de la base de datos.
+ * Wrapper para Cursor que efectua operaciones con informacion de la base de datos,
  *
  * @author Jorge Cifuentes
  */
@@ -47,6 +49,14 @@ public class RoundCursorWrapper extends CursorWrapper {
             Log.d("DEBUG", "Error turning string into tablero");
         }
         return round;
+    }
+
+    public Utils.Triplet<String, String, String> getScore() {
+        String title = getString(getColumnIndex(RoundTable.Cols.TITLE));
+        String b = getString(getColumnIndex(ScoresTable.Cols.BLACKSCORE));
+        String w = getString(getColumnIndex(ScoresTable.Cols.WHITESCORE));
+
+        return new Utils.Triplet<>(title, b, w);
     }
 
 }

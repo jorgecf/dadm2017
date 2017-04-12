@@ -3,6 +3,7 @@ package es.uam.eps.dadm.jorgecifuentes.model;
 import android.support.annotation.Nullable;
 
 import java.util.List;
+import java.util.Map;
 
 import es.uam.eps.dadm.jorgecifuentes.controller.ReversiLocalPlayer;
 
@@ -13,16 +14,14 @@ import es.uam.eps.dadm.jorgecifuentes.controller.ReversiLocalPlayer;
  */
 public interface RoundRepository {
 
-    /**
-     * Callback para la obtencion o modificacion de rondas.
-     */
-    interface RoundsCallback {
+    /* Callback para la obtencion de informacionde tipo T. */
+    interface RoundsCallback<T> {
         /**
          * Metodo a ejecutar despues de obtener las rondas.
          *
          * @param rounds Rondas nuevas.
          */
-        void onResponse(List<Round> rounds);
+        void onResponse(List<T> rounds);
 
         /**
          * Metodo a ejecutar en caso de error.
@@ -101,7 +100,9 @@ public interface RoundRepository {
      * @param group        Modo de agrupado o null.
      * @param callback     Callback a ejecutar despues de obtener las rondas.
      */
-    void getRounds(@Nullable String playeruuid, @Nullable String orderByField, @Nullable String group, RoundsCallback callback);
+    void getRounds(@Nullable String playeruuid, @Nullable String orderByField, @Nullable String group, RoundsCallback<Round> callback);
+
+    void getScores(RoundsCallback<Utils.Triplet<String, String, String>> callback);//TODO comment
 
     /**
      * Agrega una nueva ronda.
@@ -128,8 +129,9 @@ public interface RoundRepository {
 
     /**
      * Actualiza un usuario.
+     *
      * @param userUUID ID del usuario.
-     * @param name Nombre nuevo.
+     * @param name     Nombre nuevo.
      * @param password Clave nueva.
      * @param callback Callback de respuesta.
      */

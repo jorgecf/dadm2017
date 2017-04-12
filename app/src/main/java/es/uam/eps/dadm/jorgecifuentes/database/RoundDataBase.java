@@ -9,13 +9,16 @@ import android.database.sqlite.SQLiteOpenHelper;
 import android.support.annotation.Nullable;
 import android.util.Log;
 
+import java.util.AbstractMap;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 
 import es.uam.eps.dadm.jorgecifuentes.R;
 import es.uam.eps.dadm.jorgecifuentes.model.Round;
 import es.uam.eps.dadm.jorgecifuentes.model.RoundRepository;
+import es.uam.eps.dadm.jorgecifuentes.model.Utils;
 
 import static es.uam.eps.dadm.jorgecifuentes.database.RoundDataBaseSchema.RoundTable;
 import static es.uam.eps.dadm.jorgecifuentes.database.RoundDataBaseSchema.UserTable;
@@ -177,7 +180,7 @@ public class RoundDataBase implements RoundRepository {
     }
 
     @Override
-    public void getRounds(@Nullable String playeruuid, @Nullable String orderByField, @Nullable String group, RoundsCallback callback) {
+    public void getRounds(@Nullable String playeruuid, @Nullable String orderByField, @Nullable String group, RoundsCallback<Round> callback) {
 
         // Obtenemos todas las rondas con su usuario asociado.
         List<Round> rounds = new ArrayList<>();
@@ -202,6 +205,40 @@ public class RoundDataBase implements RoundRepository {
             callback.onResponse(rounds);
         else
             callback.onError(this.context.getString(R.string.no_rounds_found));
+    }
+
+    @Override
+    public void getScores(RoundsCallback<Utils.Triplet<String, String, String>> callback) {
+
+        String query = "SELECT " +
+                RoundTable.Cols.TITLE + ", " +
+                ScoresTable.Cols.BLACKSCORE + ", " +
+                ScoresTable.Cols.WHITESCORE + " " +
+                "FROM " +
+                RoundTable.NAME + " as r, " +
+                ScoresTable.NAME + " as s " + //TODO order
+                "WHERE " +
+                "r." + RoundTable.Cols.ROUNDUUID + " = " + "s." + ScoresTable.Cols.ROUNDUUID + " "+
+                "ORDER BY " + ScoresTable.Cols.BLACKSCORE + " DESC" +
+                ";";
+
+        RoundCursorWrapper cursor = new RoundCursorWrapper(db.rawQuery(query, null));
+        List<Utils.Triplet<String, String, String>> rounds = new ArrayList<>();
+
+        cursor.moveToFirst();
+        while (!cursor.isAfterLast()) {
+
+            rounds.add(cursor.getScore());
+            cursor.moveToNext();
+        }
+
+        cursor.close();
+
+        if (cursor.getCount() > 0)
+            callback.onResponse(rounds);
+        else
+            callback.onError(this.context.getString(R.string.no_rounds_found));
+
     }
 
     /**

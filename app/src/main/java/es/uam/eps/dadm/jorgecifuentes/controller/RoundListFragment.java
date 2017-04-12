@@ -32,11 +32,8 @@ import es.uam.eps.dadm.jorgecifuentes.views.EmptyRecyclerView;
  */
 public class RoundListFragment extends Fragment {
 
-    // private RecyclerView roundRecyclerView;
     private EmptyRecyclerView roundRecyclerView;
-
     private RoundAdapter roundAdapter;
-
     private Callbacks callbacks;
 
     public interface Callbacks {
@@ -66,17 +63,17 @@ public class RoundListFragment extends Fragment {
 
         // Inflamos la vista con el layout en xml.
         final View view = inflater.inflate(R.layout.fragment_round_list, container, false);
-        roundRecyclerView = (EmptyRecyclerView) view.findViewById(R.id.round_recycler_view);
+        this.roundRecyclerView = (EmptyRecyclerView) view.findViewById(R.id.round_recycler_view);
 
         // Vista recicladora.
         RecyclerView.LayoutManager linearLayoutManager = new LinearLayoutManager(getActivity());
-        roundRecyclerView.setLayoutManager(linearLayoutManager);
-        roundRecyclerView.setItemAnimator(new DefaultItemAnimator());
-        roundRecyclerView.setEmptyView(view.findViewById(R.id.rounds_empty_view));
+        this.roundRecyclerView.setLayoutManager(linearLayoutManager);
+        this.roundRecyclerView.setItemAnimator(new DefaultItemAnimator());
+        this.roundRecyclerView.setEmptyView(view.findViewById(R.id.rounds_empty_view));
 
 
         // Inicializamos el listener de la CardView.
-        roundRecyclerView.addOnItemTouchListener(new RecyclerItemClickListener(getActivity(), new RecyclerItemClickListener.OnItemClickListener() {
+        this.roundRecyclerView.addOnItemTouchListener(new RecyclerItemClickListener(getActivity(), new RecyclerItemClickListener.OnItemClickListener() {
 
             @Override
             public void onItemClick(View view, final int position) {
@@ -84,7 +81,7 @@ public class RoundListFragment extends Fragment {
                 // Si la partida esta iniciada, clickar nuevamente sobre su CardView no la reiniciara.
                 //  Para eso esta el FAB.
                 RoundRepository repository = RoundRepositoryFactory.createRepository(getActivity());
-                RoundRepository.RoundsCallback roundsCallback = new RoundRepository.RoundsCallback() {
+                RoundRepository.RoundsCallback<Round> roundsCallback = new RoundRepository.RoundsCallback<Round>() {
 
                     @Override
                     public void onResponse(List<Round> rounds) {
@@ -127,12 +124,6 @@ public class RoundListFragment extends Fragment {
                 Round round = roundAdapter.remove(viewHolder.getAdapterPosition());
                 RoundRepository repository = RoundRepositoryFactory.createRepository(getActivity());
                 repository.removeRound(round, null);
-
-                // esta vacio???
-                //if(repository.getRounds)
-                TextView empty = new TextView(getActivity());
-                empty.setText("EMPTY");
-                empty.setVisibility(View.VISIBLE);
             }
         };
 
@@ -202,8 +193,8 @@ public class RoundListFragment extends Fragment {
      */
     public void updateUI() {
 
-// Creamos el callback.
-        RoundRepository.RoundsCallback roundsCallback = new RoundRepository.RoundsCallback() {
+        // Creamos el callback.
+        RoundRepository.RoundsCallback<Round> roundsCallback = new RoundRepository.RoundsCallback<Round>() {
             @Override
             public void onResponse(List<Round> rounds) {
                 if (roundAdapter == null) {
@@ -223,6 +214,7 @@ public class RoundListFragment extends Fragment {
         // Obtenemos las rondas.
         RoundRepository repository = RoundRepositoryFactory.createRepository(getActivity());
         repository.getRounds(RoundPreferenceActivity.getPlayerUUID(getActivity()), null, null, roundsCallback);
+        repository.close();
     }
 
 
@@ -244,18 +236,18 @@ public class RoundListFragment extends Fragment {
             private TextView boardTextView;
             private TextView dateTextView;
 
-            private Round round;
+            //private Round round;
 
             public RoundHolder(View itemView) {
                 super(itemView);
 
-                this.idTextView = (TextView) itemView.findViewById(R.id.list_item_id);
-                this.boardTextView = (TextView) itemView.findViewById(R.id.list_item_board);
-                this.dateTextView = (TextView) itemView.findViewById(R.id.list_item_date);
+                this.idTextView = (TextView) itemView.findViewById(R.id.list_item_title);
+                this.boardTextView = (TextView) itemView.findViewById(R.id.list_item_white);
+                this.dateTextView = (TextView) itemView.findViewById(R.id.list_item_black);
             }
 
             public void bindRound(Round round) {
-                this.round = round;
+                //this.round = round;
 
                 this.idTextView.setText(getText(R.string.round) + round.getTitle());
                 this.boardTextView.setText(round.getBoard().toSimpleString());
@@ -272,7 +264,7 @@ public class RoundListFragment extends Fragment {
         @Override
         public RoundAdapter.RoundHolder onCreateViewHolder(ViewGroup parent, int viewType) { // llamada al crear el Holder
             LayoutInflater layoutInflater = LayoutInflater.from(parent.getContext());
-            View view = layoutInflater.inflate(R.layout.list_item_round, parent, false);
+            View view = layoutInflater.inflate(R.layout.list_round_item, parent, false);
 
             return new RoundHolder(view);
         }
@@ -305,10 +297,6 @@ public class RoundListFragment extends Fragment {
 
         public void setCurrent(int current) {
             this.current = current;
-        }
-
-        public boolean isCurrent(int position) {
-            return position == this.current;
         }
 
         @Override
