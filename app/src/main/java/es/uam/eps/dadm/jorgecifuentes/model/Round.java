@@ -78,14 +78,9 @@ public class Round {
         return playername;
     }
 
-
-    //   public void setSecondPlayerName(String n) {
-    //  }
-
     public String getPlayerUUID() {
         return this.playerUUID;
     }
-
 
     public void setPlayerUUID(String playerUUID) {
         this.playerUUID = playerUUID;
@@ -99,11 +94,11 @@ public class Round {
         return roundUUID;
     }
 
-    public int getBlackScore () {
+    public int getBlackScore() {
         return this.board.getFichas(TableroReversi.Color.NEGRO);
     }
 
-    public int getWhiteScore () {
+    public int getWhiteScore() {
         return this.board.getFichas(TableroReversi.Color.BLANCO);
     }
 }

@@ -5,6 +5,7 @@ import android.database.CursorWrapper;
 import android.util.Log;
 
 import es.uam.eps.dadm.jorgecifuentes.model.Round;
+import es.uam.eps.dadm.jorgecifuentes.model.Triplet;
 import es.uam.eps.dadm.jorgecifuentes.model.Utils;
 import es.uam.eps.multij.ExcepcionJuego;
 
@@ -51,12 +52,12 @@ public class RoundCursorWrapper extends CursorWrapper {
         return round;
     }
 
-    public Utils.Triplet<String, String, String> getScore() {
+    public Triplet<String, String, String> getScore() {
         String title = getString(getColumnIndex(RoundTable.Cols.TITLE));
         String b = getString(getColumnIndex(ScoresTable.Cols.BLACKSCORE));
         String w = getString(getColumnIndex(ScoresTable.Cols.WHITESCORE));
 
-        return new Utils.Triplet<>(title, b, w);
+        return new Triplet<>(title, b, w);
     }
 
 }

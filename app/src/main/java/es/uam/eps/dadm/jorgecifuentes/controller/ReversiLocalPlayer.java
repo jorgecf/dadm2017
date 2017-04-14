@@ -1,14 +1,8 @@
 package es.uam.eps.dadm.jorgecifuentes.controller;
 
 import android.content.Context;
-import android.os.Bundle;
-import android.support.v4.app.Fragment;
 import android.util.Log;
 
-import java.util.List;
-
-import es.uam.eps.dadm.jorgecifuentes.activities.RoundActivity;
-import es.uam.eps.dadm.jorgecifuentes.model.Round;
 import es.uam.eps.dadm.jorgecifuentes.model.TableroReversi;
 import es.uam.eps.dadm.jorgecifuentes.views.ReversiView;
 import es.uam.eps.multij.AccionMover;

@@ -20,9 +20,7 @@ import es.uam.eps.multij.Tablero;
  * @author Jorge Cifuentes
  */
 public class ReversiView extends View {
-    /**
-     * @TODO darg no está bien ajustado a la pantalla del móvil: LG. Además, este móvil tiene SDK 15.
-     */
+
     private Paint backgroundPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
     private Paint linePaint = new Paint(Paint.ANTI_ALIAS_FLAG);
     private Paint gridPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
@@ -111,16 +109,6 @@ public class ReversiView extends View {
         }
 
         if (event.getAction() == MotionEvent.ACTION_DOWN) {
-            /**
-             * @TODO darg como te reseñeo en ReversiLocalPlayer, esto se debe realizar en el modelo y notificar vía controlador. No es del todo correcto que se haga en la vista.
-             */
-
-            // Si no hay movimientos validos, se avisa y se juega un movimiento nulo para que el turno vaya al
-            //  oponente.
-            if (this.board.movimientosValidos().size() == 0) {
-                Snackbar.make(findViewById(R.id.board_reversiview), R.string.no_valid_movements, Snackbar.LENGTH_SHORT).show();
-            }
-
             onPlayListener.onPlay(fromEventToI(event), fromEventToJ(event));
         }
 

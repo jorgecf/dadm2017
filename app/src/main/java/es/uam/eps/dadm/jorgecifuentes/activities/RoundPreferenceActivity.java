@@ -115,7 +115,7 @@ public class RoundPreferenceActivity extends AppCompatActivity {
     }
 
     public static String getPlayerUUID(Context context) {
-        return PreferenceManager.getDefaultSharedPreferences(context).getString(PLAYERUUID, "0"); //TODO defvalue
+        return PreferenceManager.getDefaultSharedPreferences(context).getString(PLAYERUUID, "0");
     }
 
 

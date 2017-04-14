@@ -9,16 +9,14 @@ import android.database.sqlite.SQLiteOpenHelper;
 import android.support.annotation.Nullable;
 import android.util.Log;
 
-import java.util.AbstractMap;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 import java.util.UUID;
 
 import es.uam.eps.dadm.jorgecifuentes.R;
 import es.uam.eps.dadm.jorgecifuentes.model.Round;
 import es.uam.eps.dadm.jorgecifuentes.model.RoundRepository;
-import es.uam.eps.dadm.jorgecifuentes.model.Utils;
+import es.uam.eps.dadm.jorgecifuentes.model.Triplet;
 
 import static es.uam.eps.dadm.jorgecifuentes.database.RoundDataBaseSchema.RoundTable;
 import static es.uam.eps.dadm.jorgecifuentes.database.RoundDataBaseSchema.UserTable;
@@ -208,7 +206,7 @@ public class RoundDataBase implements RoundRepository {
     }
 
     @Override
-    public void getScores(RoundsCallback<Utils.Triplet<String, String, String>> callback) {
+    public void getScores(RoundsCallback<Triplet<String, String, String>> callback) {
 
         String query = "SELECT " +
                 RoundTable.Cols.TITLE + ", " +
@@ -216,18 +214,17 @@ public class RoundDataBase implements RoundRepository {
                 ScoresTable.Cols.WHITESCORE + " " +
                 "FROM " +
                 RoundTable.NAME + " as r, " +
-                ScoresTable.NAME + " as s " + //TODO order
+                ScoresTable.NAME + " as s " +
                 "WHERE " +
                 "r." + RoundTable.Cols.ROUNDUUID + " = " + "s." + ScoresTable.Cols.ROUNDUUID + " "+
                 "ORDER BY " + ScoresTable.Cols.BLACKSCORE + " DESC" +
                 ";";
 
         RoundCursorWrapper cursor = new RoundCursorWrapper(db.rawQuery(query, null));
-        List<Utils.Triplet<String, String, String>> rounds = new ArrayList<>();
+        List<Triplet<String, String, String>> rounds = new ArrayList<>();
 
         cursor.moveToFirst();
         while (!cursor.isAfterLast()) {
-
             rounds.add(cursor.getScore());
             cursor.moveToNext();
         }
@@ -289,10 +286,10 @@ public class RoundDataBase implements RoundRepository {
 
         String[] whereArgs = new String[]{round.getRoundUUID()};
 
-        // Actualizamos el contenido de la ronda
+        // Actualizamos el contenido de la ronda.
         long id = this.db.update(RoundTable.NAME, values, RoundTable.Cols.ROUNDUUID + " = ?", whereArgs);
 
-        // Actualizamos el score
+        // Actualizamos el score.
         long id2 = this.db.update(ScoresTable.NAME, score, ScoresTable.Cols.ROUNDUUID + " = ?", whereArgs);
 
         if (callback != null)

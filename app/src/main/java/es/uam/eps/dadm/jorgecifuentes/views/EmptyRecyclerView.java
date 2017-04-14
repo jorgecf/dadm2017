@@ -4,9 +4,12 @@ import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.util.AttributeSet;
 import android.view.View;
-import android.widget.SimpleAdapter;
 
-//recyclerView con empty text TODO comentarios
+/**
+ * RecyclerView con AdapterDataObserver para mostrar un texto personalizado cuando se queda vacio el Adapter.
+ *
+ * @author Jorge Cifuentes
+ */
 public class EmptyRecyclerView extends RecyclerView {
 
     private View emptyView;
@@ -31,17 +34,17 @@ public class EmptyRecyclerView extends RecyclerView {
 
         @Override
         public void onChanged() {
-            checkEmptyRecyclerView();
+            checkAdapterState();
         }
 
         @Override
         public void onItemRangeInserted(int positionStart, int itemCount) {
-            checkEmptyRecyclerView();
+            checkAdapterState();
         }
 
         @Override
         public void onItemRangeRemoved(int positionStart, int itemCount) {
-            checkEmptyRecyclerView();
+            checkAdapterState();
         }
     };
 
@@ -54,27 +57,33 @@ public class EmptyRecyclerView extends RecyclerView {
         }
 
         super.setAdapter(adapter);
-
         if (adapter != null) {
             adapter.registerAdapterDataObserver(this.observer);
         }
 
-        checkEmptyRecyclerView();
+        this.checkAdapterState();
     }
 
-    void checkEmptyRecyclerView() {
-        if (emptyView != null && getAdapter() != null) {
+    /**
+     * Si el adaptador esta vacio, deja visible el menssaje de aviso.
+     */
+    void checkAdapterState() {
+        if (this.emptyView != null && getAdapter() != null) {
 
-            final boolean emptyViewVisible = getAdapter().getItemCount() == 0;
+            if (this.getAdapter().getItemCount() == 0) {
+                this.emptyView.setVisibility(View.VISIBLE);
+                this.setVisibility(View.GONE);
+            } else {
+                this.emptyView.setVisibility(View.GONE);
+                this.setVisibility(View.VISIBLE);
+            }
 
-            emptyView.setVisibility(emptyViewVisible ? VISIBLE : GONE);
-            this.setVisibility(emptyViewVisible ? GONE : VISIBLE);
         }
     }
 
     public void setEmptyView(View emptyView) {
         this.emptyView = emptyView;
-        checkEmptyRecyclerView();
+        this.checkAdapterState();
     }
 
 }

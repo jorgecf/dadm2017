@@ -100,7 +100,6 @@ public class TableroReversi extends Tablero {
     /**
      * Constructor del TableroReversi. LLena el tablero de VACIO, menos las 4 casillas que vienen
      * predefinidias por las reglas del juego como BLANCO o NEGRO.
-     *
      */
     public TableroReversi() {
 
@@ -139,13 +138,6 @@ public class TableroReversi extends Tablero {
         return ret;
     }
 
-    /**
-     * A partir de tablero (matriz de Color) crea un Stream<Color> que contiene las 64 casillas.
-     * Esto se hace con un stream de cada fila y luego un stream de dicho stream de cada fila, que
-     * se aplana (flatten).
-     *
-     * @return el stream del tablero
-     */
     @Override
     protected void mueve(Movimiento movimiento) throws ExcepcionJuego {
 

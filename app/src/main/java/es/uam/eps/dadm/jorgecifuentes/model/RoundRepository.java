@@ -102,7 +102,12 @@ public interface RoundRepository {
      */
     void getRounds(@Nullable String playeruuid, @Nullable String orderByField, @Nullable String group, RoundsCallback<Round> callback);
 
-    void getScores(RoundsCallback<Utils.Triplet<String, String, String>> callback);//TODO comment
+    /**
+     * Obtiene los scores de la base de datos.
+     *
+     * @param callback Callback a ejecutar una vez obtenido el triplete de scores (Title, Score1, Score2).
+     */
+    void getScores(RoundsCallback<Triplet<String, String, String>> callback);
 
     /**
      * Agrega una nueva ronda.
