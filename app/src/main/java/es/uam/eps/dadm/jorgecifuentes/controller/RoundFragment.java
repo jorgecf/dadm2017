@@ -139,7 +139,8 @@ public class RoundFragment extends Fragment implements PartidaListener {
             rounduuid = getArguments().getString(ARG_ROUND_UUID);
         }
 
-        String boardString=roundBoard;
+        // Tablero guardado en la rotacion.
+        String boardString = roundBoard;
         if (savedInstanceState != null) {
             boardString = savedInstanceState.getString(BOARDSTRING);
         }

@@ -326,7 +326,6 @@ public class RoundDataBase implements RoundRepository {
             id = -1;
         }
 
-
         if (callback != null)
             callback.onResponse(id > 0);
     }
