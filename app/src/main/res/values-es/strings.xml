@@ -55,4 +55,6 @@
         El jugador con más fichas en el tablero, cuando no queden más movimientos válidos, es el que gana.
     </string>
     <string name="email">jorge.cifuentesf@estudiante.uam.es</string>
+    <string name="black_player_has">EL JUGADOR NEGRO TIENE</string>
+    <string name="white_player_has">EL JUGADOR BLANCO TIENE</string>
 </resources>

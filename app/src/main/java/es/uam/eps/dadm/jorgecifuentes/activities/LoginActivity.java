@@ -10,7 +10,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.Switch;
 import android.widget.Toast;
 
@@ -37,7 +36,7 @@ public class LoginActivity extends Activity implements View.OnClickListener {
 
         this.setContentView(R.layout.activity_login);
 
-        // Si si hay nombre almacenado (no devuelve el default), es que se ha hecho login, si ademas
+        // Si sí hay nombre almacenado (no devuelve el default), es que se ha hecho login; si ademas
         // el usuario ha elegido "mantenerme logueado", se salta la pantalla de login.
         if (RoundPreferenceActivity.getPlayerName(this).equals(RoundPreferenceActivity.PLAYERNAME_DEFAULT) == false
                 && RoundPreferenceActivity.getKeepLogged(this) == true) {
@@ -46,7 +45,7 @@ public class LoginActivity extends Activity implements View.OnClickListener {
             return;
         }
 
-        // En caso de no estar activado recuerdo de sesion, borramos preferencias.
+        // En caso de no estar activado recuerdo de sesion, borramos preferencias y empezamos de nuevo proceso de login.
         RoundPreferenceActivity.clearPreferences(this);
 
         this.usernameEditText = (TextInputLayout) this.findViewById(R.id.login_username_wrapper);

@@ -4,6 +4,7 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.SQLException;
+import android.database.sqlite.SQLiteConstraintException;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.support.annotation.Nullable;
@@ -216,7 +217,7 @@ public class RoundDataBase implements RoundRepository {
                 RoundTable.NAME + " as r, " +
                 ScoresTable.NAME + " as s " +
                 "WHERE " +
-                "r." + RoundTable.Cols.ROUNDUUID + " = " + "s." + ScoresTable.Cols.ROUNDUUID + " "+
+                "r." + RoundTable.Cols.ROUNDUUID + " = " + "s." + ScoresTable.Cols.ROUNDUUID + " " +
                 "ORDER BY " + ScoresTable.Cols.BLACKSCORE + " DESC" +
                 ";";
 
@@ -317,7 +318,14 @@ public class RoundDataBase implements RoundRepository {
 
         ContentValues values = this.getContentValues(name, password);
 
-        long id = this.db.update(UserTable.NAME, values, UserTable.Cols.PLAYERUUID + " = ?", new String[]{userUUID});
+        long id;
+        try {
+            id = this.db.update(UserTable.NAME, values, UserTable.Cols.PLAYERUUID + " = ?", new String[]{userUUID});
+        } catch (SQLiteConstraintException e) {
+            Log.d("[debug]", "id already exists " + name + ", " + password);
+            id = -1;
+        }
+
 
         if (callback != null)
             callback.onResponse(id > 0);

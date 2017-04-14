@@ -2,7 +2,6 @@ package es.uam.eps.dadm.jorgecifuentes.activities;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
@@ -65,6 +64,9 @@ public class ScoresActivity extends AppCompatActivity {
     }
 
 
+    /**
+     * Adapter para la vista de Scores.
+     */
     public class ScoreAdapter extends RecyclerView.Adapter<ScoreAdapter.ScoreHolder> {
 
         private List<Triplet<String, String, String>> scores;
@@ -92,6 +94,9 @@ public class ScoresActivity extends AppCompatActivity {
             return this.scores.size();
         }
 
+        /**
+         * Holder de elementos de la vista de Scores
+         */
         public class ScoreHolder extends RecyclerView.ViewHolder {
 
             private TextView titleTextView;

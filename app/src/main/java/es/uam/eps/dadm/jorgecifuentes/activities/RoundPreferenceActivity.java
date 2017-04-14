@@ -5,8 +5,11 @@ import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
+import android.support.design.widget.Snackbar;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.content.SharedPreferences;
+import android.view.ViewGroup;
 
 import es.uam.eps.dadm.jorgecifuentes.R;
 import es.uam.eps.dadm.jorgecifuentes.controller.RoundPreferenceFragment;
@@ -119,16 +122,32 @@ public class RoundPreferenceActivity extends AppCompatActivity {
     }
 
 
-    public static void setPlayerName(Context context, String name) {
+    public static void setPlayerName(final Context context, final String name) {
 
         // Actualizamos en la base de datos.
         RoundRepository r = RoundRepositoryFactory.createRepository(context);
 
-        r.updateUser(RoundPreferenceActivity.getPlayerUUID(context), name, null, null);
+        RoundRepository.BooleanCallback bc = new RoundRepository.BooleanCallback() {
+            @Override
+            public void onResponse(boolean ok) {
+
+                if (ok == true) {
+                    // Actualizamos en los ajustes.
+                    RoundPreferenceActivity.setString(context, RoundPreferenceActivity.PLAYERNAME, name);
+                } else {
+                    // Instanciamos un dialogo de aviso.
+                    AlertDialog.Builder builder = new AlertDialog.Builder(context, R.style.AppTheme_DialogAlert);
+                    builder.setTitle(R.string.login_error_title);
+                    builder.setMessage(R.string.username_already_exists);
+                    builder.setPositiveButton(R.string.ok, null);
+                    builder.show().getWindow().setLayout(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+                }
+            }
+        };
+
+        r.updateUser(RoundPreferenceActivity.getPlayerUUID(context), name, null, bc);
         r.close();
 
-        // Actualizamos en los ajustes.
-        RoundPreferenceActivity.setString(context, RoundPreferenceActivity.PLAYERNAME, name);
     }
 
 
@@ -137,16 +156,31 @@ public class RoundPreferenceActivity extends AppCompatActivity {
     }
 
 
-    public static void setPlayerPassword(Context context, String password) {
+    public static void setPlayerPassword(final Context context, final String password) {
 
         // Actualizamos en la base de datos.
         RoundRepository r = RoundRepositoryFactory.createRepository(context);
 
-        r.updateUser(RoundPreferenceActivity.getPlayerUUID(context), null, password, null);
-        r.close();
+        RoundRepository.BooleanCallback bc = new RoundRepository.BooleanCallback() {
+            @Override
+            public void onResponse(boolean ok) {
 
-        // Actualizamos en los ajustes.
-        RoundPreferenceActivity.setString(context, RoundPreferenceActivity.PLAYERPASSWORD, password);
+                if (ok == true) {
+                    // Actualizamos en los ajustes.
+                    RoundPreferenceActivity.setString(context, RoundPreferenceActivity.PLAYERPASSWORD, password);
+                } else {
+                    // Instanciamos un dialogo de aviso.
+                    AlertDialog.Builder builder = new AlertDialog.Builder(context, R.style.AppTheme_DialogAlert);
+                    builder.setTitle(R.string.login_error_title);
+                    builder.setMessage(R.string.cant_change_password);
+                    builder.setPositiveButton(R.string.ok, null);
+                    builder.show().getWindow().setLayout(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+                }
+            }
+        };
+
+        r.updateUser(RoundPreferenceActivity.getPlayerUUID(context), null, password, bc);
+        r.close();
     }
 
 

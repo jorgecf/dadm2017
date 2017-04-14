@@ -25,17 +25,16 @@ import es.uam.eps.dadm.jorgecifuentes.R;
  */
 public class ContactsActivity extends AppCompatActivity {
 
-    // Un identificador para el permiso de lectura de contactos
+    // Identificador para el permiso de lectura de contactos
     private static final int MY_PERMISSIONS_REQUEST_READ_CONTACTS = 1;
 
-    // Un identificador único para el loader, cualquier valor sirve
     public static final int LOADER_ID = 78;
     private SimpleCursorAdapter adapter;
 
     // Columnas que vaos a leer.
     private static final String[] FROM = {ContactsContract.Contacts.DISPLAY_NAME_PRIMARY, ContactsContract.Contacts.HAS_PHONE_NUMBER};
 
-    // Views donde guardar las columnas leidas (en este caso de list_contacts_itemtacts_item.xml).
+    // Views donde guardar las columnas leidas (en este caso de list_contacts_item.xml).
     private static final int[] TO = {R.id.contactName, R.id.emailDirection};
 
 
@@ -50,7 +49,6 @@ public class ContactsActivity extends AppCompatActivity {
                     ContactsContract.Contacts._ID,
                     ContactsContract.Contacts.DISPLAY_NAME,
                     ContactsContract.Contacts.HAS_PHONE_NUMBER,
-                    //  ContactsContract.CommonDataKinds.Email._ID, ContactsContract.CommonDataKinds.Email.ADDRESS
             };
 
             // Constructor del CursorLoader
@@ -76,7 +74,6 @@ public class ContactsActivity extends AppCompatActivity {
         // Se llama si los datos del proveedor cambian
         @Override
         public void onLoaderReset(Loader<Cursor> loader) {
-            // on reset take any old cursor away
             adapter.swapCursor(null);
         }
     };
@@ -120,7 +117,7 @@ public class ContactsActivity extends AppCompatActivity {
 
         switch (requestCode) {
             case MY_PERMISSIONS_REQUEST_READ_CONTACTS: {
-                // el argumento grantResults está vacio si la solicitud se rechaza
+                // El argumento grantResults está vacio si la solicitud se rechaza
                 if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                     this.showContacts();
                 } else {

@@ -139,6 +139,11 @@ public class RoundFragment extends Fragment implements PartidaListener {
             rounduuid = getArguments().getString(ARG_ROUND_UUID);
         }
 
+        String boardString=roundBoard;
+        if (savedInstanceState != null) {
+            boardString = savedInstanceState.getString(BOARDSTRING);
+        }
+
 
         // Cargamos la ronda contenida en este fragmento.
         this.round = new Round(firstPlayerName, roundTitle, roundDate, RoundPreferenceActivity.getPlayerUUID(getActivity()), rounduuid);
@@ -146,7 +151,7 @@ public class RoundFragment extends Fragment implements PartidaListener {
         // Cargamos el tablero.
         this.round.setBoard(new TableroReversi());
         try {
-            this.round.getBoard().stringToTablero(roundBoard);
+            this.round.getBoard().stringToTablero(boardString);
         } catch (ExcepcionJuego e) {
             e.printStackTrace();
         }
