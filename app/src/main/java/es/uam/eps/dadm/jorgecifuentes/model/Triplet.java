@@ -6,7 +6,6 @@ package es.uam.eps.dadm.jorgecifuentes.model;
  * @param <F> Tipo del primer dato.
  * @param <S> Tipo del segundo dato.
  * @param <T> Tipo del tercer dato.
- *
  * @author Jorge Cifuentes
  */
 public class Triplet<F, S, T> {

@@ -236,8 +236,6 @@ public class RoundListFragment extends Fragment {
             private TextView boardTextView;
             private TextView dateTextView;
 
-            //private Round round;
-
             public RoundHolder(View itemView) {
                 super(itemView);
 
@@ -247,8 +245,6 @@ public class RoundListFragment extends Fragment {
             }
 
             public void bindRound(Round round) {
-                //this.round = round;
-
                 this.idTextView.setText(getText(R.string.round) + round.getTitle());
                 this.boardTextView.setText(round.getBoard().toSimpleString());
                 this.dateTextView.setText(String.valueOf(round.getDate()).substring(0, 19));

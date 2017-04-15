@@ -16,7 +16,7 @@ import es.uam.eps.dadm.jorgecifuentes.model.RoundRepository;
 import es.uam.eps.dadm.jorgecifuentes.model.RoundRepositoryFactory;
 
 /**
- * Clase que representa una alerta dentro de un fragmento.
+ * Clase que representa una alerta de fin de juego dentro de un fragmento.
  *
  * @author Jorge Cifuentes
  */

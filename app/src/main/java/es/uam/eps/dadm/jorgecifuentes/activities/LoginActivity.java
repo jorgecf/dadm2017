@@ -104,7 +104,7 @@ public class LoginActivity extends Activity implements View.OnClickListener {
                         View view = getCurrentFocus();
                         if (view != null) {
                             InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-                            imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
+                            if (imm != null) imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
                         }
 
                         // Instanciamos un dialogo de aviso.
@@ -141,7 +141,7 @@ public class LoginActivity extends Activity implements View.OnClickListener {
     }
 
     /**
-     * Comprueba la validez del inicio de sesion antes de interactuar con la base de datos.
+     * Comprueba la validez del inicio de sesion antes de interactuar con la base de datos o servidor.
      *
      * @param playername Nombre de usuario introducido.
      * @param password   Clave introducida.

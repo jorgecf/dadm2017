@@ -3,9 +3,7 @@ package es.uam.eps.dadm.jorgecifuentes.model;
 import android.support.annotation.Nullable;
 
 import java.util.List;
-import java.util.Map;
 
-import es.uam.eps.dadm.jorgecifuentes.controller.ReversiLocalPlayer;
 
 /**
  * Interfaz que representa un repositorio de diferentes rondas, y su acceso a ellas.
@@ -14,8 +12,9 @@ import es.uam.eps.dadm.jorgecifuentes.controller.ReversiLocalPlayer;
  */
 public interface RoundRepository {
 
-    /* Callback para la obtencion de informacionde tipo T. */
+    /* Callback para la obtencion de informacion de tipo T. */
     interface RoundsCallback<T> {
+
         /**
          * Metodo a ejecutar despues de obtener las rondas.
          *
@@ -84,6 +83,7 @@ public interface RoundRepository {
      * Callback booleano.
      */
     interface BooleanCallback {
+
         /**
          * Metodo de vuelta.
          *

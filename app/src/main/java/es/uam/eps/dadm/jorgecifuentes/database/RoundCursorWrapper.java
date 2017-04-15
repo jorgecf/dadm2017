@@ -6,7 +6,6 @@ import android.util.Log;
 
 import es.uam.eps.dadm.jorgecifuentes.model.Round;
 import es.uam.eps.dadm.jorgecifuentes.model.Triplet;
-import es.uam.eps.dadm.jorgecifuentes.model.Utils;
 import es.uam.eps.multij.ExcepcionJuego;
 
 import static es.uam.eps.dadm.jorgecifuentes.database.RoundDataBaseSchema.UserTable;

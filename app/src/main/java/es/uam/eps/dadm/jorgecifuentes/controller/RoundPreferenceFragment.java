@@ -21,7 +21,7 @@ import es.uam.eps.dadm.jorgecifuentes.activities.RoundPreferenceActivity;
  */
 public class RoundPreferenceFragment extends PreferenceFragment {
 
-    // Identificadores de las preferencias.
+    /* Identificadores de las preferencias. */
     private static final String SELECT_NAME = "select_name";
     private static final String ACCESS_CONTACTS = "access_contacts";
     private static final String LOGOUT = "logout";

@@ -6,7 +6,7 @@ import android.util.AttributeSet;
 import android.view.View;
 
 /**
- * RecyclerView con AdapterDataObserver para mostrar un texto personalizado cuando se queda vacio el Adapter.
+ * RecyclerView con AdapterDataObserver para mostrar un texto personalizado cuando se quede vacio el Adapter.
  *
  * @author Jorge Cifuentes
  */

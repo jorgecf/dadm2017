@@ -15,7 +15,6 @@ public class Round {
     private TableroReversi board;
     private String playerUUID;
     private String roundUUID;
-
     private String playername;
 
 

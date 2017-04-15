@@ -18,10 +18,12 @@ public class SplashActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
+        // Restablecemos el tema de la app.
         this.setTheme(R.style.AppTheme);
 
         super.onCreate(savedInstanceState);
 
+        // Pasamos a la pantalla de login.
         Intent intent = new Intent(this, LoginActivity.class);
         this.startActivity(intent);
         finish();
