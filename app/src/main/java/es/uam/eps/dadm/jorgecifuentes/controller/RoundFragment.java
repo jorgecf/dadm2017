@@ -35,7 +35,6 @@ import es.uam.eps.multij.Tablero;
  */
 public class RoundFragment extends Fragment implements PartidaListener {
 
-    public static final String ARG_ROUND_ID = "es.uam.eps.dadm.round_id";
     public static final String ARG_FIRST_PLAYER_NAME = "es.uam.eps.dadm.first_player_name";
     public static final String ARG_ROUND_TITLE = "es.uam.eps.dadm.round_title";
     public static final String ARG_ROUND_DATE = "es.uam.eps.dadm.round_date";
@@ -57,9 +56,6 @@ public class RoundFragment extends Fragment implements PartidaListener {
     private String roundDate;
     private String roundBoard;
     private String rounduuid;
-
-    private TableroReversi board;
-
 
     /**
      * Interfaz que define que hacer al actualizar el contenido de una ronda.

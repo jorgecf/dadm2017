@@ -14,6 +14,7 @@ import es.uam.eps.dadm.jorgecifuentes.R;
  * @author Jorge Cifuentes
  */
 public class SplashActivity extends AppCompatActivity {
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 

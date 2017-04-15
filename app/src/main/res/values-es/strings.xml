@@ -57,4 +57,5 @@
     <string name="email">jorge.cifuentesf@estudiante.uam.es</string>
     <string name="black_player_has">EL JUGADOR NEGRO TIENE</string>
     <string name="white_player_has">EL JUGADOR BLANCO TIENE</string>
+    <string name="cant_change_password">No se pudo cambiar la password</string>
 </resources>
