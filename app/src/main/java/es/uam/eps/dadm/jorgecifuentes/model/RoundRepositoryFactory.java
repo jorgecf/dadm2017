@@ -12,6 +12,7 @@ import es.uam.eps.dadm.jorgecifuentes.database.RoundDataBase;
  * @author Jorge Cifuentes
  */
 public class RoundRepositoryFactory {
+
     private static final boolean LOCAL = true;
 
     public static RoundRepository createRepository(Context context) {
@@ -20,7 +21,7 @@ public class RoundRepositoryFactory {
         // Preferencia de juego online.
         Boolean online = RoundPreferenceActivity.getPlayOnline(context);
 
-        repository = LOCAL ? new RoundDataBase(context) : new RoundDataBase(context);
+        repository = online ? ServerRepository.getInstance(context) : new RoundDataBase(context);
 
         try {
             repository.open();

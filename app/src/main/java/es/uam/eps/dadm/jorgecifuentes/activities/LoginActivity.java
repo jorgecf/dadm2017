@@ -3,6 +3,8 @@ package es.uam.eps.dadm.jorgecifuentes.activities;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.AlertDialog;
@@ -28,6 +30,13 @@ public class LoginActivity extends Activity implements View.OnClickListener {
     private TextInputLayout usernameEditText;
     private TextInputLayout passwordEditText;
     private Switch keepMeLoggedInSwitch;
+
+    public boolean isOnline() {
+        ConnectivityManager connMgr = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo networkInfo = connMgr.getActiveNetworkInfo();
+
+        return (networkInfo != null && networkInfo.isConnected());
+    }
 
 
     @Override
