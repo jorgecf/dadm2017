@@ -26,7 +26,7 @@ import es.uam.eps.dadm.jorgecifuentes.model.RoundRepositoryFactory;
  */
 public class LoginActivity extends Activity implements View.OnClickListener {
 
-    private RoundRepository repository;
+    private RoundRepository repository; //TODO todos los repositorys close en onDestroy
     private TextInputLayout usernameEditText;
     private TextInputLayout passwordEditText;
     private Switch keepMeLoggedInSwitch;

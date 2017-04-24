@@ -26,7 +26,7 @@ public class ServerInterface {
 
     private static final String DEBUG = "DEBUG";
 
-    public static final int GAME_ID = 134; //TODO generar
+    public static final int GAME_ID = 34; // Codigo generado por el servidor
 
     private static final String BASE_URL = "http://ptha.ii.uam.es/dadm2017/";
     private static final String ACCOUNT_PHP = "account.php";
@@ -43,8 +43,18 @@ public class ServerInterface {
     private static ServerInterface serverInterface;
 
     private ServerInterface(Context context) { // privado para Singleton
-        queue = Volley.newRequestQueue(context.getApplicationContext());
+        this.queue = Volley.newRequestQueue(context.getApplicationContext());
     }
+
+    public static ServerInterface getServer(Context context) {
+
+        if (serverInterface == null) {
+            serverInterface = new ServerInterface(context);
+        }
+
+        return serverInterface;
+    }
+
 
     public void login(final String playername, final String password, final String regid, final boolean register, Response.Listener<String> callback, Response.ErrorListener errorCallback) {
 
@@ -54,17 +64,31 @@ public class ServerInterface {
 
         StringRequest r = new StringRequest(Request.Method.POST, url, callback, errorCallback) {
             protected Map<String, String> getParams() {
+
                 Map<String, String> params = new HashMap<>();
+
                 params.put("playername", playername);
                 params.put("playerpassword", password);
+
                 if (regid != null && !regid.isEmpty()) params.put("gcmregid", regid);
                 if (!register) params.put("login", "");
+
                 return params;
             }
         };
 
-        queue.add(r);
+        this.queue.add(r);
     }
+
+    public void sendBoard(int roundid, String playerid, String codedboard, Response.Listener<String> callback, Response.ErrorListener errorCallback) {
+
+        String url = BASE_URL + NEW_MOVEMENT_PHP + "?roundid=" + roundid + "&playerid=" + playerid + "&codedboard=" + codedboard;
+        Log.d(DEBUG, url);
+
+        StringRequest r = new StringRequest(Request.Method.GET, url, callback, errorCallback);
+        this.queue.add(r);
+    }
+
 
     public void isMyTurn(final int roundid, final String playerid, Response.Listener<JSONObject> callback, Response.ErrorListener errorCallback) {
 
@@ -72,7 +96,7 @@ public class ServerInterface {
         Log.d(DEBUG, url);
 
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, url, null, callback, errorCallback);
-        queue.add(jsonObjectRequest);
+        this.queue.add(jsonObjectRequest);
     }
 
     public void getOpenRounds(final String playerid, Response.Listener<JSONArray> callback, Response.ErrorListener errorCallback) {
@@ -81,20 +105,38 @@ public class ServerInterface {
         Log.d(DEBUG, url);
 
         JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(url, callback, errorCallback);
-        queue.add(jsonArrayRequest);
+        this.queue.add(jsonArrayRequest);
     }
 
-    public void getActiveRounds(final String playerid, Response.Listener<JSONArray> callback, Response.ErrorListener errorCallback) { //...
+    public void getActiveRounds(final String playerid, Response.Listener<JSONArray> callback, Response.ErrorListener errorCallback) {
+
+        String url = BASE_URL + ACTIVE_ROUNDS_PHP + "?" + "&gameid=" + GAME_ID + "&playerid=" + playerid;
+        Log.d(DEBUG, url);
+
+        JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(url, callback, errorCallback);
+        this.queue.add(jsonArrayRequest);
     }
 
     public void newRound(String playerid, String codedboard, Response.Listener<String> callback, Response.ErrorListener errorCallback) {
-        //...
+
+        String url = BASE_URL + NEW_ROUND_PHP + "?" + "&gameid=" + GAME_ID + "&playerid=" + playerid;
+        if (codedboard != null && codedboard.length() > 0) {
+            url += "&codedboard=" + codedboard;
+        }
+
+        Log.d(DEBUG, url);
+
+        StringRequest r = new StringRequest(Request.Method.GET, url, callback, errorCallback);
+        this.queue.add(r);
     }
 
     public void addPlayerToRound(int roundid, String playerid, Response.Listener<String> callback, Response.ErrorListener errorCallback) {
-        //...
+
+        String url = BASE_URL + ADD_PLAYER_TO_ROUND_PHP + "?" + "&roundid=" + roundid + "&playerid=" + playerid;
+        Log.d(DEBUG, url);
+
+        StringRequest r = new StringRequest(Request.Method.GET, url, callback, errorCallback);
+        this.queue.add(r);
     }
 
-
 }
-
