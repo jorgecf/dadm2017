@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -212,8 +213,17 @@ public class RoundFragment extends Fragment implements PartidaListener {
         JugadorAleatorio randomPlayer = new JugadorAleatorio(this.getContext().getString(R.string.random_player_default_name));
         ReversiLocalPlayer localPlayer = new ReversiLocalPlayer(this.getContext(), firstPlayerName);
 
-        players.add(localPlayer);
-        players.add(randomPlayer);
+
+        if (RoundPreferenceActivity.getPlayOnline(this.getContext()) == false) {
+            // Partida local
+            players.add(localPlayer);
+            players.add(randomPlayer);
+        } else {
+            // Partida online
+            players.add(localPlayer); //TODO
+            players.add(randomPlayer);
+        }
+
 
         game = new Partida(this.round.getBoard(), players);
 

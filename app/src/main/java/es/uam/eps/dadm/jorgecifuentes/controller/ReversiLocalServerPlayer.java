@@ -59,13 +59,13 @@ public class ReversiLocalServerPlayer implements Jugador, ReversiView.OnPlayList
                             }
 
                             // Si el turno es del jugador pero el tablero no está actualizado, actualizar tablero
-                            if (isMyTurn && isBoardUpToDate(codedboard)==false) {
+                            if (isMyTurn && isBoardUpToDate(codedboard) == false) {
                                 Log.d("[debug]", "realizar movimiento, antes actualizar tablero");
                                 game.getTablero().stringToTablero(codedboard);
                             }
 
                             // Si el turno no es del jugador, mostrar mensaje
-                                Log.d("[debug]", "no es turno de RLSplayer");
+                            Log.d("[debug]", "no es turno de RLSplayer");
 
 
                         } catch (Exception e) {
@@ -82,7 +82,7 @@ public class ReversiLocalServerPlayer implements Jugador, ReversiView.OnPlayList
 
         //...
 
-        String playerId= RoundPreferenceActivity.getPlayerUUID(this.context); //TODO probar
+        String playerId = RoundPreferenceActivity.getPlayerUUID(this.context); //TODO probar
         is.isMyTurn(Integer.parseInt(roundId), playerId, responseListener, errorListener);
     }
 

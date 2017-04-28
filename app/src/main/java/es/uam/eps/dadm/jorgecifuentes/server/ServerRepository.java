@@ -100,9 +100,14 @@ public class ServerRepository implements RoundRepository {
                 JSONObject o = response.getJSONObject(i);
 
                 String codedboard = o.getString("codedboard");
+                String uuid = o.getString("roundid"); //TODO a clase tipo schema o constantes
+                String date = o.getString("dateevent");
                 //   int size = codedboard.charAt(0) - '0';
 
-                Round round = new Round(RoundPreferenceActivity.getPlayerUUID(context), RoundPreferenceActivity.getPlayerName(context));
+                //   Round round = new Round(RoundPreferenceActivity.getPlayerUUID(context), RoundPreferenceActivity.getPlayerName(context));
+
+                Round round = new Round(RoundPreferenceActivity.getPlayerName(context), uuid, date, RoundPreferenceActivity.getPlayerUUID(context), uuid);
+
                 rounds.add(round);
             } catch (JSONException e) {
                 e.printStackTrace();
@@ -158,7 +163,7 @@ public class ServerRepository implements RoundRepository {
 
                     @Override
                     public void onResponse(String result) {
-                        callback.onResponse(result == "1");
+                        callback.onResponse(result != "-1"); // nos devuelve roundid
                     }
                 },
 
@@ -180,12 +185,11 @@ public class ServerRepository implements RoundRepository {
 
     @Override
     public void updateRound(Round round, BooleanCallback callback) {
-
+        //TODO mandar ronda updated al server
     }
 
     @Override
-    public void updateUser(String userUUID, String name, String password, BooleanCallback
-            callback) {
+    public void updateUser(String userUUID, String name, String password, BooleanCallback callback) {
 
     }
 }
