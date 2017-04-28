@@ -4,13 +4,6 @@
 
     <PreferenceCategory android:title="@string/settings_title">
 
-        <SwitchPreference
-            android:key="switch_online"
-            android:summary="@string/switch_online_summary"
-            android:title="@string/switch_online_title">
-
-        </SwitchPreference>
-
     </PreferenceCategory>
 
     <PreferenceCategory android:title="@string/contacts">

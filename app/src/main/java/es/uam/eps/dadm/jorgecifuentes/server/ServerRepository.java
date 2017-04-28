@@ -27,6 +27,9 @@ import es.uam.eps.multij.ExcepcionJuego;
 public class ServerRepository implements RoundRepository {
 
     private static final String DEBUG = "ServerRepository";
+
+    private boolean logged = false;
+
     private static ServerRepository repository;
     private final Context context;
     private ServerInterface is;
@@ -45,7 +48,9 @@ public class ServerRepository implements RoundRepository {
 
     public void loginOrRegister(final String playerName, String password, boolean register, final RoundRepository.LoginRegisterCallback callback) {
 
-        this.is.login(playerName, password, null, register, new Response.Listener<String>() {
+        this.is.login(playerName, password, null, register,
+
+                new Response.Listener<String>() {
 
                     @Override
                     public void onResponse(String result) {
@@ -144,7 +149,27 @@ public class ServerRepository implements RoundRepository {
     }
 
     @Override
-    public void addRound(Round round, BooleanCallback callback) {
+    public void addRound(Round round, final BooleanCallback callback) {
+
+        this.is.newRound(round.getPlayerUUID(), round.getBoard().tableroToString(),
+
+                // Callback de respuesta
+                new Response.Listener<String>() {
+
+                    @Override
+                    public void onResponse(String result) {
+                        callback.onResponse(result == "1");
+                    }
+                },
+
+                // Callback de error
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        callback.onResponse(false);
+                        Log.d("server repo", "onErrorResponse: volleyerror");
+                    }
+                });
 
     }
 

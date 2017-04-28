@@ -101,7 +101,7 @@ public class ServerInterface {
 
     public void getOpenRounds(final String playerid, Response.Listener<JSONArray> callback, Response.ErrorListener errorCallback) {
 
-        String url = BASE_URL + OPEN_ROUNDS_PHP + "?" + "&gameid=" + GAME_ID + "&playerid=" + playerid;
+        String url = BASE_URL + OPEN_ROUNDS_PHP + "?gameid=" + GAME_ID + "&playerid=" + playerid;
         Log.d(DEBUG, url);
 
         JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(url, callback, errorCallback);
@@ -110,7 +110,7 @@ public class ServerInterface {
 
     public void getActiveRounds(final String playerid, Response.Listener<JSONArray> callback, Response.ErrorListener errorCallback) {
 
-        String url = BASE_URL + ACTIVE_ROUNDS_PHP + "?" + "&gameid=" + GAME_ID + "&playerid=" + playerid;
+        String url = BASE_URL + ACTIVE_ROUNDS_PHP + "?gameid=" + GAME_ID + "&playerid=" + playerid;
         Log.d(DEBUG, url);
 
         JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(url, callback, errorCallback);
@@ -119,7 +119,7 @@ public class ServerInterface {
 
     public void newRound(String playerid, String codedboard, Response.Listener<String> callback, Response.ErrorListener errorCallback) {
 
-        String url = BASE_URL + NEW_ROUND_PHP + "?" + "&gameid=" + GAME_ID + "&playerid=" + playerid;
+        String url = BASE_URL + NEW_ROUND_PHP + "?gameid=" + GAME_ID + "&playerid=" + playerid;
         if (codedboard != null && codedboard.length() > 0) {
             url += "&codedboard=" + codedboard;
         }
@@ -132,7 +132,7 @@ public class ServerInterface {
 
     public void addPlayerToRound(int roundid, String playerid, Response.Listener<String> callback, Response.ErrorListener errorCallback) {
 
-        String url = BASE_URL + ADD_PLAYER_TO_ROUND_PHP + "?" + "&roundid=" + roundid + "&playerid=" + playerid;
+        String url = BASE_URL + ADD_PLAYER_TO_ROUND_PHP + "?roundid=" + roundid + "&playerid=" + playerid;
         Log.d(DEBUG, url);
 
         StringRequest r = new StringRequest(Request.Method.GET, url, callback, errorCallback);

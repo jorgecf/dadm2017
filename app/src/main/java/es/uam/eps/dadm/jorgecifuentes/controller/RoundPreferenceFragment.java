@@ -38,7 +38,7 @@ public class RoundPreferenceFragment extends PreferenceFragment {
         final EditTextPreference select_name = (EditTextPreference) this.findPreference(SELECT_NAME);
         Preference access_contacts = this.findPreference(ACCESS_CONTACTS);
         Preference logout = this.findPreference(LOGOUT);
-        Preference switch_online = this.findPreference(SWITCH_ONLINE);
+       // Preference switch_online = this.findPreference(SWITCH_ONLINE);
         EditTextPreference change_password = (EditTextPreference) this.findPreference(CHANGE_PASSWORD);
 
 
@@ -115,7 +115,7 @@ public class RoundPreferenceFragment extends PreferenceFragment {
 
 
         // Switch de eleccion de juego online.
-        if (switch_online != null) {
+      /*  if (switch_online != null) {
             switch_online.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
 
                 @Override
@@ -124,7 +124,7 @@ public class RoundPreferenceFragment extends PreferenceFragment {
                     return true;
                 }
             });
-        }
+        }*/
 
     }
 }

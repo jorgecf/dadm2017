@@ -30,8 +30,9 @@ public class LoginActivity extends Activity implements View.OnClickListener {
     private TextInputLayout usernameEditText;
     private TextInputLayout passwordEditText;
     private Switch keepMeLoggedInSwitch;
+    private Switch playOnlineSwitch;
 
-    public boolean isOnline() {
+    public boolean isOnline() { //TODO aunque marque online si no hay conexion abrir bbdd
         ConnectivityManager connMgr = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo networkInfo = connMgr.getActiveNetworkInfo();
 
@@ -60,6 +61,7 @@ public class LoginActivity extends Activity implements View.OnClickListener {
         this.usernameEditText = (TextInputLayout) this.findViewById(R.id.login_username_wrapper);
         this.passwordEditText = (TextInputLayout) this.findViewById(R.id.login_password_wrapper);
         this.keepMeLoggedInSwitch = (Switch) this.findViewById(R.id.keep_me_logged_in_switch);
+        this.playOnlineSwitch = (Switch) this.findViewById(R.id.play_online_switch);
 
 
         // Buscamos los botones y les pasamos esta actividad como listener, ya que son los botones
@@ -72,10 +74,6 @@ public class LoginActivity extends Activity implements View.OnClickListener {
         cancelButton.setOnClickListener(this);
         newuserButton.setOnClickListener(this);
 
-
-        this.repository = RoundRepositoryFactory.createRepository(LoginActivity.this);
-        if (this.repository == null)
-            Toast.makeText(LoginActivity.this, R.string.repository_opening_error, Toast.LENGTH_SHORT).show();
     }
 
     @Override
@@ -84,6 +82,7 @@ public class LoginActivity extends Activity implements View.OnClickListener {
         final String playername = this.usernameEditText.getEditText().getText().toString();
         final String password = this.passwordEditText.getEditText().getText().toString();
         final Boolean remember = this.keepMeLoggedInSwitch.isChecked();
+        final Boolean online = this.playOnlineSwitch.isChecked();
 
         // Control de errores de entrada.
         this.usernameEditText.setError(null);
@@ -100,7 +99,7 @@ public class LoginActivity extends Activity implements View.OnClickListener {
                         RoundPreferenceActivity.setPlayerName(LoginActivity.this, playername);
                         RoundPreferenceActivity.setPlayerPassword(LoginActivity.this, password);
                         RoundPreferenceActivity.setKeepLogged(LoginActivity.this, remember);
-                        RoundPreferenceActivity.setPlayOnline(LoginActivity.this, false);
+                        RoundPreferenceActivity.setPlayOnline(LoginActivity.this, online);
 
                         startActivity(new Intent(LoginActivity.this, RoundListActivity.class));
                         finish();
@@ -126,6 +125,10 @@ public class LoginActivity extends Activity implements View.OnClickListener {
 
                 };
 
+        // Creamos el repositorio
+        this.repository = RoundRepositoryFactory.createRepository(LoginActivity.this, online);
+        if (this.repository == null)
+            Toast.makeText(LoginActivity.this, R.string.repository_opening_error, Toast.LENGTH_SHORT).show();
 
         // Elegimos la accion dependiendo de la vista clickada.
         switch (v.getId()) {

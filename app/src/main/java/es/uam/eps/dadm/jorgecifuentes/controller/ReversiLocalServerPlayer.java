@@ -8,6 +8,7 @@ import com.android.volley.VolleyError;
 
 import org.json.JSONObject;
 
+import es.uam.eps.dadm.jorgecifuentes.activities.RoundPreferenceActivity;
 import es.uam.eps.dadm.jorgecifuentes.server.ServerInterface;
 import es.uam.eps.dadm.jorgecifuentes.views.ReversiView;
 import es.uam.eps.multij.Evento;
@@ -22,11 +23,14 @@ import es.uam.eps.multij.Tablero;
 public class ReversiLocalServerPlayer implements Jugador, ReversiView.OnPlayListener {
 
     private static final String DEBUG = "DEBUG";
+
     private Partida game;
+    private String name;
     private Context context;
     private String roundId;
 
-    public ReversiLocalServerPlayer(Context context, String roundId) {
+    public ReversiLocalServerPlayer(String name, Context context, String roundId) {
+        this.name = name;
         this.context = context;
         this.roundId = roundId;
     }
@@ -45,9 +49,25 @@ public class ReversiLocalServerPlayer implements Jugador, ReversiView.OnPlayList
                     @Override
                     public void onResponse(JSONObject response) {
                         try {
+
+                            boolean isMyTurn = response.getBoolean("turn");
+                            String codedboard = response.getString("codedboard");
+
                             // Si el turno es del jugador y el tablero está actualizado realiza movimiento
+                            if (isMyTurn && isBoardUpToDate(codedboard)) {
+                                Log.d("[debug]", "realizar movimiento");
+                            }
+
                             // Si el turno es del jugador pero el tablero no está actualizado, actualizar tablero
+                            if (isMyTurn && isBoardUpToDate(codedboard)==false) {
+                                Log.d("[debug]", "realizar movimiento, antes actualizar tablero");
+                                game.getTablero().stringToTablero(codedboard);
+                            }
+
                             // Si el turno no es del jugador, mostrar mensaje
+                                Log.d("[debug]", "no es turno de RLSplayer");
+
+
                         } catch (Exception e) {
                             Log.d(DEBUG, "" + e);
                         }
@@ -62,12 +82,13 @@ public class ReversiLocalServerPlayer implements Jugador, ReversiView.OnPlayList
 
         //...
 
+        String playerId= RoundPreferenceActivity.getPlayerUUID(this.context); //TODO probar
         is.isMyTurn(Integer.parseInt(roundId), playerId, responseListener, errorListener);
     }
 
     @Override
     public String getNombre() {
-        return null; //TODO
+        return this.name;
     }
 
     @Override
@@ -77,6 +98,6 @@ public class ReversiLocalServerPlayer implements Jugador, ReversiView.OnPlayList
 
     @Override
     public void onCambioEnPartida(Evento evento) {
-        //TODO
+        // Vacio
     }
 }

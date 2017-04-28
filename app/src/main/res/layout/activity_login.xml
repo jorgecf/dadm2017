@@ -56,6 +56,12 @@
         android:layout_height="wrap_content"
         android:text="@string/remember_user" />
 
+    <Switch
+        android:id="@+id/play_online_switch"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/switch_online_title" />
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
