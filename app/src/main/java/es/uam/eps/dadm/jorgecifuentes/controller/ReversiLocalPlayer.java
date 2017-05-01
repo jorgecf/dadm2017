@@ -70,7 +70,7 @@ public class ReversiLocalPlayer implements ReversiView.OnPlayListener, Jugador {
             }
         } catch (Exception e) {
             /**
-             * @TODO darg sigue aplicando el comentario que hice sobre este respecto en la entrega 2. 
+             * @TODO darg sigue aplicando el comentario que hice sobre este respecto en la entrega 2.
              */
         }
 
