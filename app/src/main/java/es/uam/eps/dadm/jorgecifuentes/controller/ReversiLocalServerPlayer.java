@@ -50,18 +50,18 @@ public class ReversiLocalServerPlayer implements Jugador, ReversiView.OnPlayList
                     public void onResponse(JSONObject response) {
                         try {
 
-                            boolean isMyTurn = response.getBoolean("turn");
+                            int isMyTurn = response.getInt("turn");
                             String codedboard = response.getString("codedboard");
 
                             // Si el turno es del jugador y el tablero está actualizado realiza movimiento
-                            if (isMyTurn && isBoardUpToDate(codedboard)) {
+                            if (isMyTurn == 1 && isBoardUpToDate(codedboard)) {
                                 Log.d("[debug]", "realizar movimiento");
                             }
 
                             // Si el turno es del jugador pero el tablero no está actualizado, actualizar tablero
-                            if (isMyTurn && isBoardUpToDate(codedboard) == false) {
-                                Log.d("[debug]", "realizar movimiento, antes actualizar tablero");
-                                game.getTablero().stringToTablero(codedboard);
+                            if (isMyTurn == 1 && isBoardUpToDate(codedboard) == false) {
+                                Log.d("[debug]", "actualizar tablero");
+                                game.getTablero().stringToTablero(codedboard); //TODO actualizado graficamente?
                             }
 
                             // Si el turno no es del jugador, mostrar mensaje

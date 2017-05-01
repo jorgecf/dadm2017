@@ -28,8 +28,6 @@ public class ServerRepository implements RoundRepository {
 
     private static final String DEBUG = "ServerRepository";
 
-    private boolean logged = false;
-
     private static ServerRepository repository;
     private final Context context;
     private ServerInterface is;
@@ -102,11 +100,14 @@ public class ServerRepository implements RoundRepository {
                 String codedboard = o.getString("codedboard");
                 String uuid = o.getString("roundid"); //TODO a clase tipo schema o constantes
                 String date = o.getString("dateevent");
+                String op=o.getString("playernames");
                 //   int size = codedboard.charAt(0) - '0';
 
                 //   Round round = new Round(RoundPreferenceActivity.getPlayerUUID(context), RoundPreferenceActivity.getPlayerName(context));
 
-                Round round = new Round(RoundPreferenceActivity.getPlayerName(context), uuid, date, RoundPreferenceActivity.getPlayerUUID(context), uuid);
+           //     Round round = new Round(RoundPreferenceActivity.getPlayerName(context), uuid, date, RoundPreferenceActivity.getPlayerUUID(context), uuid);
+
+                Round round = new Round(op, uuid, date, RoundPreferenceActivity.getPlayerUUID(context), uuid);
 
                 rounds.add(round);
             } catch (JSONException e) {
@@ -172,24 +173,39 @@ public class ServerRepository implements RoundRepository {
                     @Override
                     public void onErrorResponse(VolleyError error) {
                         callback.onResponse(false);
-                        Log.d("server repo", "onErrorResponse: volleyerror");
+                        Log.d("debug", "onErrorResponse: VolleyError addround");
                     }
                 });
 
     }
 
-    @Override
-    public void removeRound(Round round, BooleanCallback callback) {
-
-    }
 
     @Override
-    public void updateRound(Round round, BooleanCallback callback) {
-        //TODO mandar ronda updated al server
+    public void updateRound(Round round, final BooleanCallback callback) {
+
+        this.is.sendBoard(Integer.parseInt(round.getRoundUUID()), round.getPlayerUUID(), round.getBoard().tableroToString(), new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String result) {
+                        callback.onResponse(result != "-1"); //todo -1?
+                    }
+                },
+
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError volleyError) {
+                        callback.onResponse(false);
+                        Log.d("debug", "onErrorResponse: VolleyError updateround");
+                    }
+                });
     }
 
     @Override
     public void updateUser(String userUUID, String name, String password, BooleanCallback callback) {
+
+    }
+
+    @Override
+    public void removeRound(Round round, BooleanCallback callback) {
 
     }
 }

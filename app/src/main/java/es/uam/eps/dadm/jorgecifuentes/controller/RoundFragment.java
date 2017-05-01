@@ -12,6 +12,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+
 import java.util.ArrayList;
 
 import es.uam.eps.dadm.jorgecifuentes.R;
@@ -20,6 +23,7 @@ import es.uam.eps.dadm.jorgecifuentes.model.Round;
 import es.uam.eps.dadm.jorgecifuentes.model.RoundRepository;
 import es.uam.eps.dadm.jorgecifuentes.model.RoundRepositoryFactory;
 import es.uam.eps.dadm.jorgecifuentes.model.TableroReversi;
+import es.uam.eps.dadm.jorgecifuentes.server.ServerInterface;
 import es.uam.eps.dadm.jorgecifuentes.views.ReversiView;
 import es.uam.eps.multij.Evento;
 import es.uam.eps.multij.ExcepcionJuego;
@@ -209,9 +213,13 @@ public class RoundFragment extends Fragment implements PartidaListener {
 
     void startRound() {
 
-        ArrayList<Jugador> players = new ArrayList<Jugador>();
+        ArrayList<Jugador> players = new ArrayList<>();
+
         JugadorAleatorio randomPlayer = new JugadorAleatorio(this.getContext().getString(R.string.random_player_default_name));
         ReversiLocalPlayer localPlayer = new ReversiLocalPlayer(this.getContext(), firstPlayerName);
+
+        ReversiLocalServerPlayer localServerPlayer = new ReversiLocalServerPlayer(firstPlayerName, this.getContext(), this.round.getRoundUUID());
+        ReversiRemotePlayer remote = new ReversiRemotePlayer(this.getContext());
 
 
         if (RoundPreferenceActivity.getPlayOnline(this.getContext()) == false) {
@@ -220,9 +228,29 @@ public class RoundFragment extends Fragment implements PartidaListener {
             players.add(randomPlayer);
         } else {
             // Partida online
-            players.add(localPlayer); //TODO
-            players.add(randomPlayer);
+            if (RoundPreferenceActivity.getPlayerUUID(this.getContext()) == this.round.getPlayerUUID()) { //TODO esta bien?? ---> comprobar con playername de round mejor
+                players.add(localServerPlayer);
+                players.add(remote);
+            } else {
+                players.add(remote);
+                players.add(localServerPlayer);
+            }
+
+            // Agregamos al jugador a la partida creada por otro
+            ServerInterface.getServer(this.getContext()).addPlayerToRound(Integer.parseInt(this.round.getRoundUUID()), this.round.getPlayerUUID(), new Response.Listener<String>() {
+                @Override
+                public void onResponse(String s) {
+
+                }
+            }, new Response.ErrorListener() {
+                @Override
+                public void onErrorResponse(VolleyError volleyError) {
+                    //TODO
+                }
+            });
         }
+
+
 
 
         game = new Partida(this.round.getBoard(), players);
@@ -233,7 +261,9 @@ public class RoundFragment extends Fragment implements PartidaListener {
         // Vista del Tablero.
         boardView = (ReversiView) this.getView().findViewById(R.id.board_reversiview);
         boardView.setBoard(round.getBoard());
-        boardView.setOnPlayListener(localPlayer);
+
+        if (players.contains(localPlayer)) boardView.setOnPlayListener(localPlayer);
+        else boardView.setOnPlayListener(localServerPlayer);
 
 
         if (game.getTablero().getEstado() == Tablero.EN_CURSO)
