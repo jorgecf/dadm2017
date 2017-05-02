@@ -218,8 +218,8 @@ public class RoundFragment extends Fragment implements PartidaListener {
         JugadorAleatorio randomPlayer = new JugadorAleatorio(this.getContext().getString(R.string.random_player_default_name));
         ReversiLocalPlayer localPlayer = new ReversiLocalPlayer(this.getContext(), firstPlayerName);
 
-        ReversiLocalServerPlayer localServerPlayer = new ReversiLocalServerPlayer(firstPlayerName, this.getContext(), this.round.getRoundUUID());
-        ReversiRemotePlayer remote = new ReversiRemotePlayer(this.getContext());
+        ReversiLocalServerPlayer localServerPlayer = new ReversiLocalServerPlayer(this.round.getBoard(), firstPlayerName, this.getContext(), this.round.getRoundUUID(), (ReversiView) this.getView().findViewById(R.id.board_reversiview));
+        ReversiRemotePlayer remote = new ReversiRemotePlayer(this.round, this.getContext());
 
 
         if (RoundPreferenceActivity.getPlayOnline(this.getContext()) == false) {
@@ -228,29 +228,27 @@ public class RoundFragment extends Fragment implements PartidaListener {
             players.add(randomPlayer);
         } else {
             // Partida online
-            if (RoundPreferenceActivity.getPlayerUUID(this.getContext()) == this.round.getPlayerUUID()) { //TODO esta bien?? ---> comprobar con playername de round mejor
+            if (RoundPreferenceActivity.getPlayerName(this.getContext()) == this.round.getPlayername()) { //TODO esta bien?? ---> comprobar con playername de round mejor
                 players.add(localServerPlayer);
                 players.add(remote);
             } else {
                 players.add(remote);
                 players.add(localServerPlayer);
+
+                // Agregamos al jugador a la partida creada por otro
+                ServerInterface.getServer(this.getContext()).addPlayerToRound(Integer.parseInt(this.round.getRoundUUID()), this.round.getPlayerUUID(), new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String s) {
+                        Log.d("debug", "onResponse: add new player to round workeo: " + s);
+                    }
+                }, new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError volleyError) {
+                        //TODO
+                    }
+                });
             }
-
-            // Agregamos al jugador a la partida creada por otro
-            ServerInterface.getServer(this.getContext()).addPlayerToRound(Integer.parseInt(this.round.getRoundUUID()), this.round.getPlayerUUID(), new Response.Listener<String>() {
-                @Override
-                public void onResponse(String s) {
-
-                }
-            }, new Response.ErrorListener() {
-                @Override
-                public void onErrorResponse(VolleyError volleyError) {
-                    //TODO
-                }
-            });
         }
-
-
 
 
         game = new Partida(this.round.getBoard(), players);

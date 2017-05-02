@@ -100,12 +100,12 @@ public class ServerRepository implements RoundRepository {
                 String codedboard = o.getString("codedboard");
                 String uuid = o.getString("roundid"); //TODO a clase tipo schema o constantes
                 String date = o.getString("dateevent");
-                String op=o.getString("playernames");
+                String op = o.getString("playernames");
                 //   int size = codedboard.charAt(0) - '0';
 
                 //   Round round = new Round(RoundPreferenceActivity.getPlayerUUID(context), RoundPreferenceActivity.getPlayerName(context));
 
-           //     Round round = new Round(RoundPreferenceActivity.getPlayerName(context), uuid, date, RoundPreferenceActivity.getPlayerUUID(context), uuid);
+                //     Round round = new Round(RoundPreferenceActivity.getPlayerName(context), uuid, date, RoundPreferenceActivity.getPlayerUUID(context), uuid);
 
                 Round round = new Round(op, uuid, date, RoundPreferenceActivity.getPlayerUUID(context), uuid);
 
@@ -122,17 +122,35 @@ public class ServerRepository implements RoundRepository {
     }
 
     @Override
-    public void getRounds(@Nullable String playeruuid, @Nullable String orderByField, @Nullable String group, final RoundsCallback<Round> callback) {
+    public void getRounds(@Nullable final String playeruuid, @Nullable String orderByField, @Nullable String group, final RoundsCallback<Round> callback) {
 
-        List<Round> rounds = new ArrayList<>();
+        final List<Round> roundsT = new ArrayList<>();
 
         // Callback de respuesta
         Response.Listener<JSONArray> responseCallback = new Response.Listener<JSONArray>() {
             @Override
             public void onResponse(JSONArray response) {
                 List<Round> rounds = roundsFromJSONArray(response);
-                callback.onResponse(rounds);
+                //callback.onResponse(rounds);
+                 roundsT.addAll(rounds);
                 Log.d(DEBUG, "Rounds downloaded from server");
+
+
+                is.getActiveRounds(playeruuid, new Response.Listener<JSONArray>() {
+                    @Override
+                    public void onResponse(JSONArray response) {
+                        Log.d(DEBUG, "Rounds TWO downloaded from server");
+                        List<Round> rounds = roundsFromJSONArray(response);
+                        roundsT.addAll(rounds); //TODO orden prioritario activas
+                        callback.onResponse(roundsT);
+                    }
+                }, new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError volleyError) {
+                        Log.d(DEBUG, "Rounds TWO ERROR!! NOT downloaded from server");
+                    }
+                });
+
             }
         };
 
@@ -146,6 +164,9 @@ public class ServerRepository implements RoundRepository {
         };
 
         this.is.getOpenRounds(playeruuid, responseCallback, errorCallback);
+
+
+        //     callback.onResponse(roundsT);
 
     }
 
@@ -170,6 +191,7 @@ public class ServerRepository implements RoundRepository {
 
                 // Callback de error
                 new Response.ErrorListener() {
+
                     @Override
                     public void onErrorResponse(VolleyError error) {
                         callback.onResponse(false);
@@ -183,7 +205,7 @@ public class ServerRepository implements RoundRepository {
     @Override
     public void updateRound(Round round, final BooleanCallback callback) {
 
-        this.is.sendBoard(Integer.parseInt(round.getRoundUUID()), round.getPlayerUUID(), round.getBoard().tableroToString(), new Response.Listener<String>() {
+     /*   this.is.sendBoard(Integer.parseInt(round.getRoundUUID()), round.getPlayerUUID(), round.getBoard().tableroToString(), new Response.Listener<String>() {
                     @Override
                     public void onResponse(String result) {
                         callback.onResponse(result != "-1"); //todo -1?
@@ -196,7 +218,7 @@ public class ServerRepository implements RoundRepository {
                         callback.onResponse(false);
                         Log.d("debug", "onErrorResponse: VolleyError updateround");
                     }
-                });
+                });*/
     }
 
     @Override

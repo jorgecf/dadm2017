@@ -9,10 +9,13 @@ import com.android.volley.VolleyError;
 import org.json.JSONObject;
 
 import es.uam.eps.dadm.jorgecifuentes.activities.RoundPreferenceActivity;
+import es.uam.eps.dadm.jorgecifuentes.model.TableroReversi;
 import es.uam.eps.dadm.jorgecifuentes.server.ServerInterface;
 import es.uam.eps.dadm.jorgecifuentes.views.ReversiView;
+import es.uam.eps.multij.AccionMover;
 import es.uam.eps.multij.Evento;
 import es.uam.eps.multij.Jugador;
+import es.uam.eps.multij.Movimiento;
 import es.uam.eps.multij.Partida;
 import es.uam.eps.multij.Tablero;
 
@@ -25,22 +28,36 @@ public class ReversiLocalServerPlayer implements Jugador, ReversiView.OnPlayList
     private static final String DEBUG = "DEBUG";
 
     private Partida game;
+    private TableroReversi t;
     private String name;
     private Context context;
     private String roundId;
 
-    public ReversiLocalServerPlayer(String name, Context context, String roundId) {
+    private ReversiView board;
+
+    public ReversiLocalServerPlayer(TableroReversi t, String name, Context context, String roundId, ReversiView board) {
+        this.t = t;
         this.name = name;
         this.context = context;
         this.roundId = roundId;
+        this.board = board;
     }
 
+    public void setPartida(Partida game) {
+        this.game = game;
+    }
+
+
     private boolean isBoardUpToDate(String codedboard) {
-        return game.getTablero().tableroToString().equals(codedboard);
+        return t.tableroToString().equals(codedboard);
     }
 
     @Override
     public void onPlay(final int row, final int column) {
+
+        Movimiento m = t.getMovimientoValido(row, column);
+        final AccionMover acc = new AccionMover(this, m);
+
 
         ServerInterface is = ServerInterface.getServer(context);
 
@@ -56,17 +73,22 @@ public class ReversiLocalServerPlayer implements Jugador, ReversiView.OnPlayList
                             // Si el turno es del jugador y el tablero está actualizado realiza movimiento
                             if (isMyTurn == 1 && isBoardUpToDate(codedboard)) {
                                 Log.d("[debug]", "realizar movimiento");
+                                t.stringToTablero(codedboard);
+
+                                game.realizaAccion(acc);
                             }
 
                             // Si el turno es del jugador pero el tablero no está actualizado, actualizar tablero
                             if (isMyTurn == 1 && isBoardUpToDate(codedboard) == false) {
                                 Log.d("[debug]", "actualizar tablero");
-                                game.getTablero().stringToTablero(codedboard); //TODO actualizado graficamente?
+                                t.stringToTablero(codedboard); //TODO actualizado graficamente?
+                                board.invalidate();
                             }
 
-                            // Si el turno no es del jugador, mostrar mensaje
-                            Log.d("[debug]", "no es turno de RLSplayer");
-
+                            if (isMyTurn == 0) {
+                                // Si el turno no es del jugador, mostrar mensaje
+                                Log.d("[debug]", "no es turno de RLSplayer");
+                            }
 
                         } catch (Exception e) {
                             Log.d(DEBUG, "" + e);
