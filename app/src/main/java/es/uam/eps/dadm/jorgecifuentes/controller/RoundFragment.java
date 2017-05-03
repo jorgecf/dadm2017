@@ -45,6 +45,7 @@ public class RoundFragment extends Fragment implements PartidaListener {
     public static final String ARG_ROUND_DATE = "es.uam.eps.dadm.round_date";
     public static final String ARG_ROUND_BOARD = "es.uam.eps.dadm.round_board";
     public static final String ARG_ROUND_UUID = "es.uam.eps.dadm.rounduuid";
+    public static final String ARG_RIVAL_UUID = "es.uam.eps.dadm.rivaluuid";
 
     public static final String BOARDSTRING = "es.uam.eps.dadm.boardstring";
 
@@ -61,6 +62,7 @@ public class RoundFragment extends Fragment implements PartidaListener {
     private String roundDate;
     private String roundBoard;
     private String rounduuid;
+    private String rivaluuid;
 
     /**
      * Interfaz que define que hacer al actualizar el contenido de una ronda.
@@ -83,7 +85,7 @@ public class RoundFragment extends Fragment implements PartidaListener {
      * @param roundBoard
      * @return la nueva instancia
      */
-    public static RoundFragment newInstance(String rounduuid, String firstPlayerName, String roundTitle, String roundDate, String roundBoard) {
+    public static RoundFragment newInstance(String rounduuid, String firstPlayerName, String roundTitle, String roundDate, String roundBoard, String rivaluuid) {
 
         // Almacenamos los datos de la ronda en el Bundle.
         Bundle args = new Bundle();
@@ -92,6 +94,7 @@ public class RoundFragment extends Fragment implements PartidaListener {
         args.putString(ARG_ROUND_TITLE, roundTitle);
         args.putString(ARG_ROUND_DATE, roundDate);
         args.putString(ARG_ROUND_BOARD, roundBoard);
+        args.putString(ARG_RIVAL_UUID, rivaluuid);
 
         args.putString(ARG_ROUND_UUID, rounduuid);
 
@@ -140,6 +143,10 @@ public class RoundFragment extends Fragment implements PartidaListener {
             rounduuid = getArguments().getString(ARG_ROUND_UUID);
         }
 
+        if (getArguments().containsKey(ARG_RIVAL_UUID)) {
+            rivaluuid = getArguments().getString(ARG_RIVAL_UUID);
+        }
+
         // Tablero guardado en la rotacion.
         String boardString = roundBoard;
         if (savedInstanceState != null) {
@@ -148,7 +155,7 @@ public class RoundFragment extends Fragment implements PartidaListener {
 
 
         // Cargamos la ronda contenida en este fragmento.
-        this.round = new Round(firstPlayerName, roundTitle, roundDate, RoundPreferenceActivity.getPlayerUUID(getActivity()), rounduuid);
+        this.round = new Round(firstPlayerName, roundTitle, roundDate, RoundPreferenceActivity.getPlayerUUID(getActivity()), rivaluuid, rounduuid);
 
         // Cargamos el tablero.
         this.round.setBoard(new TableroReversi());
@@ -228,25 +235,29 @@ public class RoundFragment extends Fragment implements PartidaListener {
             players.add(randomPlayer);
         } else {
             // Partida online
-            if (RoundPreferenceActivity.getPlayerName(this.getContext()) == this.round.getPlayername()) { //TODO esta bien?? ---> comprobar con playername de round mejor
+                if (RoundPreferenceActivity.getPlayerName(this.getContext()) == this.round.getPlayername()) {
+       //     if (RoundPreferenceActivity.getPlayerUUID(this.getContext()) == this.round.getPlayerUUID()) {
                 players.add(localServerPlayer);
                 players.add(remote);
             } else {
                 players.add(remote);
                 players.add(localServerPlayer);
 
-                // Agregamos al jugador a la partida creada por otro
-                ServerInterface.getServer(this.getContext()).addPlayerToRound(Integer.parseInt(this.round.getRoundUUID()), this.round.getPlayerUUID(), new Response.Listener<String>() {
-                    @Override
-                    public void onResponse(String s) {
-                        Log.d("debug", "onResponse: add new player to round workeo: " + s);
-                    }
-                }, new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError volleyError) {
-                        //TODO
-                    }
-                });
+                // Agregamos al jugador a la partida creada por otro, si es la primera vez que entra
+                if (this.round.getRivalUUID() == "") {
+                    ServerInterface.getServer(this.getContext()).addPlayerToRound(Integer.parseInt(this.round.getRoundUUID()), this.round.getPlayerUUID(), new Response.Listener<String>() {
+                        @Override
+                        public void onResponse(String s) {
+                            Log.d("debug", "onResponse: add new player to round: " + s + ", " + round.getTitle());
+                            round.setRivalUUID(RoundPreferenceActivity.getPlayerUUID(getContext()));
+                        }
+                    }, new Response.ErrorListener() {
+                        @Override
+                        public void onErrorResponse(VolleyError volleyError) {
+                            //TODO
+                        }
+                    });
+                }
             }
         }
 

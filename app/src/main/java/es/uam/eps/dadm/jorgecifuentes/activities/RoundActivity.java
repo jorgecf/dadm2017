@@ -23,6 +23,7 @@ public class RoundActivity extends AppCompatActivity implements RoundFragment.Ca
     public static final String EXTRA_ROUND_DATE = "es.uam.eps.dadm.round_date";
     public static final String EXTRA_ROUND_BOARD = "es.uam.eps.dadm.round_board";
     public static final String EXTRA_ROUND_UUID = "es.uam.eps.dadm.round_uuid";
+    public static final String EXTRA_RIVAL_UUID = "es.uam.eps.dadm.rival_uuid";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,8 +41,9 @@ public class RoundActivity extends AppCompatActivity implements RoundFragment.Ca
             String roundDate = getIntent().getStringExtra(EXTRA_ROUND_DATE);
             String roundBoard = getIntent().getStringExtra(EXTRA_ROUND_BOARD);
             String rounduuid = getIntent().getStringExtra(EXTRA_ROUND_UUID);
+            String rivaluuid = getIntent().getStringExtra(EXTRA_RIVAL_UUID);
 
-            RoundFragment roundFragment = RoundFragment.newInstance(rounduuid, firstPlayerName, roundTitle, roundDate, roundBoard); // nuevo fragmento
+            RoundFragment roundFragment = RoundFragment.newInstance(rounduuid, firstPlayerName, roundTitle, roundDate, roundBoard, rivaluuid); // nuevo fragmento
             getSupportFragmentManager().beginTransaction().add(R.id.fragment_container, roundFragment).commit();
         }
     }
@@ -53,7 +55,7 @@ public class RoundActivity extends AppCompatActivity implements RoundFragment.Ca
      * @param rounduuid      Id de la ronda que se va a asociar a la actividad.
      * @return intencion creada
      */
-    public static Intent newIntent(Context packageContext, String rounduuid, String firstPlayerName, String roundTitle, String roundDate, String roundBoard) {
+    public static Intent newIntent(Context packageContext, String rounduuid, String firstPlayerName, String roundTitle, String roundDate, String roundBoard, String rivaluuid) {
 
         Intent intent = new Intent(packageContext, RoundActivity.class);
 
@@ -62,6 +64,7 @@ public class RoundActivity extends AppCompatActivity implements RoundFragment.Ca
         intent.putExtra(EXTRA_ROUND_DATE, roundDate);
         intent.putExtra(EXTRA_ROUND_BOARD, roundBoard);
         intent.putExtra(EXTRA_ROUND_UUID, rounduuid);
+        intent.putExtra(EXTRA_RIVAL_UUID, rivaluuid);
 
         return intent;
     }

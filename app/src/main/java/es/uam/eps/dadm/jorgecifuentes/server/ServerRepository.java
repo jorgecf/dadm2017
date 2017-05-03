@@ -100,7 +100,11 @@ public class ServerRepository implements RoundRepository {
                 String codedboard = o.getString("codedboard");
                 String uuid = o.getString("roundid"); //TODO a clase tipo schema o constantes
                 String date = o.getString("dateevent");
-                String op = o.getString("playernames");
+                String ops = o.getString("playernames");
+
+                String[] players = ops.split(",");
+                String op = players[0];
+
                 //   int size = codedboard.charAt(0) - '0';
 
                 //   Round round = new Round(RoundPreferenceActivity.getPlayerUUID(context), RoundPreferenceActivity.getPlayerName(context));
@@ -108,6 +112,10 @@ public class ServerRepository implements RoundRepository {
                 //     Round round = new Round(RoundPreferenceActivity.getPlayerName(context), uuid, date, RoundPreferenceActivity.getPlayerUUID(context), uuid);
 
                 Round round = new Round(op, uuid, date, RoundPreferenceActivity.getPlayerUUID(context), uuid);
+
+                if (players.length >= 2) {
+                    round.setRivalUUID(players[1]);
+                }
 
                 rounds.add(round);
             } catch (JSONException e) {
@@ -132,7 +140,7 @@ public class ServerRepository implements RoundRepository {
             public void onResponse(JSONArray response) {
                 List<Round> rounds = roundsFromJSONArray(response);
                 //callback.onResponse(rounds);
-                 roundsT.addAll(rounds);
+                roundsT.addAll(rounds);
                 Log.d(DEBUG, "Rounds downloaded from server");
 
 
@@ -164,10 +172,6 @@ public class ServerRepository implements RoundRepository {
         };
 
         this.is.getOpenRounds(playeruuid, responseCallback, errorCallback);
-
-
-        //     callback.onResponse(roundsT);
-
     }
 
     @Override

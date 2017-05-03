@@ -37,10 +37,10 @@ public class RoundListActivity extends AppCompatActivity implements RoundListFra
     public void onRoundSelected(Round round) {
 
         if (this.findViewById(R.id.detail_fragment_container) == null) {
-            Intent intent = RoundActivity.newIntent(this, round.getRoundUUID(), round.getPlayername(), round.getTitle(), round.getDate(), round.getBoard().tableroToString());
+            Intent intent = RoundActivity.newIntent(this, round.getRoundUUID(), round.getPlayername(), round.getTitle(), round.getDate(), round.getBoard().tableroToString(),round.getRivalUUID());
             startActivity(intent);
         } else {
-            RoundFragment roundFragment = RoundFragment.newInstance(round.getRoundUUID(), round.getPlayername(), round.getTitle(), round.getDate(), round.getBoard().tableroToString());
+            RoundFragment roundFragment = RoundFragment.newInstance(round.getRoundUUID(), round.getPlayername(), round.getTitle(), round.getDate(), round.getBoard().tableroToString(), round.getRivalUUID());
             getSupportFragmentManager().beginTransaction().replace(R.id.detail_fragment_container, roundFragment).commit();
         }
     }

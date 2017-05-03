@@ -14,6 +14,8 @@ public class Round {
     private String date;
     private TableroReversi board;
     private String playerUUID;
+
+    private String rivalUUID;
     private String roundUUID;
     private String playername;
 
@@ -21,6 +23,8 @@ public class Round {
     public Round(String playerUUID, String playername) {
         this.playerUUID = playerUUID;
         this.roundUUID = UUID.randomUUID().toString();
+
+        this.rivalUUID = "";
 
         this.playername = playername;
         this.title = this.roundUUID.toString().substring(19, 23).toUpperCase();
@@ -35,11 +39,28 @@ public class Round {
         this.setTitle(roundTitle);
         this.setDate(roundDate);
 
+        this.rivalUUID = "";
+
         this.setPlayerUUID(playerUUID);
         this.setRoundUUID(rounduuid);
 
         this.board = new TableroReversi();
     }
+
+    public Round(String firstPlayerName, String roundTitle, String roundDate, String playerUUID, String rivalUUID, String rounduuid) {
+
+        this.setFirstPlayerName(firstPlayerName);
+        this.setTitle(roundTitle);
+        this.setDate(roundDate);
+
+        this.rivalUUID = rivalUUID;
+
+        this.setPlayerUUID(playerUUID);
+        this.setRoundUUID(rounduuid);
+
+        this.board = new TableroReversi();
+    }
+
 
     public String getTitle() {
         return title;
@@ -79,6 +100,14 @@ public class Round {
 
     public String getPlayerUUID() {
         return this.playerUUID;
+    }
+
+    public void setRivalUUID(String rivalUUID) {
+        this.rivalUUID = rivalUUID;
+    }
+
+    public String getRivalUUID() {
+        return rivalUUID;
     }
 
     public void setPlayerUUID(String playerUUID) {
