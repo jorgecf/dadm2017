@@ -12,6 +12,7 @@ import android.view.View;
 
 import es.uam.eps.dadm.jorgecifuentes.R;
 import es.uam.eps.dadm.jorgecifuentes.model.TableroReversi;
+import es.uam.eps.multij.ExcepcionJuego;
 import es.uam.eps.multij.Tablero;
 
 /**
@@ -178,7 +179,13 @@ public class ReversiView extends View {
     }
 
     public void setBoard(Tablero board) {
-        this.board = (TableroReversi) board;
+     //   this.board = (TableroReversi) board;
+        this.board=new TableroReversi();
+        try {
+            this.board.stringToTablero(board.tableroToString());
+        } catch (ExcepcionJuego excepcionJuego) {
+            excepcionJuego.printStackTrace();
+        }
         this.size = this.board.getSize();
     }
 

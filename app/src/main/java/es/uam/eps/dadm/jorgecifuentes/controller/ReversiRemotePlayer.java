@@ -1,16 +1,20 @@
 package es.uam.eps.dadm.jorgecifuentes.controller;
 
+import android.app.Activity;
 import android.content.Context;
 import android.util.Log;
 
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 
+import es.uam.eps.dadm.jorgecifuentes.R;
 import es.uam.eps.dadm.jorgecifuentes.model.Round;
 import es.uam.eps.dadm.jorgecifuentes.server.ServerInterface;
 import es.uam.eps.dadm.jorgecifuentes.server.ServerRepository;
+import es.uam.eps.dadm.jorgecifuentes.views.ReversiView;
 import es.uam.eps.multij.Evento;
 import es.uam.eps.multij.Jugador;
+import es.uam.eps.multij.Partida;
 import es.uam.eps.multij.Tablero;
 
 /**
@@ -19,12 +23,16 @@ import es.uam.eps.multij.Tablero;
 
 public class ReversiRemotePlayer implements Jugador {
 
-    private Round round;
+   // private Round round;
     private Context context;
+    private String roundUUID;
+    private String playerUUID;
 
-    public ReversiRemotePlayer(Round round, Context context) {
-        this.round = round;
+    public ReversiRemotePlayer(/*Round round, */Context context, String p, String r) {
+      //  this.round = round;
         this.context = context;
+        this.roundUUID=r;
+        this.playerUUID=p;
     }
 
     @Override
@@ -39,12 +47,23 @@ public class ReversiRemotePlayer implements Jugador {
 
     @Override
     public void onCambioEnPartida(Evento evento) {
-        switch (evento.getTipo()) {
-            case Evento.EVENTO_TURNO:
-                Log.d("debug", "onCambioEnPartida: evento turno ha llegado");
 
-                //     ServerRepository.getInstance(this.context).updateRound();
-                ServerInterface.getServer(this.context).sendBoard(Integer.parseInt(round.getRoundUUID()), round.getPlayerUUID(), round.getBoard().tableroToString(), new Response.Listener<String>() {
+        Partida p = evento.getPartida();
+
+        switch (evento.getTipo()) {
+            case Evento.EVENTO_CAMBIO:
+                if (evento.getDescripcion().contains("ha jugado") == false) {
+                    Log.d("debug", "onCambioEnPartida +  CAMBIO: no ha sido turno del local server player");
+                    return;
+                }
+
+                Log.d("debug", "onCambioEnPartida: cambiamos");
+
+           /*     final ReversiView b = (ReversiView) ((Activity) context).findViewById(R.id.board_reversiview);
+                b.setBoard(evento.getPartida().getTablero());
+                b.postInvalidate();*/
+
+                ServerInterface.getServer(this.context).sendBoard(Integer.parseInt(roundUUID), playerUUID, p.getTablero().tableroToString(), new Response.Listener<String>() {
                             @Override
                             public void onResponse(String result) {
                                 Log.d("debug", "onResponse: remote " + result);
@@ -57,6 +76,30 @@ public class ReversiRemotePlayer implements Jugador {
                                 Log.d("debug", "onResponse: remote ERROR!  " + volleyError.getLocalizedMessage());
                             }
                         });
+                break;
+            case Evento.EVENTO_TURNO:
+
+                if (evento.getDescripcion().contains("ha jugado") == false) {
+                    Log.d("debug", "onCambioEnPartida: no ha sido turno del local server player");
+                    return;
+                }
+
+                Log.d("debug", "onCambioEnPartida: evento turno ha llegado: " + evento.getDescripcion());
+
+                //     ServerRepository.getInstance(this.context).updateRound();
+             /*  ServerInterface.getServer(this.context).sendBoard(Integer.parseInt(round.getRoundUUID()), round.getPlayerUUID(), round.getBoard().tableroToString(), new Response.Listener<String>() {
+                            @Override
+                            public void onResponse(String result) {
+                                Log.d("debug", "onResponse: remote " + result);
+                            }
+                        },
+
+                        new Response.ErrorListener() {
+                            @Override
+                            public void onErrorResponse(VolleyError volleyError) {
+                                Log.d("debug", "onResponse: remote ERROR!  " + volleyError.getLocalizedMessage());
+                            }
+                        });*/
 
                 break;
         }

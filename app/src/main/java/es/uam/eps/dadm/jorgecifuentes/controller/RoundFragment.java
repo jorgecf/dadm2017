@@ -225,8 +225,9 @@ public class RoundFragment extends Fragment implements PartidaListener {
         JugadorAleatorio randomPlayer = new JugadorAleatorio(this.getContext().getString(R.string.random_player_default_name));
         ReversiLocalPlayer localPlayer = new ReversiLocalPlayer(this.getContext(), firstPlayerName);
 
-        ReversiLocalServerPlayer localServerPlayer = new ReversiLocalServerPlayer(this.round.getBoard(), firstPlayerName, this.getContext(), this.round.getRoundUUID(), (ReversiView) this.getView().findViewById(R.id.board_reversiview));
-        ReversiRemotePlayer remote = new ReversiRemotePlayer(this.round, this.getContext());
+        ReversiLocalServerPlayer localServerPlayer = new ReversiLocalServerPlayer(firstPlayerName, this.getContext(), this.round.getRoundUUID());
+        //(ReversiView) this.getView().findViewById(R.id.board_reversiview)
+        ReversiRemotePlayer remote = new ReversiRemotePlayer(this.getContext(), this.round.getPlayerUUID(),this.round.getRoundUUID());
 
 
         if (RoundPreferenceActivity.getPlayOnline(this.getContext()) == false) {
@@ -235,8 +236,8 @@ public class RoundFragment extends Fragment implements PartidaListener {
             players.add(randomPlayer);
         } else {
             // Partida online
-                if (RoundPreferenceActivity.getPlayerName(this.getContext()) == this.round.getPlayername()) {
-       //     if (RoundPreferenceActivity.getPlayerUUID(this.getContext()) == this.round.getPlayerUUID()) {
+            if (RoundPreferenceActivity.getPlayerName(this.getContext()) == this.round.getPlayername()) {
+                //     if (RoundPreferenceActivity.getPlayerUUID(this.getContext()) == this.round.getPlayerUUID()) {
                 players.add(localServerPlayer);
                 players.add(remote);
             } else {
@@ -265,14 +266,18 @@ public class RoundFragment extends Fragment implements PartidaListener {
         game = new Partida(this.round.getBoard(), players);
 
         game.addObservador(this);
-        localPlayer.setPartida(game);
 
         // Vista del Tablero.
         boardView = (ReversiView) this.getView().findViewById(R.id.board_reversiview);
         boardView.setBoard(round.getBoard());
 
-        if (players.contains(localPlayer)) boardView.setOnPlayListener(localPlayer);
-        else boardView.setOnPlayListener(localServerPlayer);
+        if (players.contains(localPlayer)) {
+            boardView.setOnPlayListener(localPlayer);
+            localPlayer.setPartida(game);
+        } else {
+            boardView.setOnPlayListener(localServerPlayer);
+            localServerPlayer.setPartida(game);
+        }
 
 
         if (game.getTablero().getEstado() == Tablero.EN_CURSO)

@@ -1,5 +1,6 @@
 package es.uam.eps.dadm.jorgecifuentes.controller;
 
+import android.app.Activity;
 import android.content.Context;
 import android.util.Log;
 
@@ -8,7 +9,9 @@ import com.android.volley.VolleyError;
 
 import org.json.JSONObject;
 
+import es.uam.eps.dadm.jorgecifuentes.R;
 import es.uam.eps.dadm.jorgecifuentes.activities.RoundPreferenceActivity;
+import es.uam.eps.dadm.jorgecifuentes.model.Round;
 import es.uam.eps.dadm.jorgecifuentes.model.TableroReversi;
 import es.uam.eps.dadm.jorgecifuentes.server.ServerInterface;
 import es.uam.eps.dadm.jorgecifuentes.views.ReversiView;
@@ -27,20 +30,22 @@ public class ReversiLocalServerPlayer implements Jugador, ReversiView.OnPlayList
 
     private static final String DEBUG = "DEBUG";
 
+    //    private Round round;
     private Partida game;
-    private TableroReversi t;
+    // private TableroReversi t;
     private String name;
     private Context context;
     private String roundId;
 
-    private ReversiView board;
+    //  private ReversiView board;
 
-    public ReversiLocalServerPlayer(TableroReversi t, String name, Context context, String roundId, ReversiView board) {
-        this.t = t;
+    public ReversiLocalServerPlayer(/*TableroReversi t, */String name, Context context, String roundId) {
+        //  this.t = t;
+        // this.round=r;
         this.name = name;
         this.context = context;
         this.roundId = roundId;
-        this.board = board;
+        //    this.board = board;
     }
 
     public void setPartida(Partida game) {
@@ -49,14 +54,23 @@ public class ReversiLocalServerPlayer implements Jugador, ReversiView.OnPlayList
 
 
     private boolean isBoardUpToDate(String codedboard) {
+        TableroReversi t = (TableroReversi) this.game.getTablero();
         return t.tableroToString().equals(codedboard);
     }
 
     @Override
     public void onPlay(final int row, final int column) {
 
+        final TableroReversi t = (TableroReversi) this.game.getTablero();
         Movimiento m = t.getMovimientoValido(row, column);
         final AccionMover acc = new AccionMover(this, m);
+
+
+        //**** //(ReversiView) this.getView().findViewById(R.id.board_reversiview)
+  //    final  ReversiView b = (ReversiView) ((Activity) context).findViewById(R.id.board_reversiview);
+        //****
+
+
 
 
         ServerInterface is = ServerInterface.getServer(context);
@@ -75,20 +89,32 @@ public class ReversiLocalServerPlayer implements Jugador, ReversiView.OnPlayList
                                 Log.d("[debug]", "realizar movimiento");
                                 t.stringToTablero(codedboard);
 
+                        //        b.setBoard(game.getTablero());
+                         //       b.invalidate();
+
+                             /*   final ReversiView b = (ReversiView) ((Activity) context).findViewById(R.id.board_reversiview);
+                                b.setBoard(game.getTablero());
+                                b.postInvalidate();*/
+
                                 game.realizaAccion(acc);
+                                //      board.invalidate();
+
                             }
 
                             // Si el turno es del jugador pero el tablero no está actualizado, actualizar tablero
                             if (isMyTurn == 1 && isBoardUpToDate(codedboard) == false) {
                                 Log.d("[debug]", "actualizar tablero");
-                                t.stringToTablero(codedboard); //TODO actualizado graficamente?
-                                board.invalidate();
+                                t.stringToTablero(codedboard);
+                                //     board.invalidate();
                             }
 
                             if (isMyTurn == 0) {
                                 // Si el turno no es del jugador, mostrar mensaje
                                 Log.d("[debug]", "no es turno de RLSplayer");
                             }
+
+                            //        board.setBoard(t);
+                            //       board.invalidate();
 
                         } catch (Exception e) {
                             Log.d(DEBUG, "" + e);
@@ -104,7 +130,7 @@ public class ReversiLocalServerPlayer implements Jugador, ReversiView.OnPlayList
 
         //...
 
-        String playerId = RoundPreferenceActivity.getPlayerUUID(this.context); //TODO probar
+        String playerId = RoundPreferenceActivity.getPlayerUUID(this.context);
         is.isMyTurn(Integer.parseInt(roundId), playerId, responseListener, errorListener);
     }
 
