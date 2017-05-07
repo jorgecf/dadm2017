@@ -2,6 +2,7 @@ package es.uam.eps.dadm.jorgecifuentes.controller;
 
 import android.app.Activity;
 import android.content.Context;
+import android.support.design.widget.Snackbar;
 import android.util.Log;
 
 import com.android.volley.Response;
@@ -15,8 +16,10 @@ import es.uam.eps.dadm.jorgecifuentes.model.Round;
 import es.uam.eps.dadm.jorgecifuentes.model.TableroReversi;
 import es.uam.eps.dadm.jorgecifuentes.server.ServerInterface;
 import es.uam.eps.dadm.jorgecifuentes.views.ReversiView;
+import es.uam.eps.multij.Accion;
 import es.uam.eps.multij.AccionMover;
 import es.uam.eps.multij.Evento;
+import es.uam.eps.multij.ExcepcionJuego;
 import es.uam.eps.multij.Jugador;
 import es.uam.eps.multij.Movimiento;
 import es.uam.eps.multij.Partida;
@@ -65,14 +68,6 @@ public class ReversiLocalServerPlayer implements Jugador, ReversiView.OnPlayList
         Movimiento m = t.getMovimientoValido(row, column);
         final AccionMover acc = new AccionMover(this, m);
 
-
-        //**** //(ReversiView) this.getView().findViewById(R.id.board_reversiview)
-  //    final  ReversiView b = (ReversiView) ((Activity) context).findViewById(R.id.board_reversiview);
-        //****
-
-
-
-
         ServerInterface is = ServerInterface.getServer(context);
 
         Response.Listener<JSONObject> responseListener = new
@@ -89,32 +84,23 @@ public class ReversiLocalServerPlayer implements Jugador, ReversiView.OnPlayList
                                 Log.d("[debug]", "realizar movimiento");
                                 t.stringToTablero(codedboard);
 
-                        //        b.setBoard(game.getTablero());
-                         //       b.invalidate();
-
-                             /*   final ReversiView b = (ReversiView) ((Activity) context).findViewById(R.id.board_reversiview);
-                                b.setBoard(game.getTablero());
-                                b.postInvalidate();*/
-
                                 game.realizaAccion(acc);
-                                //      board.invalidate();
 
                             }
 
                             // Si el turno es del jugador pero el tablero no está actualizado, actualizar tablero
-                            if (isMyTurn == 1 && isBoardUpToDate(codedboard) == false) {
+                            else if (isMyTurn == 1 && isBoardUpToDate(codedboard) == false) {
                                 Log.d("[debug]", "actualizar tablero");
                                 t.stringToTablero(codedboard);
-                                //     board.invalidate();
-                            }
 
-                            if (isMyTurn == 0) {
+                                final ReversiView b = (ReversiView) ((Activity) context).findViewById(R.id.board_reversiview);
+                                b.setBoard(game.getTablero());
+                                b.postInvalidate();
+
+                            } else if (isMyTurn == 0) {
                                 // Si el turno no es del jugador, mostrar mensaje
                                 Log.d("[debug]", "no es turno de RLSplayer");
                             }
-
-                            //        board.setBoard(t);
-                            //       board.invalidate();
 
                         } catch (Exception e) {
                             Log.d(DEBUG, "" + e);
@@ -127,8 +113,6 @@ public class ReversiLocalServerPlayer implements Jugador, ReversiView.OnPlayList
             public void onErrorResponse(VolleyError error) {
             }
         };
-
-        //...
 
         String playerId = RoundPreferenceActivity.getPlayerUUID(this.context);
         is.isMyTurn(Integer.parseInt(roundId), playerId, responseListener, errorListener);

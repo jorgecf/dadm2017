@@ -226,7 +226,6 @@ public class RoundFragment extends Fragment implements PartidaListener {
         ReversiLocalPlayer localPlayer = new ReversiLocalPlayer(this.getContext(), firstPlayerName);
 
         ReversiLocalServerPlayer localServerPlayer = new ReversiLocalServerPlayer(firstPlayerName, this.getContext(), this.round.getRoundUUID());
-        //(ReversiView) this.getView().findViewById(R.id.board_reversiview)
         ReversiRemotePlayer remote = new ReversiRemotePlayer(this.getContext(), this.round.getPlayerUUID(),this.round.getRoundUUID());
 
 
@@ -237,7 +236,6 @@ public class RoundFragment extends Fragment implements PartidaListener {
         } else {
             // Partida online
             if (RoundPreferenceActivity.getPlayerName(this.getContext()) == this.round.getPlayername()) {
-                //     if (RoundPreferenceActivity.getPlayerUUID(this.getContext()) == this.round.getPlayerUUID()) {
                 players.add(localServerPlayer);
                 players.add(remote);
             } else {
@@ -245,7 +243,7 @@ public class RoundFragment extends Fragment implements PartidaListener {
                 players.add(localServerPlayer);
 
                 // Agregamos al jugador a la partida creada por otro, si es la primera vez que entra
-                if (this.round.getRivalUUID() == "") {
+                if (this.round.getRivalUUID().equals("")) {
                     ServerInterface.getServer(this.getContext()).addPlayerToRound(Integer.parseInt(this.round.getRoundUUID()), this.round.getPlayerUUID(), new Response.Listener<String>() {
                         @Override
                         public void onResponse(String s) {
@@ -327,7 +325,7 @@ public class RoundFragment extends Fragment implements PartidaListener {
 
         // Repintamos el tablero.
         this.boardView.setBoard(this.round.getBoard());
-        boardView.invalidate();
+         boardView.invalidate();
         callbacks.onRoundUpdated(round);
 
         switch (evento.getTipo()) {

@@ -23,16 +23,16 @@ import es.uam.eps.multij.Tablero;
 
 public class ReversiRemotePlayer implements Jugador {
 
-   // private Round round;
+    // private Round round;
     private Context context;
     private String roundUUID;
     private String playerUUID;
 
     public ReversiRemotePlayer(/*Round round, */Context context, String p, String r) {
-      //  this.round = round;
+        //  this.round = round;
         this.context = context;
-        this.roundUUID=r;
-        this.playerUUID=p;
+        this.roundUUID = r;
+        this.playerUUID = p;
     }
 
     @Override
@@ -52,16 +52,12 @@ public class ReversiRemotePlayer implements Jugador {
 
         switch (evento.getTipo()) {
             case Evento.EVENTO_CAMBIO:
-                if (evento.getDescripcion().contains("ha jugado") == false) {
+
+                //if (evento.getDescripcion().contains("ha jugado") == false) {
+                if (evento.getCausa() == null) {
                     Log.d("debug", "onCambioEnPartida +  CAMBIO: no ha sido turno del local server player");
                     return;
                 }
-
-                Log.d("debug", "onCambioEnPartida: cambiamos");
-
-           /*     final ReversiView b = (ReversiView) ((Activity) context).findViewById(R.id.board_reversiview);
-                b.setBoard(evento.getPartida().getTablero());
-                b.postInvalidate();*/
 
                 ServerInterface.getServer(this.context).sendBoard(Integer.parseInt(roundUUID), playerUUID, p.getTablero().tableroToString(), new Response.Listener<String>() {
                             @Override
@@ -78,29 +74,6 @@ public class ReversiRemotePlayer implements Jugador {
                         });
                 break;
             case Evento.EVENTO_TURNO:
-
-                if (evento.getDescripcion().contains("ha jugado") == false) {
-                    Log.d("debug", "onCambioEnPartida: no ha sido turno del local server player");
-                    return;
-                }
-
-                Log.d("debug", "onCambioEnPartida: evento turno ha llegado: " + evento.getDescripcion());
-
-                //     ServerRepository.getInstance(this.context).updateRound();
-             /*  ServerInterface.getServer(this.context).sendBoard(Integer.parseInt(round.getRoundUUID()), round.getPlayerUUID(), round.getBoard().tableroToString(), new Response.Listener<String>() {
-                            @Override
-                            public void onResponse(String result) {
-                                Log.d("debug", "onResponse: remote " + result);
-                            }
-                        },
-
-                        new Response.ErrorListener() {
-                            @Override
-                            public void onErrorResponse(VolleyError volleyError) {
-                                Log.d("debug", "onResponse: remote ERROR!  " + volleyError.getLocalizedMessage());
-                            }
-                        });*/
-
                 break;
         }
     }

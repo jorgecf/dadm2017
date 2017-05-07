@@ -179,8 +179,8 @@ public class ReversiView extends View {
     }
 
     public void setBoard(Tablero board) {
-     //   this.board = (TableroReversi) board;
-        this.board=new TableroReversi();
+        //   this.board = (TableroReversi) board;
+        this.board = new TableroReversi();
         try {
             this.board.stringToTablero(board.tableroToString());
         } catch (ExcepcionJuego excepcionJuego) {
