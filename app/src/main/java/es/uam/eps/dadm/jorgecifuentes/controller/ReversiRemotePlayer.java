@@ -12,6 +12,7 @@ import es.uam.eps.dadm.jorgecifuentes.model.Round;
 import es.uam.eps.dadm.jorgecifuentes.server.ServerInterface;
 import es.uam.eps.dadm.jorgecifuentes.server.ServerRepository;
 import es.uam.eps.dadm.jorgecifuentes.views.ReversiView;
+import es.uam.eps.multij.AccionMover;
 import es.uam.eps.multij.Evento;
 import es.uam.eps.multij.Jugador;
 import es.uam.eps.multij.Partida;
@@ -23,13 +24,14 @@ import es.uam.eps.multij.Tablero;
 
 public class ReversiRemotePlayer implements Jugador {
 
-    // private Round round;
     private Context context;
     private String roundUUID;
     private String playerUUID;
 
-    public ReversiRemotePlayer(/*Round round, */Context context, String p, String r) {
-        //  this.round = round;
+
+    private String playername;
+
+    public ReversiRemotePlayer(Context context, String p, String r) {
         this.context = context;
         this.roundUUID = r;
         this.playerUUID = p;
@@ -37,7 +39,7 @@ public class ReversiRemotePlayer implements Jugador {
 
     @Override
     public String getNombre() {
-        return "cambiame";
+        return this.playername;
     }
 
     @Override
@@ -59,6 +61,7 @@ public class ReversiRemotePlayer implements Jugador {
                     return;
                 }
 
+                // Si el movimiento es correcto
                 ServerInterface.getServer(this.context).sendBoard(Integer.parseInt(roundUUID), playerUUID, p.getTablero().tableroToString(), new Response.Listener<String>() {
                             @Override
                             public void onResponse(String result) {
@@ -76,5 +79,9 @@ public class ReversiRemotePlayer implements Jugador {
             case Evento.EVENTO_TURNO:
                 break;
         }
+    }
+
+    public void setPlayername(String playername) {
+        this.playername = playername;
     }
 }

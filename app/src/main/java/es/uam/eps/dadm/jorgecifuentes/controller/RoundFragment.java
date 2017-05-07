@@ -225,7 +225,7 @@ public class RoundFragment extends Fragment implements PartidaListener {
         JugadorAleatorio randomPlayer = new JugadorAleatorio(this.getContext().getString(R.string.random_player_default_name));
         ReversiLocalPlayer localPlayer = new ReversiLocalPlayer(this.getContext(), firstPlayerName);
 
-        ReversiLocalServerPlayer localServerPlayer = new ReversiLocalServerPlayer(firstPlayerName, this.getContext(), this.round.getRoundUUID());
+        ReversiLocalServerPlayer localServerPlayer = new ReversiLocalServerPlayer(this.getContext(), this.round.getRoundUUID());
         ReversiRemotePlayer remote = new ReversiRemotePlayer(this.getContext(), this.round.getPlayerUUID(),this.round.getRoundUUID());
 
 
@@ -236,9 +236,17 @@ public class RoundFragment extends Fragment implements PartidaListener {
         } else {
             // Partida online
             if (RoundPreferenceActivity.getPlayerName(this.getContext()) == this.round.getPlayername()) {
+
+                localServerPlayer.setPlayername(this.round.getPlayername()); // Yo
+                remote.setPlayername("Rival");
+
                 players.add(localServerPlayer);
                 players.add(remote);
             } else {
+
+                localServerPlayer.setPlayername(this.round.getPlayername());
+                remote.setPlayername(RoundPreferenceActivity.getPlayerName(this.getContext())); // Yo
+
                 players.add(remote);
                 players.add(localServerPlayer);
 

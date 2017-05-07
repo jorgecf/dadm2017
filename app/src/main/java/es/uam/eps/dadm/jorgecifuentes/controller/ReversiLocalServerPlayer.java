@@ -33,22 +33,15 @@ public class ReversiLocalServerPlayer implements Jugador, ReversiView.OnPlayList
 
     private static final String DEBUG = "DEBUG";
 
-    //    private Round round;
     private Partida game;
-    // private TableroReversi t;
-    private String name;
+
+    private String playername;
     private Context context;
     private String roundId;
 
-    //  private ReversiView board;
-
-    public ReversiLocalServerPlayer(/*TableroReversi t, */String name, Context context, String roundId) {
-        //  this.t = t;
-        // this.round=r;
-        this.name = name;
+    public ReversiLocalServerPlayer(Context context, String roundId) {
         this.context = context;
         this.roundId = roundId;
-        //    this.board = board;
     }
 
     public void setPartida(Partida game) {
@@ -65,7 +58,7 @@ public class ReversiLocalServerPlayer implements Jugador, ReversiView.OnPlayList
     public void onPlay(final int row, final int column) {
 
         final TableroReversi t = (TableroReversi) this.game.getTablero();
-        Movimiento m = t.getMovimientoValido(row, column);
+        final Movimiento m = t.getMovimientoValido(row, column);
         final AccionMover acc = new AccionMover(this, m);
 
         ServerInterface is = ServerInterface.getServer(context);
@@ -81,11 +74,12 @@ public class ReversiLocalServerPlayer implements Jugador, ReversiView.OnPlayList
 
                             // Si el turno es del jugador y el tablero está actualizado realiza movimiento
                             if (isMyTurn == 1 && isBoardUpToDate(codedboard)) {
+
                                 Log.d("[debug]", "realizar movimiento");
                                 t.stringToTablero(codedboard);
 
-                                game.realizaAccion(acc);
-
+                                // Evitamos jugar movimientos invalidos
+                                if (m != null) game.realizaAccion(acc);
                             }
 
                             // Si el turno es del jugador pero el tablero no está actualizado, actualizar tablero
@@ -99,7 +93,7 @@ public class ReversiLocalServerPlayer implements Jugador, ReversiView.OnPlayList
 
                             } else if (isMyTurn == 0) {
                                 // Si el turno no es del jugador, mostrar mensaje
-                                Log.d("[debug]", "no es turno de RLSplayer");
+                                Log.d("[debug]", "no es turno de RLSplayer"); //TODO snackbar
                             }
 
                         } catch (Exception e) {
@@ -114,13 +108,14 @@ public class ReversiLocalServerPlayer implements Jugador, ReversiView.OnPlayList
             }
         };
 
+
         String playerId = RoundPreferenceActivity.getPlayerUUID(this.context);
         is.isMyTurn(Integer.parseInt(roundId), playerId, responseListener, errorListener);
     }
 
     @Override
     public String getNombre() {
-        return this.name;
+        return this.playername;
     }
 
     @Override
@@ -131,5 +126,9 @@ public class ReversiLocalServerPlayer implements Jugador, ReversiView.OnPlayList
     @Override
     public void onCambioEnPartida(Evento evento) {
         // Vacio
+    }
+
+    public void setPlayername(String playername) {
+        this.playername = playername;
     }
 }
