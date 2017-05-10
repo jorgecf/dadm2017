@@ -95,12 +95,9 @@ public class RoundDataBase implements RoundRepository {
 
             String str3 = "CREATE TABLE " + ScoresTable.NAME + " ("
                     + "_id integer primary key autoincrement, "
-                    + ScoresTable.Cols.ROUNDUUID + " TEXT UNIQUE, "
+                    + ScoresTable.Cols.ROUNDUUID + " TEXT UNIQUE, " /* foreign keys ---> https://sqlite.org/foreignkeys.html  */
                     + ScoresTable.Cols.BLACKSCORE + " INTEGER, "
                     + ScoresTable.Cols.WHITESCORE + " INTEGER);";
-            /**
-             * @TODO darg es mejore usar foreign keys ---> https://sqlite.org/foreignkeys.html
-             */
 
             try {
                 db.execSQL(str1);

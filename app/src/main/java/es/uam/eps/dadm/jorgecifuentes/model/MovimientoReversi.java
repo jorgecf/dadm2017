@@ -1,10 +1,6 @@
 package es.uam.eps.dadm.jorgecifuentes.model;
 
 import java.util.ArrayList;
-/**
- * @TODO darg sobre este import
- */
-import java.util.stream.Collectors;
 
 import es.uam.eps.multij.Movimiento;
 
