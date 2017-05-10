@@ -146,7 +146,6 @@ public class RoundPreferenceActivity extends AppCompatActivity {
 
         r.updateUser(RoundPreferenceActivity.getPlayerUUID(context), name, null, bc);
         r.close();
-
     }
 
 

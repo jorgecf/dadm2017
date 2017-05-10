@@ -84,6 +84,9 @@ public class LoginActivity extends Activity implements View.OnClickListener {
         final Boolean remember = this.keepMeLoggedInSwitch.isChecked();
         final Boolean online = this.playOnlineSwitch.isChecked();
 
+        // Primero dejamos puesto el modo de juego
+        RoundPreferenceActivity.setPlayOnline(LoginActivity.this, online);
+
         // Control de errores de entrada.
         this.usernameEditText.setError(null);
         this.passwordEditText.setError(null);
@@ -99,7 +102,6 @@ public class LoginActivity extends Activity implements View.OnClickListener {
                         RoundPreferenceActivity.setPlayerName(LoginActivity.this, playername);
                         RoundPreferenceActivity.setPlayerPassword(LoginActivity.this, password);
                         RoundPreferenceActivity.setKeepLogged(LoginActivity.this, remember);
-                        RoundPreferenceActivity.setPlayOnline(LoginActivity.this, online);
 
                         startActivity(new Intent(LoginActivity.this, RoundListActivity.class));
                         finish();

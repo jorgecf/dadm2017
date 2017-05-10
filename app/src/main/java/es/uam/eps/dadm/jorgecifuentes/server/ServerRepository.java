@@ -223,25 +223,11 @@ public class ServerRepository implements RoundRepository {
     @Override
     public void updateRound(Round round, final BooleanCallback callback) {
 
-     /*   this.is.sendBoard(Integer.parseInt(round.getRoundUUID()), round.getPlayerUUID(), round.getBoard().tableroToString(), new Response.Listener<String>() {
-                    @Override
-                    public void onResponse(String result) {
-                        callback.onResponse(result != "-1"); //todo -1?
-                    }
-                },
-
-                new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError volleyError) {
-                        callback.onResponse(false);
-                        Log.d("debug", "onErrorResponse: VolleyError updateround");
-                    }
-                });*/
     }
 
     @Override
     public void updateUser(String userUUID, String name, String password, BooleanCallback callback) {
-
+        callback.onResponse(true);
     }
 
     @Override
