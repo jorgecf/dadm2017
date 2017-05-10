@@ -235,10 +235,10 @@ public class RoundFragment extends Fragment implements PartidaListener {
             players.add(randomPlayer);
         } else {
             // Partida online
-            if (RoundPreferenceActivity.getPlayerName(this.getContext()) == this.round.getPlayername()) {
+            if (RoundPreferenceActivity.getPlayerName(this.getContext()).equals(this.round.getPlayername())) {
 
                 localServerPlayer.setPlayername(this.round.getPlayername()); // Yo
-                remote.setPlayername("Rival");
+                remote.setPlayername(this.round.getRivalUUID());
 
                 players.add(localServerPlayer);
                 players.add(remote);
