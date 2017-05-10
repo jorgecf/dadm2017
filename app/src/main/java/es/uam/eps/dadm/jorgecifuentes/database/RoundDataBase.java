@@ -35,7 +35,9 @@ public class RoundDataBase implements RoundRepository {
     private static final String DATABASE_NAME = "er.db";
     private static final int DATABASE_VERSION = 2;
     private Context context;
-
+    /**
+     * @TODO darg como os comenté en clase, hay que llamar a close() en onDestroy() de la actividad que abre la conexión con la base de datos
+     */
     private DatabaseHelper helper;
     private SQLiteDatabase db;
 
@@ -96,6 +98,9 @@ public class RoundDataBase implements RoundRepository {
                     + ScoresTable.Cols.ROUNDUUID + " TEXT UNIQUE, "
                     + ScoresTable.Cols.BLACKSCORE + " INTEGER, "
                     + ScoresTable.Cols.WHITESCORE + " INTEGER);";
+            /**
+             * @TODO darg es mejore usar foreign keys ---> https://sqlite.org/foreignkeys.html
+             */
 
             try {
                 db.execSQL(str1);
