@@ -11,7 +11,10 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.math.BigInteger;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 import es.uam.eps.dadm.jorgecifuentes.activities.RoundPreferenceActivity;
@@ -112,6 +115,7 @@ public class ServerRepository implements RoundRepository {
                 //     Round round = new Round(RoundPreferenceActivity.getPlayerName(context), uuid, date, RoundPreferenceActivity.getPlayerUUID(context), uuid);
 
                 Round round = new Round(op, uuid, date, RoundPreferenceActivity.getPlayerUUID(context), uuid);
+                round.getBoard().stringToTablero(codedboard);
 
                 if (players.length >= 2) {
                     round.setRivalUUID(players[1]);
@@ -120,9 +124,9 @@ public class ServerRepository implements RoundRepository {
                 rounds.add(round);
             } catch (JSONException e) {
                 e.printStackTrace();
-                //   } catch (ExcepcionJuego excepcionJuego) {
-                //    excepcionJuego.printStackTrace();
-                //      Log.d(DEBUG, "Error turning string into ERTablero");
+            } catch (ExcepcionJuego excepcionJuego) {
+                excepcionJuego.printStackTrace();
+                Log.d(DEBUG, "Error turning string into TableroReversi");
             }
         }
 
@@ -149,7 +153,17 @@ public class ServerRepository implements RoundRepository {
                     public void onResponse(JSONArray response) {
                         Log.d(DEBUG, "Rounds TWO downloaded from server");
                         List<Round> rounds = roundsFromJSONArray(response);
-                        roundsT.addAll(rounds); //TODO orden prioritario activas
+                        roundsT.addAll(rounds);
+
+
+                        Collections.sort(roundsT, new Comparator<Round>() {
+                            @Override
+                            public int compare(Round o1, Round o2) {
+                                return new BigInteger(o1.getRoundUUID()).compareTo(new BigInteger(o2.getRoundUUID()));
+                            }
+                        });
+
+
                         callback.onResponse(roundsT);
                     }
                 }, new Response.ErrorListener() {

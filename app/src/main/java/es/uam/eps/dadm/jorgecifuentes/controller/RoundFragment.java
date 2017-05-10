@@ -226,7 +226,7 @@ public class RoundFragment extends Fragment implements PartidaListener {
         ReversiLocalPlayer localPlayer = new ReversiLocalPlayer(this.getContext(), firstPlayerName);
 
         ReversiLocalServerPlayer localServerPlayer = new ReversiLocalServerPlayer(this.getContext(), this.round.getRoundUUID());
-        ReversiRemotePlayer remote = new ReversiRemotePlayer(this.getContext(), this.round.getPlayerUUID(),this.round.getRoundUUID());
+        ReversiRemotePlayer remote = new ReversiRemotePlayer(this.getContext(), this.round.getPlayerUUID(), this.round.getRoundUUID());
 
 
         if (RoundPreferenceActivity.getPlayOnline(this.getContext()) == false) {
@@ -333,7 +333,7 @@ public class RoundFragment extends Fragment implements PartidaListener {
 
         // Repintamos el tablero.
         this.boardView.setBoard(this.round.getBoard());
-         boardView.invalidate();
+        boardView.invalidate();
         callbacks.onRoundUpdated(round);
 
         switch (evento.getTipo()) {
