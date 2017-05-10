@@ -2,6 +2,7 @@ package es.uam.eps.dadm.jorgecifuentes.server;
 
 import android.content.Context;
 import android.support.annotation.Nullable;
+import android.support.design.widget.Snackbar;
 import android.util.Log;
 
 import com.android.volley.Response;
@@ -17,9 +18,11 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
+import es.uam.eps.dadm.jorgecifuentes.R;
 import es.uam.eps.dadm.jorgecifuentes.activities.RoundPreferenceActivity;
 import es.uam.eps.dadm.jorgecifuentes.model.Round;
 import es.uam.eps.dadm.jorgecifuentes.model.RoundRepository;
+import es.uam.eps.dadm.jorgecifuentes.model.RoundRepositoryFactory;
 import es.uam.eps.dadm.jorgecifuentes.model.Triplet;
 import es.uam.eps.multij.ExcepcionJuego;
 
@@ -189,8 +192,41 @@ public class ServerRepository implements RoundRepository {
     }
 
     @Override
-    public void getScores(RoundsCallback<Triplet<String, String, String>> callback) {
+    public void getScores(final RoundsCallback<Triplet<String, String, String>> callback) {
 
+        final List<Triplet<String, String, String>> rounds2 = new ArrayList<>();
+
+        RoundRepository repository = RoundRepositoryFactory.createRepository(this.context);
+        RoundRepository.RoundsCallback<Round> roundsCallback = new RoundRepository.RoundsCallback<Round>() {
+
+            @Override
+            public void onResponse(List<Round> rounds) {
+                Collections.sort(rounds, new Comparator<Round>() {
+                    @Override
+                    public int compare(Round o1, Round o2) {
+                        return o2.getBlackScore() - o1.getBlackScore();
+                    }
+                });
+
+                for (Round r : rounds) {
+                    rounds2.add(new Triplet<>(r.getTitle(), String.valueOf(r.getBlackScore()), String.valueOf(r.getWhiteScore())));
+                }
+
+                if (rounds.size() > 0)
+                    callback.onResponse(rounds2);
+                else
+                    callback.onError("");
+
+            }
+
+            @Override
+            public void onError(String error) {
+            }
+        };
+
+
+        String playeruuid = RoundPreferenceActivity.getPlayerUUID(this.context);
+        repository.getRounds(playeruuid, null, null, roundsCallback);
     }
 
     @Override
