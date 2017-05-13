@@ -261,7 +261,6 @@ public class RoundFragment extends Fragment implements PartidaListener {
                     }, new Response.ErrorListener() {
                         @Override
                         public void onErrorResponse(VolleyError volleyError) {
-                            //TODO
                         }
                     });
                 }

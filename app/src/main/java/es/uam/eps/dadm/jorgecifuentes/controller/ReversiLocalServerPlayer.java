@@ -12,14 +12,11 @@ import org.json.JSONObject;
 
 import es.uam.eps.dadm.jorgecifuentes.R;
 import es.uam.eps.dadm.jorgecifuentes.activities.RoundPreferenceActivity;
-import es.uam.eps.dadm.jorgecifuentes.model.Round;
 import es.uam.eps.dadm.jorgecifuentes.model.TableroReversi;
 import es.uam.eps.dadm.jorgecifuentes.server.ServerInterface;
 import es.uam.eps.dadm.jorgecifuentes.views.ReversiView;
-import es.uam.eps.multij.Accion;
 import es.uam.eps.multij.AccionMover;
 import es.uam.eps.multij.Evento;
-import es.uam.eps.multij.ExcepcionJuego;
 import es.uam.eps.multij.Jugador;
 import es.uam.eps.multij.Movimiento;
 import es.uam.eps.multij.Partida;
@@ -93,6 +90,7 @@ public class ReversiLocalServerPlayer implements Jugador, ReversiView.OnPlayList
 
                             } else if (isMyTurn == 0) {
                                 // Si el turno no es del jugador, mostrar mensaje
+
                                 Log.d("[debug]", "no es turno de RLSplayer"); //TODO snackbar
                             }
 
