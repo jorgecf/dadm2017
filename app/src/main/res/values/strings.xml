@@ -58,4 +58,5 @@
     <string name="white_player_has">WHITE PLAYER HAS</string>
     <string name="cant_change_password">Unable to change password</string>
     <string name="not_your_turn">Not your turn</string>
+    <string name="board_updated_play_again">Board updated, play again</string>
 </resources>

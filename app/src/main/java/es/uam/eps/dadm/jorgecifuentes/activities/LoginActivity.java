@@ -55,7 +55,7 @@ public class LoginActivity extends Activity implements View.OnClickListener {
         RoundPreferenceActivity.setFirebaseToken(LoginActivity.this, token);
 
         // Iniciamos SERVICIO DE MENSAJERIA
-        startService(new Intent(LoginActivity.this, MessagingService.class));
+        startService(new Intent(this, MessagingService.class));
 
 
         // Si sí hay nombre almacenado (no devuelve el default), es que se ha hecho login; si ademas
@@ -195,6 +195,7 @@ public class LoginActivity extends Activity implements View.OnClickListener {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        this.repository.close();
+        if (this.repository != null)
+            this.repository.close();
     }
 }

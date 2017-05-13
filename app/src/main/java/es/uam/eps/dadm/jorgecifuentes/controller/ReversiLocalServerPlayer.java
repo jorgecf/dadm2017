@@ -24,9 +24,10 @@ import es.uam.eps.multij.Partida;
 import es.uam.eps.multij.Tablero;
 
 /**
- * Created by jorgecf on 24/04/17.
+ * Jugador local para juego en red.
+ *
+ * @author Jorge Cifuentes
  */
-
 public class ReversiLocalServerPlayer implements Jugador, ReversiView.OnPlayListener {
 
     private static final String DEBUG = "DEBUG";
@@ -43,6 +44,7 @@ public class ReversiLocalServerPlayer implements Jugador, ReversiView.OnPlayList
         this.roundId = roundId;
         this.view = view;
     }
+
 
     public void setPartida(Partida game) {
         this.game = game;
@@ -84,7 +86,7 @@ public class ReversiLocalServerPlayer implements Jugador, ReversiView.OnPlayList
 
                             // Si el turno es del jugador pero el tablero no está actualizado, actualizar tablero
                             else if (isMyTurn == 1 && isBoardUpToDate(codedboard) == false) {
-                                Log.d("[debug]", "actualizar tablero");
+                                Snackbar.make(view, context.getString(R.string.board_updated_play_again), Snackbar.LENGTH_LONG).show();
                                 t.stringToTablero(codedboard);
 
                                 final ReversiView b = (ReversiView) ((Activity) context).findViewById(R.id.board_reversiview);

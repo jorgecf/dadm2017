@@ -139,7 +139,6 @@ public class ServerRepository implements RoundRepository {
             @Override
             public void onResponse(JSONArray response) {
                 List<Round> rounds = roundsFromJSONArray(response);
-                //callback.onResponse(rounds);
                 roundsT.addAll(rounds);
                 Log.d(DEBUG, "Rounds downloaded from server");
 
@@ -151,7 +150,7 @@ public class ServerRepository implements RoundRepository {
                         List<Round> rounds = roundsFromJSONArray(response);
                         roundsT.addAll(rounds);
 
-
+                        // Ordenamos la lista
                         Collections.sort(roundsT, new Comparator<Round>() {
                             @Override
                             public int compare(Round o1, Round o2) {

@@ -14,8 +14,6 @@ import es.uam.eps.dadm.jorgecifuentes.server.ServerRepository;
  */
 public class RoundRepositoryFactory {
 
-    private static final boolean LOCAL = true;
-
     public static RoundRepository createRepository(Context context) {
 
         // Preferencia de juego online.

@@ -68,17 +68,8 @@ public class MessageActivity extends Activity {
             if (action.equals(ACTION_MESSAGE)) {
                 Message message = new Message(message_id++, extras.getString(MESSAGE), extras.getString(DATE), extras.getString(SENDER));
                 messages.add(message);
-
-                // Actualizamos la vista recicladora
-          /*      if (messages_adapter != null) {
-                    messages_adapter = new MessagesRecylerViewAdapter(messages);
-                    recyclerView.setAdapter(messages_adapter);
-                }
-
-                messages_adapter.setMessages(messages);
-                messages_adapter.notifyDataSSetChanged();*/
-
             }
+
         }
     }
 }

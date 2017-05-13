@@ -1,27 +1,24 @@
 package es.uam.eps.dadm.jorgecifuentes.controller;
 
-import android.app.Activity;
 import android.content.Context;
 import android.util.Log;
 
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 
-import es.uam.eps.dadm.jorgecifuentes.R;
-import es.uam.eps.dadm.jorgecifuentes.model.Round;
 import es.uam.eps.dadm.jorgecifuentes.server.ServerInterface;
 import es.uam.eps.dadm.jorgecifuentes.server.ServerRepository;
-import es.uam.eps.dadm.jorgecifuentes.views.ReversiView;
-import es.uam.eps.multij.AccionMover;
 import es.uam.eps.multij.Evento;
 import es.uam.eps.multij.Jugador;
 import es.uam.eps.multij.Partida;
 import es.uam.eps.multij.Tablero;
 
 /**
- * Created by jorgecf on 24/04/17.
+ * Jugador remoto para juego en red. Se encarga de enviar la nueva jugada valida del
+ * LocalServerPlayer al servidor.
+ *
+ * @author Jorge Cifuentes
  */
-
 public class ReversiRemotePlayer implements Jugador {
 
     private Context context;
