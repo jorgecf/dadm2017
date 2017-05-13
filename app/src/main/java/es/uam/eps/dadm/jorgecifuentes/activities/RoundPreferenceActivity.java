@@ -53,6 +53,10 @@ public class RoundPreferenceActivity extends AppCompatActivity {
      */
     private static final String PLAY_ONLINE = "playOnline";
 
+    /*
+     * Token para notificaciones con Firebase.
+     */
+    private static final String FIREBASE_TOKEN="firebaseToken";
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -198,4 +202,13 @@ public class RoundPreferenceActivity extends AppCompatActivity {
     public static void setPlayOnline(Context context, Boolean b) {
         RoundPreferenceActivity.setBoolean(context, RoundPreferenceActivity.PLAY_ONLINE, b);
     }
+
+    public static void setFirebaseToken(Context context, String token) {
+        RoundPreferenceActivity.setString(context, RoundPreferenceActivity.FIREBASE_TOKEN, token);
+    }
+
+    public static String getFirebaseToken(Context context) {
+        return PreferenceManager.getDefaultSharedPreferences(context).getString(FIREBASE_TOKEN, "0");
+    }
+
 }

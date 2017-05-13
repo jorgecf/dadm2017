@@ -28,13 +28,14 @@ public class ReversiRemotePlayer implements Jugador {
     private String roundUUID;
     private String playerUUID;
 
-
     private String playername;
+    private String rivalName;
 
-    public ReversiRemotePlayer(Context context, String p, String r) {
+    public ReversiRemotePlayer(Context context, String p, String r, String rivalName) {
         this.context = context;
         this.roundUUID = r;
         this.playerUUID = p;
+        this.rivalName = rivalName;
     }
 
     @Override
@@ -55,14 +56,15 @@ public class ReversiRemotePlayer implements Jugador {
         switch (evento.getTipo()) {
             case Evento.EVENTO_CAMBIO:
 
-                //if (evento.getDescripcion().contains("ha jugado") == false) {
                 if (evento.getCausa() == null) {
                     Log.d("debug", "onCambioEnPartida +  CAMBIO: no ha sido turno del local server player");
                     return;
                 }
 
                 // Si el movimiento es correcto
-                ServerInterface.getServer(this.context).sendBoard(Integer.parseInt(roundUUID), playerUUID, p.getTablero().tableroToString(), new Response.Listener<String>() {
+                ServerInterface.getServer(this.context).sendBoard(Integer.parseInt(roundUUID), playerUUID, p.getTablero().tableroToString(),
+
+                        new Response.Listener<String>() {
                             @Override
                             public void onResponse(String result) {
                                 Log.d("debug", "onResponse: remote " + result);
@@ -75,6 +77,24 @@ public class ReversiRemotePlayer implements Jugador {
                                 Log.d("debug", "onResponse: remote ERROR!  " + volleyError.getLocalizedMessage());
                             }
                         });
+
+                ServerRepository.getInstance(this.context).sendMessage(playerUUID, rivalName, p.getTablero().tableroToString(), null);
+            /*    ServerInterface.getServer(this.context).sendMsg(playerUUID, rivalName, p.getTablero().tableroToString(), // message = tablero
+
+                        new Response.Listener<String>() {
+                            @Override
+                            public void onResponse(String result) {
+                                Log.d("debug", "onResponse MSG : remote " + result);
+                            }
+                        },
+
+                        new Response.ErrorListener() {
+                            @Override
+                            public void onErrorResponse(VolleyError volleyError) {
+                                Log.d("debug", "onResponse MSG: remote ERROR!  " + volleyError.getLocalizedMessage());
+                            }
+                        });*/
+
                 break;
             case Evento.EVENTO_TURNO:
                 break;

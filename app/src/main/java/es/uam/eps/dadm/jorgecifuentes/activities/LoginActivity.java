@@ -15,9 +15,12 @@ import android.widget.Button;
 import android.widget.Switch;
 import android.widget.Toast;
 
+import com.google.firebase.iid.FirebaseInstanceId;
+
 import es.uam.eps.dadm.jorgecifuentes.R;
 import es.uam.eps.dadm.jorgecifuentes.model.RoundRepository;
 import es.uam.eps.dadm.jorgecifuentes.model.RoundRepositoryFactory;
+import es.uam.eps.dadm.jorgecifuentes.server.MessagingService;
 
 /**
  * Actividad para el login de usuario.
@@ -45,6 +48,15 @@ public class LoginActivity extends Activity implements View.OnClickListener {
         super.onCreate(savedInstanceState);
 
         this.setContentView(R.layout.activity_login);
+
+
+        // FIREBASE
+        String token = FirebaseInstanceId.getInstance().getToken();  // Codigo de firebase
+        RoundPreferenceActivity.setFirebaseToken(LoginActivity.this, token);
+
+        // Iniciamos SERVICIO DE MENSAJERIA
+        startService(new Intent(LoginActivity.this, MessagingService.class));
+
 
         // Si sí hay nombre almacenado (no devuelve el default), es que se ha hecho login; si ademas
         // el usuario ha elegido "mantenerme logueado", se salta la pantalla de login.

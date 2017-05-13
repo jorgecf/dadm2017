@@ -37,6 +37,7 @@ public class ServerInterface {
     private static final String NEW_MOVEMENT_PHP = "newmovement.php";
     private static final String NEW_ROUND_PHP = "newround.php";
     private static final String ADD_PLAYER_TO_ROUND_PHP = "addplayertoround.php";
+    private static final String SEND_MESSAGE = "sendmsg.php";
 
     private RequestQueue queue;
 
@@ -134,6 +135,16 @@ public class ServerInterface {
 
         String url = BASE_URL + ADD_PLAYER_TO_ROUND_PHP + "?roundid=" + roundid + "&playerid=" + playerid;
         Log.d(DEBUG, url);
+
+        StringRequest r = new StringRequest(Request.Method.GET, url, callback, errorCallback);
+        this.queue.add(r);
+    }
+
+    public void sendMsg(final String playerId, String playerDest, String message, Response.Listener<String> callback, Response.ErrorListener errorCallback) {
+
+        String url = BASE_URL + SEND_MESSAGE + "?playerid=" + playerId + "&to=" + playerDest + "&msg=" + message;
+
+        Log.d("debug", "Enviando msg :" + url);
 
         StringRequest r = new StringRequest(Request.Method.GET, url, callback, errorCallback);
         this.queue.add(r);

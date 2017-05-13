@@ -10,6 +10,8 @@ import android.database.sqlite.SQLiteOpenHelper;
 import android.support.annotation.Nullable;
 import android.util.Log;
 
+import com.android.volley.Response;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
@@ -365,5 +367,10 @@ public class RoundDataBase implements RoundRepository {
         if (password != null) values.put(UserTable.Cols.PLAYERPASSWORD, password);
 
         return values;
+    }
+
+    @Override
+    public void sendMessage(String playerId, String playerDest, String message, BooleanCallback callback) {
+
     }
 }

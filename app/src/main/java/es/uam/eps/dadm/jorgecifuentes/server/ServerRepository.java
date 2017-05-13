@@ -270,4 +270,29 @@ public class ServerRepository implements RoundRepository {
     public void removeRound(Round round, BooleanCallback callback) {
 
     }
+
+    @Override
+    public void sendMessage(String playerId, String playerDest, String message, final BooleanCallback callback) {
+
+        this.is.sendMsg(playerId, playerDest, message,
+
+                // Callback de respuesta
+                new Response.Listener<String>() {
+
+                    @Override
+                    public void onResponse(String result) {
+                        Log.d("debug", "onResponse: ok "+result);
+                    }
+                },
+
+                // Callback de error
+                new Response.ErrorListener() {
+
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        //callback.onResponse(false);
+                        Log.d("debug", "onErrorResponse: VolleyError addround");
+                    }
+                });
+    }
 }
