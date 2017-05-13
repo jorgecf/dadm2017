@@ -18,10 +18,12 @@ import org.json.JSONObject;
 import java.util.HashMap;
 import java.util.Map;
 
-/**
- * Created by jorgecf on 19/04/17.
- */
 
+/**
+ * Interfaz de acceso al servidor del juego.
+ *
+ * @author Jorge Cifuentes
+ */
 public class ServerInterface {
 
     private static final String DEBUG = "DEBUG";

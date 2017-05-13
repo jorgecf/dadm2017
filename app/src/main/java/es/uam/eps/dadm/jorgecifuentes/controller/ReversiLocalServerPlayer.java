@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.support.design.widget.Snackbar;
 import android.util.Log;
+import android.view.View;
 
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
@@ -29,6 +30,7 @@ import es.uam.eps.multij.Tablero;
 public class ReversiLocalServerPlayer implements Jugador, ReversiView.OnPlayListener {
 
     private static final String DEBUG = "DEBUG";
+    private final View view;
 
     private Partida game;
 
@@ -36,9 +38,10 @@ public class ReversiLocalServerPlayer implements Jugador, ReversiView.OnPlayList
     private Context context;
     private String roundId;
 
-    public ReversiLocalServerPlayer(Context context, String roundId) {
+    public ReversiLocalServerPlayer(Context context, View view, String roundId) {
         this.context = context;
         this.roundId = roundId;
+        this.view = view;
     }
 
     public void setPartida(Partida game) {
@@ -90,8 +93,7 @@ public class ReversiLocalServerPlayer implements Jugador, ReversiView.OnPlayList
 
                             } else if (isMyTurn == 0) {
                                 // Si el turno no es del jugador, mostrar mensaje
-
-                                Log.d("[debug]", "no es turno de RLSplayer"); //TODO snackbar
+                                Snackbar.make(view, context.getString(R.string.not_your_turn), Snackbar.LENGTH_LONG).show();
                             }
 
                         } catch (Exception e) {

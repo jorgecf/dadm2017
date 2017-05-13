@@ -11,7 +11,7 @@ import android.support.v4.content.LocalBroadcastManager;
 
 import java.util.List;
 
-import es.uam.eps.dadm.jorgecifuentes.server.Message;
+import es.uam.eps.dadm.jorgecifuentes.fcm.Message;
 
 /**
  * Created by jorgecf on 13/05/17.

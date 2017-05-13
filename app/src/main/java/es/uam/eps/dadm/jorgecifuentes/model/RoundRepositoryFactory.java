@@ -18,20 +18,10 @@ public class RoundRepositoryFactory {
 
     public static RoundRepository createRepository(Context context) {
 
-        RoundRepository repository; //TODO simplificar llamando al de abajo
-
         // Preferencia de juego online.
         Boolean online = RoundPreferenceActivity.getPlayOnline(context);
 
-        repository = online ? ServerRepository.getInstance(context) : new RoundDataBase(context);
-
-        try {
-            repository.open();
-        } catch (Exception e) {
-            return null;
-        }
-
-        return repository;
+        return createRepository(context, online);
     }
 
     public static RoundRepository createRepository(Context context, boolean online) {

@@ -78,22 +78,9 @@ public class ReversiRemotePlayer implements Jugador {
                             }
                         });
 
+                // Enviamos el tablero como mensaje
                 ServerRepository.getInstance(this.context).sendMessage(playerUUID, rivalName, p.getTablero().tableroToString(), null);
-            /*    ServerInterface.getServer(this.context).sendMsg(playerUUID, rivalName, p.getTablero().tableroToString(), // message = tablero
 
-                        new Response.Listener<String>() {
-                            @Override
-                            public void onResponse(String result) {
-                                Log.d("debug", "onResponse MSG : remote " + result);
-                            }
-                        },
-
-                        new Response.ErrorListener() {
-                            @Override
-                            public void onErrorResponse(VolleyError volleyError) {
-                                Log.d("debug", "onResponse MSG: remote ERROR!  " + volleyError.getLocalizedMessage());
-                            }
-                        });*/
 
                 break;
             case Evento.EVENTO_TURNO:

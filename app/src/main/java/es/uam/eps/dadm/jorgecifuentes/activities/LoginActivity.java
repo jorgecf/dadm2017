@@ -20,7 +20,7 @@ import com.google.firebase.iid.FirebaseInstanceId;
 import es.uam.eps.dadm.jorgecifuentes.R;
 import es.uam.eps.dadm.jorgecifuentes.model.RoundRepository;
 import es.uam.eps.dadm.jorgecifuentes.model.RoundRepositoryFactory;
-import es.uam.eps.dadm.jorgecifuentes.server.MessagingService;
+import es.uam.eps.dadm.jorgecifuentes.fcm.MessagingService;
 
 /**
  * Actividad para el login de usuario.
@@ -29,13 +29,13 @@ import es.uam.eps.dadm.jorgecifuentes.server.MessagingService;
  */
 public class LoginActivity extends Activity implements View.OnClickListener {
 
-    private RoundRepository repository; //TODO todos los repositorys close en onDestroy
+    private RoundRepository repository;
     private TextInputLayout usernameEditText;
     private TextInputLayout passwordEditText;
     private Switch keepMeLoggedInSwitch;
     private Switch playOnlineSwitch;
 
-    public boolean isOnline() { //TODO aunque marque online si no hay conexion abrir bbdd
+    public boolean isOnline() {
         ConnectivityManager connMgr = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo networkInfo = connMgr.getActiveNetworkInfo();
 
@@ -97,7 +97,10 @@ public class LoginActivity extends Activity implements View.OnClickListener {
         final Boolean online = this.playOnlineSwitch.isChecked();
 
         // Primero dejamos puesto el modo de juego
-        RoundPreferenceActivity.setPlayOnline(LoginActivity.this, online);
+        if (this.isOnline() == false)
+            RoundPreferenceActivity.setPlayOnline(LoginActivity.this, false);
+        else
+            RoundPreferenceActivity.setPlayOnline(LoginActivity.this, online);
 
         // Control de errores de entrada.
         this.usernameEditText.setError(null);
@@ -187,5 +190,11 @@ public class LoginActivity extends Activity implements View.OnClickListener {
         }
 
         return true;
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        this.repository.close();
     }
 }

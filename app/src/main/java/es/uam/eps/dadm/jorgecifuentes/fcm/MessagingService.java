@@ -1,4 +1,4 @@
-package es.uam.eps.dadm.jorgecifuentes.server;
+package es.uam.eps.dadm.jorgecifuentes.fcm;
 
 import android.content.Intent;
 import android.support.v4.content.LocalBroadcastManager;
@@ -41,7 +41,6 @@ public class MessagingService extends FirebaseMessagingService {
 
         // check if msg contains data payload
 
-        // TODO verify message type
         if(remoteMessage.getMessageType().equals(ROUND_MOVEMENT)) {
             Log.d("debug", "onMessageReceived: ROUND MOV.");
         }

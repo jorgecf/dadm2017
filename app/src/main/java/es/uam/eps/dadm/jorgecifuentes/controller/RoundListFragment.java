@@ -86,7 +86,11 @@ public class RoundListFragment extends Fragment {
                     @Override
                     public void onResponse(List<Round> rounds) {
                         roundAdapter.setCurrent(position);
-                        callbacks.onRoundSelected(rounds.get(position));
+
+                        if (position == -1)
+                            callbacks.onRoundSelected(rounds.get(1));
+                        else
+                            callbacks.onRoundSelected(rounds.get(position));
                     }
 
                     @Override

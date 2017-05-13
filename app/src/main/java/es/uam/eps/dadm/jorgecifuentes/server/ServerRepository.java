@@ -2,7 +2,6 @@ package es.uam.eps.dadm.jorgecifuentes.server;
 
 import android.content.Context;
 import android.support.annotation.Nullable;
-import android.support.design.widget.Snackbar;
 import android.util.Log;
 
 import com.android.volley.Response;
@@ -18,7 +17,6 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
-import es.uam.eps.dadm.jorgecifuentes.R;
 import es.uam.eps.dadm.jorgecifuentes.activities.RoundPreferenceActivity;
 import es.uam.eps.dadm.jorgecifuentes.model.Round;
 import es.uam.eps.dadm.jorgecifuentes.model.RoundRepository;
@@ -27,9 +25,10 @@ import es.uam.eps.dadm.jorgecifuentes.model.Triplet;
 import es.uam.eps.multij.ExcepcionJuego;
 
 /**
- * Created by jorgecf on 19/04/17.
+ * Repositorio de rondas para servidor remoto.
+ *
+ * @author Jorge Cifuentes
  */
-
 public class ServerRepository implements RoundRepository {
 
     private static final String DEBUG = "ServerRepository";
@@ -104,18 +103,12 @@ public class ServerRepository implements RoundRepository {
                 JSONObject o = response.getJSONObject(i);
 
                 String codedboard = o.getString("codedboard");
-                String uuid = o.getString("roundid"); //TODO a clase tipo schema o constantes
+                String uuid = o.getString("roundid");
                 String date = o.getString("dateevent");
                 String ops = o.getString("playernames");
 
                 String[] players = ops.split(",");
                 String op = players[0];
-
-                //   int size = codedboard.charAt(0) - '0';
-
-                //   Round round = new Round(RoundPreferenceActivity.getPlayerUUID(context), RoundPreferenceActivity.getPlayerName(context));
-
-                //     Round round = new Round(RoundPreferenceActivity.getPlayerName(context), uuid, date, RoundPreferenceActivity.getPlayerUUID(context), uuid);
 
                 Round round = new Round(op, uuid, date, RoundPreferenceActivity.getPlayerUUID(context), uuid);
                 round.getBoard().stringToTablero(codedboard);
