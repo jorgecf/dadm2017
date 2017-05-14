@@ -49,6 +49,7 @@ public class ServerRepository implements RoundRepository {
         this.is = ServerInterface.getServer(context);
     }
 
+
     public void loginOrRegister(final String playerName, String password, boolean register, final RoundRepository.LoginRegisterCallback callback) {
 
         this.is.login(playerName, password, RoundPreferenceActivity.getFirebaseToken(this.context), register,
@@ -95,6 +96,12 @@ public class ServerRepository implements RoundRepository {
         loginOrRegister(playername, password, true, callback);
     }
 
+    /**
+     * Convierte una lista de rondas codificada como JSon a una lista de Round.
+     *
+     * @param response lista en JSon.
+     * @return lista de Round.
+     */
     private List<Round> roundsFromJSONArray(JSONArray response) {
 
         List<Round> rounds = new ArrayList<>();
@@ -273,7 +280,7 @@ public class ServerRepository implements RoundRepository {
 
                     @Override
                     public void onResponse(String result) {
-                        Log.d("debug", "onResponse: ok "+result);
+                        Log.d("debug", "onResponse: ok " + result);
                     }
                 },
 
@@ -282,7 +289,6 @@ public class ServerRepository implements RoundRepository {
 
                     @Override
                     public void onErrorResponse(VolleyError error) {
-                        //callback.onResponse(false);
                         Log.d("debug", "onErrorResponse: VolleyError addround");
                     }
                 });

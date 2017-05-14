@@ -20,7 +20,8 @@ import es.uam.eps.dadm.jorgecifuentes.model.Triplet;
 import es.uam.eps.dadm.jorgecifuentes.views.EmptyRecyclerView;
 
 /**
- * Actividad que muestra en la pantalla informacion sobre las partidas alojadas en la base de datos.
+ * Actividad que muestra en la pantalla informacion sobre las partidas alojadas en el repositorio
+ * de rondas.
  *
  * @author Jorge Cifuentes
  */

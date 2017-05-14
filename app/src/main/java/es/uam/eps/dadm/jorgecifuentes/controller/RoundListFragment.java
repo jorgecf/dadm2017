@@ -24,6 +24,7 @@ import java.util.List;
 
 import es.uam.eps.dadm.jorgecifuentes.R;
 import es.uam.eps.dadm.jorgecifuentes.activities.RoundPreferenceActivity;
+import es.uam.eps.dadm.jorgecifuentes.fcm.MessageFields;
 import es.uam.eps.dadm.jorgecifuentes.model.Round;
 import es.uam.eps.dadm.jorgecifuentes.model.RoundRepository;
 import es.uam.eps.dadm.jorgecifuentes.model.RoundRepositoryFactory;
@@ -166,7 +167,7 @@ public class RoundListFragment extends Fragment {
         super.onResume();
 
         LocalBroadcastManager manager = LocalBroadcastManager.getInstance(this.getContext());
-        IntentFilter filter = new IntentFilter(MessageReceiver.ACTION_MESSAGE);
+        IntentFilter filter = new IntentFilter(MessageFields.ACTION_MESSAGE);
         manager.registerReceiver(this.receiver, filter);
 
         this.updateUI();
@@ -363,11 +364,6 @@ public class RoundListFragment extends Fragment {
 
     public class MessageReceiver extends BroadcastReceiver {
 
-        public static final String ACTION_MESSAGE = "actionMessage";
-        public static final String MESSAGE = "message";
-        public static final String DATE = "date";
-        public static final String SENDER = "sender";
-
         private Context context;
 
         @Override
@@ -379,10 +375,10 @@ public class RoundListFragment extends Fragment {
             String action = intent.getAction();
 
             // Obtenemos los datos que nos ha dado nuestro MessagingService
-            if (action.equals(ACTION_MESSAGE)) {
+            if (action.equals(MessageFields.ACTION_MESSAGE)) {
 
                 // Actualizamos el tablero requerido
-                roundAdapter.updateRound(extras.getString(SENDER), extras.getString(MESSAGE));
+                roundAdapter.updateRound(extras.getString(MessageFields.SENDER), extras.getString(MessageFields.MESSAGE));
             }
         }
     }

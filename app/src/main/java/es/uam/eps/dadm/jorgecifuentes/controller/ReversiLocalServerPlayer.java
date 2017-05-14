@@ -45,15 +45,13 @@ public class ReversiLocalServerPlayer implements Jugador, ReversiView.OnPlayList
         this.view = view;
     }
 
-
     public void setPartida(Partida game) {
         this.game = game;
     }
 
-
     private boolean isBoardUpToDate(String codedboard) {
-            TableroReversi t = (TableroReversi) this.game.getTablero();
-            return t.tableroToString().equals(codedboard);
+        TableroReversi t = (TableroReversi) this.game.getTablero();
+        return t.tableroToString().equals(codedboard);
     }
 
     @Override
@@ -77,7 +75,6 @@ public class ReversiLocalServerPlayer implements Jugador, ReversiView.OnPlayList
                             // Si el turno es del jugador y el tablero está actualizado realiza movimiento
                             if (isMyTurn == 1 && isBoardUpToDate(codedboard)) {
 
-                                Log.d("[debug]", "realizar movimiento");
                                 t.stringToTablero(codedboard);
 
                                 // Evitamos jugar movimientos invalidos
@@ -85,7 +82,6 @@ public class ReversiLocalServerPlayer implements Jugador, ReversiView.OnPlayList
                             }
 
                             // Si el turno es del jugador pero el tablero no está actualizado, actualizar tablero
-                            // (solo aplica si FCM no funcionase)
                             else if (isMyTurn == 1 && isBoardUpToDate(codedboard) == false) {
                                 Snackbar.make(view, context.getString(R.string.board_updated_play_again), Snackbar.LENGTH_LONG).show();
                                 t.stringToTablero(codedboard);

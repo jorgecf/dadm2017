@@ -2,8 +2,6 @@ package es.uam.eps.dadm.jorgecifuentes.model;
 
 import android.support.annotation.Nullable;
 
-import com.android.volley.Response;
-
 import java.util.List;
 
 
@@ -144,5 +142,12 @@ public interface RoundRepository {
      */
     void updateUser(String userUUID, String name, String password, BooleanCallback callback);
 
+    /**
+     * Envia un mensaje de texto a otro usuario.
+     * @param playerId id del enviador.
+     * @param playerDest nombre del destinatario.
+     * @param message mensaje.
+     * @param callback callback booleano.
+     */
     void sendMessage(String playerId, String playerDest, String message, BooleanCallback callback);
 }

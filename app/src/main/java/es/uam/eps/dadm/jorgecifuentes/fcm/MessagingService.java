@@ -11,13 +11,12 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Map;
 
-import es.uam.eps.dadm.jorgecifuentes.controller.RoundListFragment;
-
 
 /**
- * Created by jorgecf on 13/05/17.
+ * Servicio de mensajeria para capturar la actualizacion de rondas.
+ *
+ * @author Jorge Cifuentes
  */
-
 public class MessagingService extends FirebaseMessagingService {
 
     private static final String CONTENT = "content";
@@ -32,7 +31,7 @@ public class MessagingService extends FirebaseMessagingService {
         SimpleDateFormat dateformat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         String msString = dateformat.format(new Date());
 
-        // estos mensajes los crea el servidor al eniar un newmovement.php
+        // Estos mensajes los crea el servidor al enviar un newmovement.php
         if (remoteMessage.getData() != null && remoteMessage.getData().get(MSG_TYPE) != null && remoteMessage.getData().get(MSG_TYPE).equals(ROUND_MOVEMENT)) {
             Log.d("debug", "onMessageReceived: ROUND MOVEMENT");
 
@@ -42,10 +41,10 @@ public class MessagingService extends FirebaseMessagingService {
                 LocalBroadcastManager manager = LocalBroadcastManager.getInstance(this.getApplicationContext());
 
                 // Pasamos los datos recibidos por FCM al intent mediante LocalBroadcast
-                Intent intent = new Intent(RoundListFragment.MessageReceiver.ACTION_MESSAGE);
-                intent.putExtra(RoundListFragment.MessageReceiver.MESSAGE, data.get(CONTENT));
-                intent.putExtra(RoundListFragment.MessageReceiver.SENDER, data.get(SENDER));
-                intent.putExtra(RoundListFragment.MessageReceiver.DATE, msString);
+                Intent intent = new Intent(MessageFields.ACTION_MESSAGE);
+                intent.putExtra(MessageFields.MESSAGE, data.get(CONTENT));
+                intent.putExtra(MessageFields.SENDER, data.get(SENDER));
+                intent.putExtra(MessageFields.DATE, msString);
                 manager.sendBroadcast(intent);
             }
         }

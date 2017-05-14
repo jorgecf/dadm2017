@@ -23,6 +23,7 @@ import java.util.ArrayList;
 
 import es.uam.eps.dadm.jorgecifuentes.R;
 import es.uam.eps.dadm.jorgecifuentes.activities.RoundPreferenceActivity;
+import es.uam.eps.dadm.jorgecifuentes.fcm.MessageFields;
 import es.uam.eps.dadm.jorgecifuentes.model.Round;
 import es.uam.eps.dadm.jorgecifuentes.model.RoundRepository;
 import es.uam.eps.dadm.jorgecifuentes.model.RoundRepositoryFactory;
@@ -52,11 +53,6 @@ public class RoundFragment extends Fragment implements PartidaListener {
     public static final String ARG_RIVAL_UUID = "es.uam.eps.dadm.rivaluuid";
 
     public static final String BOARDSTRING = "es.uam.eps.dadm.boardstring";
-
-    // Broadcast Receiver
-    public static final String ACTION_MESSAGE = "actionMessage";
-    public static final String MESSAGE = "message";
-    public static final String SENDER = "sender";
 
     private Round round;
     private Partida game;
@@ -91,7 +87,7 @@ public class RoundFragment extends Fragment implements PartidaListener {
     public void onResume() {
         super.onResume();
         LocalBroadcastManager manager = LocalBroadcastManager.getInstance(this.getContext());
-        IntentFilter filter = new IntentFilter(RoundListFragment.MessageReceiver.ACTION_MESSAGE); //TODO a schema
+        IntentFilter filter = new IntentFilter(MessageFields.ACTION_MESSAGE);
         manager.registerReceiver(this.receiver, filter);
 
     }
@@ -106,11 +102,6 @@ public class RoundFragment extends Fragment implements PartidaListener {
 
     public class MessageReceiver extends BroadcastReceiver {
 
-        public static final String ACTION_MESSAGE = "actionMessage";
-        public static final String MESSAGE = "message";
-        public static final String DATE = "date";
-        public static final String SENDER = "sender";
-
         private Context context;
 
         @Override
@@ -121,13 +112,13 @@ public class RoundFragment extends Fragment implements PartidaListener {
             String action = intent.getAction();
 
             // Obtenemos los datos que nos ha dado nuestro MessagingService
-            if (action.equals(ACTION_MESSAGE)) {
+            if (action.equals(MessageFields.ACTION_MESSAGE)) {
 
                 // Actualizamos el tablero requerido
-                if (extras.getString(SENDER).equals(rounduuid)) {
+                if (extras.getString(MessageFields.SENDER).equals(rounduuid)) {
                     Log.d("debug", "onReceive: receiving in rfrag");
                     try {
-                        round.getBoard().stringToTablero(extras.getString(MESSAGE));
+                        round.getBoard().stringToTablero(extras.getString(MessageFields.MESSAGE));
                     } catch (ExcepcionJuego excepcionJuego) {
                         excepcionJuego.printStackTrace();
                     }
@@ -311,19 +302,24 @@ public class RoundFragment extends Fragment implements PartidaListener {
                 players.add(remote);
                 players.add(localServerPlayer);
 
-                // Agregamos al jugador a la partida creada por otro, si es la primera vez que entra
+                // Agregamos al jugador a la partida creada por otro, SOLO si es la primera vez que entra
                 if (this.round.getRivalUUID().equals("")) {
-                    ServerInterface.getServer(this.getContext()).addPlayerToRound(Integer.parseInt(this.round.getRoundUUID()), this.round.getPlayerUUID(), new Response.Listener<String>() {
-                        @Override
-                        public void onResponse(String s) {
-                            Log.d("debug", "onResponse: add new player to round: " + s + ", " + round.getTitle());
-                            round.setRivalUUID(RoundPreferenceActivity.getPlayerUUID(getContext()));
-                        }
-                    }, new Response.ErrorListener() {
-                        @Override
-                        public void onErrorResponse(VolleyError volleyError) {
-                        }
-                    });
+                    ServerInterface.getServer(this.getContext()).addPlayerToRound(Integer.parseInt(this.round.getRoundUUID()), this.round.getPlayerUUID(),
+
+                            new Response.Listener<String>() {
+
+                                @Override
+                                public void onResponse(String s) {
+                                    round.setRivalUUID(RoundPreferenceActivity.getPlayerUUID(getContext()));
+                                }
+                            },
+
+                            new Response.ErrorListener() {
+
+                                @Override
+                                public void onErrorResponse(VolleyError volleyError) {
+                                }
+                            });
                 }
             }
         }

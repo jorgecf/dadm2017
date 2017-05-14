@@ -7,7 +7,6 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 
 import es.uam.eps.dadm.jorgecifuentes.server.ServerInterface;
-import es.uam.eps.dadm.jorgecifuentes.server.ServerRepository;
 import es.uam.eps.multij.Evento;
 import es.uam.eps.multij.Jugador;
 import es.uam.eps.multij.Partida;

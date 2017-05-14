@@ -22,7 +22,6 @@ import es.uam.eps.dadm.jorgecifuentes.model.RoundRepositoryFactory;
  */
 public class RoundPreferenceActivity extends AppCompatActivity {
 
-
     /**
      * Id del jugador.
      */
@@ -56,7 +55,7 @@ public class RoundPreferenceActivity extends AppCompatActivity {
     /*
      * Token para notificaciones con Firebase.
      */
-    private static final String FIREBASE_TOKEN="firebaseToken";
+    private static final String FIREBASE_TOKEN = "firebaseToken";
 
     @Override
     public void onCreate(Bundle savedInstanceState) {

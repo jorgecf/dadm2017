@@ -58,7 +58,6 @@ public class ServerInterface {
         return serverInterface;
     }
 
-
     public void login(final String playername, final String password, final String regid, final boolean register, Response.Listener<String> callback, Response.ErrorListener errorCallback) {
 
         String url = BASE_URL + ACCOUNT_PHP;
@@ -151,5 +150,4 @@ public class ServerInterface {
         StringRequest r = new StringRequest(Request.Method.GET, url, callback, errorCallback);
         this.queue.add(r);
     }
-
 }

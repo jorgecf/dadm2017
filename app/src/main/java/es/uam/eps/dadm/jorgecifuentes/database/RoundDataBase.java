@@ -10,8 +10,6 @@ import android.database.sqlite.SQLiteOpenHelper;
 import android.support.annotation.Nullable;
 import android.util.Log;
 
-import com.android.volley.Response;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
@@ -37,9 +35,6 @@ public class RoundDataBase implements RoundRepository {
     private static final String DATABASE_NAME = "er.db";
     private static final int DATABASE_VERSION = 2;
     private Context context;
-    /**
-     * @TODO darg como os comenté en clase, hay que llamar a close() en onDestroy() de la actividad que abre la conexión con la base de datos
-     */
     private DatabaseHelper helper;
     private SQLiteDatabase db;
 
@@ -371,6 +366,6 @@ public class RoundDataBase implements RoundRepository {
 
     @Override
     public void sendMessage(String playerId, String playerDest, String message, BooleanCallback callback) {
-
+        // no aplica en local
     }
 }

@@ -52,16 +52,17 @@ public class LoginActivity extends Activity implements View.OnClickListener {
 
         // FIREBASE
         String token = FirebaseInstanceId.getInstance().getToken();  // Codigo de firebase
-        RoundPreferenceActivity.setFirebaseToken(LoginActivity.this, token);
-
-        // Iniciamos SERVICIO DE MENSAJERIA
-        startService(new Intent(this, MessagingService.class));
-
 
         // Si sí hay nombre almacenado (no devuelve el default), es que se ha hecho login; si ademas
         // el usuario ha elegido "mantenerme logueado", se salta la pantalla de login.
         if (RoundPreferenceActivity.getPlayerName(this).equals(RoundPreferenceActivity.PLAYERNAME_DEFAULT) == false
                 && RoundPreferenceActivity.getKeepLogged(this) == true) {
+
+            RoundPreferenceActivity.setFirebaseToken(LoginActivity.this, token);
+
+            // Iniciamos SERVICIO DE MENSAJERIA
+            startService(new Intent(this, MessagingService.class));
+
             startActivity(new Intent(LoginActivity.this, RoundListActivity.class));
             finish();
             return;
@@ -70,6 +71,10 @@ public class LoginActivity extends Activity implements View.OnClickListener {
         // En caso de no estar activado recuerdo de sesion, borramos preferencias y empezamos de nuevo proceso de login.
         RoundPreferenceActivity.clearPreferences(this);
         RoundPreferenceActivity.setFirebaseToken(LoginActivity.this, token);
+
+        // Iniciamos SERVICIO DE MENSAJERIA
+        startService(new Intent(this, MessagingService.class));
+
 
         this.usernameEditText = (TextInputLayout) this.findViewById(R.id.login_username_wrapper);
         this.passwordEditText = (TextInputLayout) this.findViewById(R.id.login_password_wrapper);
