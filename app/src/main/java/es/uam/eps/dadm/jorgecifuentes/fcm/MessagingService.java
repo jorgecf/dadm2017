@@ -26,24 +26,15 @@ public class MessagingService extends FirebaseMessagingService {
     private static final String ROUND_MOVEMENT = "1";
 
     @Override
-    public void onCreate() {
-        super.onCreate();
-        Log.d("debug", "onCreate: creando msger");
-    }
-
-
-    @Override
     public void onMessageReceived(RemoteMessage remoteMessage) {
         super.onMessageReceived(remoteMessage);
-
-        Log.d("debug", "onMessageReceived: RECIBIDO!");
 
         SimpleDateFormat dateformat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         String msString = dateformat.format(new Date());
 
         // estos mensajes los crea el servidor al eniar un newmovement.php
-        if (remoteMessage.getData() != null && remoteMessage.getData().get(MSG_TYPE)!=null && remoteMessage.getData().get(MSG_TYPE).equals(ROUND_MOVEMENT)) {
-            Log.d("debug", "onMessageReceived: ROUND MOV.");
+        if (remoteMessage.getData() != null && remoteMessage.getData().get(MSG_TYPE) != null && remoteMessage.getData().get(MSG_TYPE).equals(ROUND_MOVEMENT)) {
+            Log.d("debug", "onMessageReceived: ROUND MOVEMENT");
 
             if (remoteMessage.getData().size() > 0) {
                 Map<String, String> data = remoteMessage.getData();

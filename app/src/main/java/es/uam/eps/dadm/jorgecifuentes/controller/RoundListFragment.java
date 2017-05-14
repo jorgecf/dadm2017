@@ -1,6 +1,5 @@
 package es.uam.eps.dadm.jorgecifuentes.controller;
 
-import android.app.Activity;
 import android.content.BroadcastReceiver;
 import android.content.Intent;
 import android.content.IntentFilter;
@@ -28,7 +27,6 @@ import es.uam.eps.dadm.jorgecifuentes.activities.RoundPreferenceActivity;
 import es.uam.eps.dadm.jorgecifuentes.model.Round;
 import es.uam.eps.dadm.jorgecifuentes.model.RoundRepository;
 import es.uam.eps.dadm.jorgecifuentes.model.RoundRepositoryFactory;
-import es.uam.eps.dadm.jorgecifuentes.model.TableroReversi;
 import es.uam.eps.dadm.jorgecifuentes.views.EmptyRecyclerView;
 import es.uam.eps.dadm.jorgecifuentes.views.ReversiView;
 import es.uam.eps.multij.ExcepcionJuego;

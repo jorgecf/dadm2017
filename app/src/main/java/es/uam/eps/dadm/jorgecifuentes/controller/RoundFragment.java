@@ -1,11 +1,15 @@
 package es.uam.eps.dadm.jorgecifuentes.controller;
 
+import android.content.BroadcastReceiver;
 import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
+import android.support.v4.content.LocalBroadcastManager;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -49,6 +53,10 @@ public class RoundFragment extends Fragment implements PartidaListener {
 
     public static final String BOARDSTRING = "es.uam.eps.dadm.boardstring";
 
+    // Broadcast Receiver
+    public static final String ACTION_MESSAGE = "actionMessage";
+    public static final String MESSAGE = "message";
+    public static final String SENDER = "sender";
 
     private Round round;
     private Partida game;
@@ -64,6 +72,8 @@ public class RoundFragment extends Fragment implements PartidaListener {
     private String rounduuid;
     private String rivaluuid;
 
+    private MessageReceiver receiver;
+
     /**
      * Interfaz que define que hacer al actualizar el contenido de una ronda.
      */
@@ -73,8 +83,59 @@ public class RoundFragment extends Fragment implements PartidaListener {
 
 
     public RoundFragment() {
+        this.receiver = new MessageReceiver();
 
     }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        LocalBroadcastManager manager = LocalBroadcastManager.getInstance(this.getContext());
+        IntentFilter filter = new IntentFilter(RoundListFragment.MessageReceiver.ACTION_MESSAGE); //TODO a schema
+        manager.registerReceiver(this.receiver, filter);
+
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+
+        LocalBroadcastManager manager = LocalBroadcastManager.getInstance(this.getContext());
+        manager.unregisterReceiver(this.receiver);
+    }
+
+    public class MessageReceiver extends BroadcastReceiver {
+
+        public static final String ACTION_MESSAGE = "actionMessage";
+        public static final String MESSAGE = "message";
+        public static final String DATE = "date";
+        public static final String SENDER = "sender";
+
+        private Context context;
+
+        @Override
+        public void onReceive(Context context, Intent intent) {
+
+            // Informacion del intent
+            Bundle extras = intent.getExtras();
+            String action = intent.getAction();
+
+            // Obtenemos los datos que nos ha dado nuestro MessagingService
+            if (action.equals(ACTION_MESSAGE)) {
+
+                // Actualizamos el tablero requerido
+                if (extras.getString(SENDER).equals(rounduuid)) {
+                    Log.d("debug", "onReceive: receiving in rfrag");
+                    try {
+                        round.getBoard().stringToTablero(extras.getString(MESSAGE));
+                    } catch (ExcepcionJuego excepcionJuego) {
+                        excepcionJuego.printStackTrace();
+                    }
+                }
+            }
+        }
+    }
+
 
     /**
      * Devuelve una nueva instancia de este fragmento.
