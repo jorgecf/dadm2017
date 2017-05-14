@@ -69,6 +69,7 @@ public class LoginActivity extends Activity implements View.OnClickListener {
 
         // En caso de no estar activado recuerdo de sesion, borramos preferencias y empezamos de nuevo proceso de login.
         RoundPreferenceActivity.clearPreferences(this);
+        RoundPreferenceActivity.setFirebaseToken(LoginActivity.this, token);
 
         this.usernameEditText = (TextInputLayout) this.findViewById(R.id.login_username_wrapper);
         this.passwordEditText = (TextInputLayout) this.findViewById(R.id.login_password_wrapper);

@@ -269,7 +269,6 @@ public class RoundFragment extends Fragment implements PartidaListener {
 
 
         game = new Partida(this.round.getBoard(), players);
-
         game.addObservador(this);
 
         // Vista del Tablero.
@@ -347,4 +346,6 @@ public class RoundFragment extends Fragment implements PartidaListener {
                 break;
         }
     }
+
+
 }

@@ -1,9 +1,14 @@
 package es.uam.eps.dadm.jorgecifuentes.controller;
 
+import android.app.Activity;
+import android.content.BroadcastReceiver;
+import android.content.Intent;
+import android.content.IntentFilter;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.content.Context;
 import android.os.Bundle;
+import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -23,7 +28,10 @@ import es.uam.eps.dadm.jorgecifuentes.activities.RoundPreferenceActivity;
 import es.uam.eps.dadm.jorgecifuentes.model.Round;
 import es.uam.eps.dadm.jorgecifuentes.model.RoundRepository;
 import es.uam.eps.dadm.jorgecifuentes.model.RoundRepositoryFactory;
+import es.uam.eps.dadm.jorgecifuentes.model.TableroReversi;
 import es.uam.eps.dadm.jorgecifuentes.views.EmptyRecyclerView;
+import es.uam.eps.dadm.jorgecifuentes.views.ReversiView;
+import es.uam.eps.multij.ExcepcionJuego;
 
 /**
  * Clase que representa un  fragmento que incluye la lista de rondas.
@@ -36,6 +44,10 @@ public class RoundListFragment extends Fragment {
     private RoundAdapter roundAdapter;
     private Callbacks callbacks;
 
+    // Receptor de broadcasts locales
+    private MessageReceiver receiver;
+
+
     public interface Callbacks {
         void onRoundSelected(Round round);
 
@@ -45,6 +57,15 @@ public class RoundListFragment extends Fragment {
 
         void onScoresSelected();
     }
+
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+
+        this.receiver = new MessageReceiver();
+    }
+
 
     @Override
     public void onAttach(Context context) {
@@ -145,12 +166,25 @@ public class RoundListFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
+
+        LocalBroadcastManager manager = LocalBroadcastManager.getInstance(this.getContext());
+        IntentFilter filter = new IntentFilter(MessageReceiver.ACTION_MESSAGE);
+        manager.registerReceiver(this.receiver, filter);
+
         this.updateUI();
 
         // Al cargar la vista de nuevo (solo en movil, en tablet nunca se oculta), reseteamos el
         //  actual.
         if (this.roundAdapter != null)
             this.roundAdapter.setCurrent(-1);
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+
+        LocalBroadcastManager manager = LocalBroadcastManager.getInstance(this.getContext());
+        manager.unregisterReceiver(this.receiver);
     }
 
     @Override
@@ -290,6 +324,29 @@ public class RoundListFragment extends Fragment {
             roundAdapter.notifyDataSetChanged();
         }
 
+        /**
+         * Actualiza el tablero de una ronda.
+         *
+         * @param roundUUID id de la ronda a actualizar.
+         * @param newBoard  nuevo tablero.
+         */
+        public void updateRound(String roundUUID, String newBoard) {
+            for (Round r : this.rounds) {
+                if (r.getRoundUUID().equals(roundUUID)) {
+                    try {
+                        r.getBoard().stringToTablero(newBoard);
+                    } catch (ExcepcionJuego excepcionJuego) {
+                        excepcionJuego.printStackTrace();
+                    }
+
+                    final ReversiView b = (ReversiView) getActivity().findViewById(R.id.board_reversiview);
+                    b.setBoard(r.getBoard());
+                    b.invalidate();
+                    return;
+                }
+            }
+        }
+
 
         public boolean isRemovable(int position) {
             return current != position;
@@ -304,5 +361,31 @@ public class RoundListFragment extends Fragment {
             return this.rounds.size();
         }
 
+    }
+
+    public class MessageReceiver extends BroadcastReceiver {
+
+        public static final String ACTION_MESSAGE = "actionMessage";
+        public static final String MESSAGE = "message";
+        public static final String DATE = "date";
+        public static final String SENDER = "sender";
+
+        private Context context;
+
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            this.context = context;
+
+            // Informacion del intent
+            Bundle extras = intent.getExtras();
+            String action = intent.getAction();
+
+            // Obtenemos los datos que nos ha dado nuestro MessagingService
+            if (action.equals(ACTION_MESSAGE)) {
+
+                // Actualizamos el tablero requerido
+                roundAdapter.updateRound(extras.getString(SENDER), extras.getString(MESSAGE));
+            }
+        }
     }
 }

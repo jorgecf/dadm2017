@@ -51,7 +51,7 @@ public class ServerRepository implements RoundRepository {
 
     public void loginOrRegister(final String playerName, String password, boolean register, final RoundRepository.LoginRegisterCallback callback) {
 
-        this.is.login(playerName, password, null, register,
+        this.is.login(playerName, password, RoundPreferenceActivity.getFirebaseToken(this.context), register,
 
                 new Response.Listener<String>() {
 

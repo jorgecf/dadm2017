@@ -11,7 +11,8 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Map;
 
-import es.uam.eps.dadm.jorgecifuentes.activities.MessageActivity;
+import es.uam.eps.dadm.jorgecifuentes.controller.RoundListFragment;
+
 
 /**
  * Created by jorgecf on 13/05/17.
@@ -40,22 +41,20 @@ public class MessagingService extends FirebaseMessagingService {
         SimpleDateFormat dateformat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         String msString = dateformat.format(new Date());
 
-        // check if msg contains data payload
-
-        if (remoteMessage.getMessageType().equals(ROUND_MOVEMENT)) {
+        // estos mensajes los crea el servidor al eniar un newmovement.php
+        if (remoteMessage.getData() != null && remoteMessage.getData().get(MSG_TYPE)!=null && remoteMessage.getData().get(MSG_TYPE).equals(ROUND_MOVEMENT)) {
             Log.d("debug", "onMessageReceived: ROUND MOV.");
-
 
             if (remoteMessage.getData().size() > 0) {
                 Map<String, String> data = remoteMessage.getData();
 
                 LocalBroadcastManager manager = LocalBroadcastManager.getInstance(this.getApplicationContext());
 
-                // Pasamos los datos recibidos por FCM al intent medianto LocalBroadcast
-                Intent intent = new Intent(MessageActivity.ACTION_MESSAGE);
-                intent.putExtra(MessageActivity.MESSAGE, data.get(CONTENT));
-                intent.putExtra(MessageActivity.SENDER, data.get(SENDER));
-                intent.putExtra(MessageActivity.DATE, msString);
+                // Pasamos los datos recibidos por FCM al intent mediante LocalBroadcast
+                Intent intent = new Intent(RoundListFragment.MessageReceiver.ACTION_MESSAGE);
+                intent.putExtra(RoundListFragment.MessageReceiver.MESSAGE, data.get(CONTENT));
+                intent.putExtra(RoundListFragment.MessageReceiver.SENDER, data.get(SENDER));
+                intent.putExtra(RoundListFragment.MessageReceiver.DATE, msString);
                 manager.sendBroadcast(intent);
             }
         }

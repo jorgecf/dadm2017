@@ -58,7 +58,7 @@ public class ReversiRemotePlayer implements Jugador {
                     return;
                 }
 
-                // Si el movimiento es correcto
+                // Si el movimiento es correcto, el tablero se envia y ademas notifica mediante firebase fcm
                 ServerInterface.getServer(this.context).sendBoard(Integer.parseInt(roundUUID), playerUUID, p.getTablero().tableroToString(),
 
                         new Response.Listener<String>() {
@@ -74,10 +74,6 @@ public class ReversiRemotePlayer implements Jugador {
                                 Log.d("debug", "onResponse: remote ERROR!  " + volleyError.getLocalizedMessage());
                             }
                         });
-
-                // Enviamos el tablero como mensaje
-                ServerRepository.getInstance(this.context).sendMessage(playerUUID, rivalName, p.getTablero().tableroToString(), null);
-
 
                 break;
             case Evento.EVENTO_TURNO:
