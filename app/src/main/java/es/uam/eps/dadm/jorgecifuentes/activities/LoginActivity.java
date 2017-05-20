@@ -23,6 +23,10 @@ import es.uam.eps.dadm.jorgecifuentes.model.RoundRepositoryFactory;
 import es.uam.eps.dadm.jorgecifuentes.fcm.MessagingService;
 
 /**
+ * @TODO darg sigue sin estar ajustado el tablero al móvil LG de la asignatura. Se puede jugar una partida completa. Ahora bien, cuando uno de los jugadores debe pasar no se puede continuar jugado. Ver el png que he subido al repositorio. Además, el jugador que pierde queda a la espera sin recibir notificación de fin de partida.  
+ */
+
+/**
  * Actividad para el login de usuario.
  *
  * @author Jorge Cifuentes

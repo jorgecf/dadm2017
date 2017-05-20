@@ -117,8 +117,23 @@ public class RoundFragment extends Fragment implements PartidaListener {
                 // Actualizamos el tablero requerido
                 if (extras.getString(MessageFields.SENDER).equals(rounduuid)) {
                     Log.d("debug", "onReceive: receiving in rfrag");
+                    /**
+                     * @TODO darg puedes notificar desde aquí. Lo puedes hacer, por ejemplo, como sigue
+                     */
+                    Snackbar.make(getActivity().findViewById(android.R.id.content),"TURNO!!!!",Snackbar.LENGTH_LONG).show();
+
+
+
                     try {
                         round.getBoard().stringToTablero(extras.getString(MessageFields.MESSAGE));
+                        /**
+                         * @TODO darg además, actualizas el tablero
+                         *
+                         */
+                        // Repintamos el tablero.
+                        boardView.setBoard(round.getBoard());
+                        boardView.invalidate();
+                        callbacks.onRoundUpdated(round);
                     } catch (ExcepcionJuego excepcionJuego) {
                         excepcionJuego.printStackTrace();
                     }
